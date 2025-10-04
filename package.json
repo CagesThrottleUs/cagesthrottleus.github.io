@@ -2,7 +2,7 @@
   "name": "portfolio",
   "private": true,
   "homepage": "https://cagesthrottleus.github.io/",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -13,8 +13,11 @@
     "deploy": "gh-pages -d dist"
   },
   "dependencies": {
+    "@adobe/react-spectrum": "^3.45.0",
     "react": "^19.1.1",
-    "react-dom": "^19.1.1"
+    "react-aria-components": "^1.13.0",
+    "react-dom": "^19.1.1",
+    "tslib": "^2.8.1"
   },
   "devDependencies": {
     "@eslint/js": "^9.36.0",
