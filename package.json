@@ -2,8 +2,12 @@
   "name": "portfolio",
   "private": true,
   "homepage": "https://cagesthrottleus.github.io/",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "type": "module",
+  "engines": {
+    "node": "24.9.0",
+    "npm": "11.6.0"
+  },
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
