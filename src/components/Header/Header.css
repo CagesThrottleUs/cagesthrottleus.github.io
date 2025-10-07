@@ -12,22 +12,101 @@
   font-style: normal;
 }
 
+/* Header link styles with golden radial background hover effect */
 .link-header {
   text-decoration: none;
   color: inherit;
+  position: relative;
+  transition: all 0.3s ease-in-out;
+  border-radius: 8px;
+  padding: 4px 8px;
+  margin: -4px -8px;
+}
+
+.link-header::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: radial-gradient(
+    circle,
+    rgba(255, 215, 0, 0.15) 0%,
+    rgba(255, 223, 0, 0.1) 30%,
+    rgba(255, 228, 181, 0.08) 60%,
+    transparent 100%
+  );
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  pointer-events: none;
+  z-index: -1;
+}
+
+.link-header:hover {
+  text-decoration: none;
+  color: rgba(245, 122, 183, 0.885);
+}
+
+.link-header:hover::before {
+  width: 120px;
+  height: 120px;
+  background: radial-gradient(
+    circle,
+    rgba(255, 215, 0, 0.25) 0%,
+    rgba(255, 223, 0, 0.18) 25%,
+    rgba(255, 228, 181, 0.12) 50%,
+    rgba(255, 235, 205, 0.06) 75%,
+    transparent 100%
+  );
 }
 
 .link-header-no-effect {
   text-decoration: none;
   color: inherit;
+  position: relative;
+  transition: all 0.3s ease-in-out;
+  border-radius: 8px;
+  padding: 4px 8px;
+  margin: -4px -8px;
 }
 
-/* Hover effect */
-.link-header:hover {
-  text-decoration: none;
+.link-header-no-effect::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: radial-gradient(
+    circle,
+    rgba(255, 215, 0, 0.15) 0%,
+    rgba(255, 223, 0, 0.1) 30%,
+    rgba(255, 228, 181, 0.08) 60%,
+    transparent 100%
+  );
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  pointer-events: none;
+  z-index: -1;
 }
 
 .link-header-no-effect:hover {
   text-decoration: none;
-  color: inherit;
+  color: rgba(245, 122, 183, 0.885);
+}
+
+.link-header-no-effect:hover::before {
+  width: 120px;
+  height: 120px;
+  background: radial-gradient(
+    circle,
+    rgba(255, 215, 0, 0.25) 0%,
+    rgba(255, 223, 0, 0.18) 25%,
+    rgba(255, 228, 181, 0.12) 50%,
+    rgba(255, 235, 205, 0.06) 75%,
+    transparent 100%
+  );
 }
