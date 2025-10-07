@@ -3,12 +3,14 @@ import reactLogo from "../assets/react.svg";
 import viteLogo from "/vite.svg";
 import "./App.css";
 import FooterComponent from "./components/Footer/Footer";
+import HeaderComponent from "./components/Header/Header";
 
 function App() {
   const [count, setCount] = useState(0);
 
   return (
     <>
+      <HeaderComponent />
       <div className="app-content">
         <div>
           <a href="https://vite.dev" target="_blank">
