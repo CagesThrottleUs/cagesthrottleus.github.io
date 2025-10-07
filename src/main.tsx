@@ -7,7 +7,11 @@ import { darkTheme, Provider } from "@adobe/react-spectrum";
 // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <Provider theme={darkTheme} scale="large" UNSAFE_className="app text-mono">
+    <Provider
+      theme={darkTheme}
+      UNSAFE_className="app text-mono"
+      id="app-provider"
+    >
       <App />
     </Provider>
   </StrictMode>
