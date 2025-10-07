@@ -1,0 +1,33 @@
+.app-header {
+  position: relative;
+  top: 0;
+  text-align: start;
+  font-weight: 600;
+}
+
+.text-header {
+  font-family: "Red Hat Display", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.link-header {
+  text-decoration: none;
+  color: inherit;
+}
+
+.link-header-no-effect {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Hover effect */
+.link-header:hover {
+  text-decoration: none;
+}
+
+.link-header-no-effect:hover {
+  text-decoration: none;
+  color: inherit;
+}
