@@ -1,17 +1,18 @@
 import packageJson from "../../../package.json";
+import { URL_BLOG, URL_PROJECTS, URL_RESUME } from "../../utils/constants";
 
 export const SUPPORTED_APPLICATIONS = [
   {
     name: "Resume",
-    url: "/resume",
+    url: URL_RESUME,
   },
   {
     name: "Projects",
-    url: "/projects",
+    url: URL_PROJECTS,
   },
   {
     name: "Blog",
-    url: "/blog",
+    url: URL_BLOG,
   },
 ];
 
