@@ -8,9 +8,10 @@ function HeaderComponent() {
   return (
     <View
       UNSAFE_className="app-header"
-      backgroundColor="gray-300"
+      backgroundColor="gray-50"
       colorVersion={6}
       padding="size-200"
+      borderBottomWidth="thin"
     >
       <Flex
         UNSAFE_className="text-header"
