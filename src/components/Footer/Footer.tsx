@@ -9,7 +9,7 @@ function FooterComponent() {
       borderBottomWidth="none"
       borderXWidth="none"
       width="100%"
-      backgroundColor="gray-200"
+      backgroundColor="gray-50"
       colorVersion={6}
     >
       <Footer UNSAFE_className="text-footer">
