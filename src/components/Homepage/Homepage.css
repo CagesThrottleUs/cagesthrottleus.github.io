@@ -20,39 +20,56 @@
       "YPN1" -21,
       "YPN2" 0;
     
-    /* Simple typewriter effect */
-    overflow: hidden;
-    white-space: nowrap;
-    border-right: 3px solid #ffd700; /* Golden cursor */
-    width: 0;
-    animation: 
-        typewriter 4s steps(var(--typewriter-character-count), end) 0.5s 1 normal both,
-        blink-cursor 0.75s step-end infinite 4.5s;
+    /* Typewriter effect setup */
+    overflow: hidden;                    /* Hide text outside container */
+    white-space: nowrap;                 /* Prevent text wrapping */
+    border-right: 3px solid #ffd700;    /* Golden cursor (3px = visible thickness) */
+    width: 0;                           /* Start with no visible text */
 }
 
-/* Typewriter animation */
-@keyframes typewriter {
-    from {
-        width: 0;
-    }
-    to {
-        width: calc(var(--typewriter-character-count) * 1ch); /* Full width of text */
-    }
-}
-
-/* Blinking cursor animation */
-@keyframes blink-cursor {
-    0%, 50% {
-        border-color: #ffd700;
-    }
-    51%, 100% {
-        border-color: transparent;
-    }
-}
-
-/* Intersection Observer trigger class */
+/* 
+ * TYPEWRITER ANIMATION SYSTEM
+ * 
+ * Timing Breakdown:
+ * - 2s total duration (2 seconds for complete typing)
+ * - 0.25s delay (250ms before animation starts)
+ * - 16 steps = 0.125s per character (2s ÷ 16 = 125ms per character)
+ * - 2.25s cursor start (2s typing + 0.25s delay = when cursor blinking begins)
+ * 
+ * Magic Numbers Explained:
+ * - 0.25s delay: Smooth entry, prevents jarring start
+ * - 2s duration: Realistic typing speed (125ms per character)
+ * - 0.75s cursor blink: Natural blinking rhythm (750ms per blink cycle)
+ * - 3px cursor: Visible but not overwhelming
+ * - 51% cursor timing: Slightly longer visible than hidden for readability
+ */
 .text-intro-name.animate {
     animation: 
-        typewriter 4s steps(var(--typewriter-character-count), end) 0.5s 1 normal both,
-        blink-cursor 0.75s step-end infinite 4.5s;
+        /* Typewriter: 2s duration, 16 steps, 0.25s delay, runs once, both directions */
+        typewriter 2s steps(var(--typewriter-character-count), end) 0.25s 1 normal both,
+        /* Cursor: 0.75s blink cycle, infinite, starts after 2.25s (typing complete) */
+        blink-cursor 0.75s step-end infinite 1.5s;
+}
+
+/* Typewriter width animation - reveals text character by character */
+@keyframes typewriter {
+    from {
+        width: 0; /* Start: no text visible */
+    }
+    to {
+        /* End: full text width (16 characters × 1 character unit) */
+        width: calc(var(--typewriter-character-count) * 1ch);
+    }
+}
+
+/* Cursor blinking animation - creates typing cursor effect */
+@keyframes blink-cursor {
+    /* 0-50%: Cursor visible (first half of blink cycle) */
+    0%, 50% {
+        border-color: #ffd700; /* Golden cursor visible */
+    }
+    /* 51-100%: Cursor hidden (second half of blink cycle) */
+    51%, 100% {
+        border-color: transparent; /* Cursor invisible */
+    }
 }
