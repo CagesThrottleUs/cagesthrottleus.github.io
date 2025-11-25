@@ -1,14 +1,17 @@
 import { Flex, Heading, Link, View, Text } from "@adobe/react-spectrum";
 import "./Header.css";
 import { APPLICATION_VERSION, SUPPORTED_APPLICATIONS } from "./constants";
+import { useNavigate } from "react-router";
 
 function HeaderComponent() {
+  const navigate = useNavigate();
   return (
     <View
       UNSAFE_className="app-header"
-      backgroundColor="gray-300"
+      backgroundColor="gray-50"
       colorVersion={6}
       padding="size-200"
+      borderBottomWidth="thin"
     >
       <Flex
         UNSAFE_className="text-header"
@@ -38,7 +41,12 @@ function HeaderComponent() {
         >
           {SUPPORTED_APPLICATIONS.map((application) => (
             <Heading level={2} marginY="auto">
-              <Link href={application.url} UNSAFE_className="link-header">
+              <Link
+                onPress={() => {
+                  void navigate(application.url);
+                }}
+                UNSAFE_className="link-header"
+              >
                 {application.name}
               </Link>
             </Heading>

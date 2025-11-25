@@ -1,0 +1,75 @@
+:root {
+    --typewriter-character-count: 16;
+}
+
+.text-intro-name {
+    font-family: "Bitcount Single Ink", system-ui;
+    font-optical-sizing: auto;
+    font-weight: 500;
+    font-style: normal;
+    font-size: 4em;
+    font-variation-settings:
+      "slnt" 0,
+      "CRSV" 1,
+      "ELSH" 59.2,
+      "ELXP" 21,
+      "SZP1" 44,
+      "SZP2" 29,
+      "XPN1" 19,
+      "XPN2" 0,
+      "YPN1" -21,
+      "YPN2" 0;
+    
+    /* Typewriter effect setup */
+    overflow: hidden;                    /* Hide text outside container */
+    white-space: nowrap;                 /* Prevent text wrapping */
+    border-right: 3px solid #ffd700;    /* Golden cursor (3px = visible thickness) */
+    width: 0;                           /* Start with no visible text */
+}
+
+/* 
+ * TYPEWRITER ANIMATION SYSTEM
+ * 
+ * Timing Breakdown:
+ * - 2s total duration (2 seconds for complete typing)
+ * - 0.25s delay (250ms before animation starts)
+ * - 16 steps = 0.125s per character (2s ÷ 16 = 125ms per character)
+ * - 2.25s cursor start (2s typing + 0.25s delay = when cursor blinking begins)
+ * 
+ * Magic Numbers Explained:
+ * - 0.25s delay: Smooth entry, prevents jarring start
+ * - 2s duration: Realistic typing speed (125ms per character)
+ * - 0.75s cursor blink: Natural blinking rhythm (750ms per blink cycle)
+ * - 3px cursor: Visible but not overwhelming
+ * - 51% cursor timing: Slightly longer visible than hidden for readability
+ */
+.text-intro-name.animate {
+    animation: 
+        /* Typewriter: 2s duration, 16 steps, 0.25s delay, runs once, both directions */
+        typewriter 2s steps(var(--typewriter-character-count), end) 0.25s 1 normal both,
+        /* Cursor: 0.75s blink cycle, infinite, starts after 2.25s (typing complete) */
+        blink-cursor 0.75s step-end infinite 1.5s;
+}
+
+/* Typewriter width animation - reveals text character by character */
+@keyframes typewriter {
+    from {
+        width: 0; /* Start: no text visible */
+    }
+    to {
+        /* End: full text width (16 characters × 1 character unit) */
+        width: calc(var(--typewriter-character-count) * 1ch);
+    }
+}
+
+/* Cursor blinking animation - creates typing cursor effect */
+@keyframes blink-cursor {
+    /* 0-50%: Cursor visible (first half of blink cycle) */
+    0%, 50% {
+        border-color: #ffd700; /* Golden cursor visible */
+    }
+    /* 51-100%: Cursor hidden (second half of blink cycle) */
+    51%, 100% {
+        border-color: transparent; /* Cursor invisible */
+    }
+}

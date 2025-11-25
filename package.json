@@ -2,12 +2,8 @@
   "name": "portfolio",
   "private": true,
   "homepage": "https://cagesthrottleus.github.io/",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "type": "module",
-  "engines": {
-    "node": "24.9.0",
-    "npm": "11.6.0"
-  },
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
@@ -18,9 +14,13 @@
   },
   "dependencies": {
     "@adobe/react-spectrum": "^3.45.0",
+    "@spectrum-icons/illustrations": "^3.6.26",
+    "@spectrum-icons/ui": "^3.6.20",
+    "@spectrum-icons/workflow": "^4.2.25",
     "react": "^19.1.1",
     "react-aria-components": "^1.13.0",
     "react-dom": "^19.1.1",
+    "react-router": "^7.9.3",
     "tslib": "^2.8.1"
   },
   "devDependencies": {
@@ -28,7 +28,7 @@
     "@types/node": "^24.6.0",
     "@types/react": "^19.1.16",
     "@types/react-dom": "^19.1.9",
-    "@vitejs/plugin-react-swc": "^4.1.0",
+    "@vitejs/plugin-react": "^5.1.1",
     "eslint": "^9.36.0",
     "eslint-plugin-react-hooks": "^5.2.0",
     "eslint-plugin-react-refresh": "^0.4.22",
