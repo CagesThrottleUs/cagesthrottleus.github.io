@@ -11,7 +11,7 @@ createRoot(document.getElementById("root")!).render(
     <HashRouter>
       <Provider
         theme={darkTheme}
-        UNSAFE_className="app text-mono"
+        UNSAFE_className="app text-mono text-display text"
         id="app-provider"
       >
         <App />
