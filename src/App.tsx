@@ -5,12 +5,14 @@ import Homepage from "./components/Homepage/Homepage";
 import { Routes, Route } from "react-router";
 import { Suspense } from "react";
 import NotFoundComponent from "./components/NotFound/NotFound";
+import CursorTracker from "./components/CursorTracker/CursorTracker";
 
 function App() {
   return (
     <div className="app-wrapper">
       <HeaderComponent />
       <div className="app-content">
+        <CursorTracker />
         <Routes>
           <Route
             path="/"

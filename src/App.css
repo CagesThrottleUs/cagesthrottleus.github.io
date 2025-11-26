@@ -7,4 +7,5 @@
 .app-content {
   flex: 1;
   background-color: var(--spectrum-gray-100);
+  position: relative;
 }
