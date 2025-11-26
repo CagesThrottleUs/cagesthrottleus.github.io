@@ -20,12 +20,11 @@ function CursorTracker() {
     <div
       className="cursor-tracker"
       style={{
-        left: `${position.x}px`,
-        top: `${position.y}px`,
+        left: `${position.x.toString()}px`,
+        top: `${position.y.toString()}px`,
       }}
     />
   );
 }
 
 export default CursorTracker;
-
