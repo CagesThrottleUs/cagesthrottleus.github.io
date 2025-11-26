@@ -9,13 +9,14 @@ import { HashRouter } from "react-router";
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <HashRouter>
-      <Provider
-        theme={darkTheme}
-        UNSAFE_className="app text-mono text-display text"
-        id="app-provider"
-      >
-        <App />
-      </Provider>
+      <div className="app text-mono text-display text">
+        <Provider
+          theme={darkTheme}
+          id="app-provider"
+        >
+          <App />
+        </Provider>
+      </div>
     </HashRouter>
   </StrictMode>
 );

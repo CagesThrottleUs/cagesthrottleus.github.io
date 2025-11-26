@@ -1,4 +1,3 @@
-import { View } from "@adobe/react-spectrum";
 import "./App.css";
 import FooterComponent from "./components/Footer/Footer";
 import HeaderComponent from "./components/Header/Header";
@@ -9,9 +8,9 @@ import NotFoundComponent from "./components/NotFound/NotFound";
 
 function App() {
   return (
-    <>
+    <div className="app-wrapper">
       <HeaderComponent />
-      <View UNSAFE_className="app-content" backgroundColor="gray-100">
+      <div className="app-content">
         <Routes>
           <Route
             path="/"
@@ -30,9 +29,9 @@ function App() {
             }
           />
         </Routes>
-      </View>
+      </div>
       <FooterComponent />
-    </>
+    </div>
   );
 }
 

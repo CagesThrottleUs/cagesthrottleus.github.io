@@ -41,7 +41,7 @@ function Homepage() {
   }, [isVisible]);
 
   return (
-    <Flex marginTop="5vh" alignItems="center" direction="column" gap="size-200">
+    <Flex marginTop="5vh" alignItems="center" direction="column" gap="size-100">
       <Heading level={1} ref={headingRef} className="text-intro-name">
         CagesThrottleUs
       </Heading>
