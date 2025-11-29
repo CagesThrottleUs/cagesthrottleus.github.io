@@ -1,12 +1,20 @@
 .cursor-tracker {
+  --cursor-x: 0px;
+  --cursor-y: 0px;
+  
   position: fixed;
+  left: 0;
+  top: 0;
   width: 50px;
   height: 50px;
   border-radius: var(--radius-full);
   background: var(--gradient-cursor);
   pointer-events: none;
-  transform: translate(-50%, -50%);
+  /* GPU-accelerated transform - percentage-based centering */
+  transform: translate3d(var(--cursor-x), var(--cursor-y), 0) translate(-50%, -50%);
   z-index: 9999;
   box-shadow: var(--glow-cursor);
-  transition: transform 0.05s ease-out;
+  /* Use will-change to hint browser for optimization */
+  will-change: transform;
+  transition: opacity 150ms ease-out;
 }

@@ -25,14 +25,16 @@
     rgba(0, 0, 0, 0.15) 3px
   );
   animation: scanlines 8s linear infinite;
+  /* GPU acceleration for transform */
+  will-change: transform;
 }
 
 @keyframes scanlines {
   0% {
-    transform: translateY(0);
+    transform: translate3d(0, 0, 0);
   }
   100% {
-    transform: translateY(10px);
+    transform: translate3d(0, 10px, 0);
   }
 }
 

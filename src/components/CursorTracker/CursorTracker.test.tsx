@@ -17,8 +17,9 @@ describe("CursorTracker", () => {
     // Fire event on a real DOM element
     fireEvent.mouseMove(container, { clientX: 100, clientY: 200 });
 
-    expect(tracker.style.left).toBe("100px");
-    expect(tracker.style.top).toBe("200px");
+    // Check CSS custom properties instead of inline left/top
+    expect(tracker.style.getPropertyValue('--cursor-x')).toBe("100px");
+    expect(tracker.style.getPropertyValue('--cursor-y')).toBe("200px");
   });
 
   it("remains visible by default", () => {

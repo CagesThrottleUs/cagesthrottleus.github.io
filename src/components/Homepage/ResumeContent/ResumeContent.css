@@ -56,7 +56,7 @@
   font-family: var(--font-sans);
 }
 
-/* Animated background gradient orbs */
+/* Animated background gradient orbs - OPTIMIZED */
 .resume-content::before {
   content: "";
   position: absolute;
@@ -66,10 +66,13 @@
   height: 40%;
   background: var(--gradient-ambient-orb-1);
   border-radius: var(--radius-full);
-  filter: blur(60px);
+  /* Reduced blur for performance - 30px instead of 60px */
+  filter: blur(30px);
   animation: float-1 20s ease-in-out infinite;
   pointer-events: none;
   z-index: -1;
+  /* GPU acceleration hint */
+  will-change: opacity;
 }
 
 .resume-content::after {
@@ -81,41 +84,33 @@
   height: 50%;
   background: var(--gradient-ambient-orb-2);
   border-radius: var(--radius-full);
-  filter: blur(80px);
+  /* Reduced blur for performance - 40px instead of 80px */
+  filter: blur(40px);
   animation: float-2 25s ease-in-out infinite;
   pointer-events: none;
   z-index: -1;
+  /* GPU acceleration hint */
+  will-change: opacity;
 }
 
+/* Optimized animations - only opacity (removed expensive transforms/scale) */
 @keyframes float-1 {
   0%,
   100% {
-    transform: translate(0, 0) scale(1);
     opacity: 0.6;
   }
-  33% {
-    transform: translate(30px, -50px) scale(1.1);
+  50% {
     opacity: 0.8;
-  }
-  66% {
-    transform: translate(-20px, 30px) scale(0.9);
-    opacity: 0.5;
   }
 }
 
 @keyframes float-2 {
   0%,
   100% {
-    transform: translate(0, 0) scale(1);
     opacity: 0.5;
   }
-  33% {
-    transform: translate(-40px, 40px) scale(1.15);
+  50% {
     opacity: 0.7;
-  }
-  66% {
-    transform: translate(30px, -30px) scale(0.85);
-    opacity: 0.4;
   }
 }
 
@@ -196,34 +191,13 @@
     rgba(255, 255, 255, 0.1),
     transparent
   );
-  animation: shimmer 3s infinite;
-}
-
-@keyframes shimmer {
-  0% {
-    left: -100%;
-  }
-  100% {
-    left: 100%;
-  }
+  /* Shimmer animation removed for performance - can be re-enabled on hover if needed */
 }
 
 .company-icon {
   color: var(--color-primary);
   filter: drop-shadow(var(--glow-primary));
-  animation: pulse-glow 3s ease-in-out infinite;
-}
-
-@keyframes pulse-glow {
-  0%,
-  100% {
-    opacity: 1;
-    filter: drop-shadow(0 0 10px rgba(139, 92, 246, 0.4));
-  }
-  50% {
-    opacity: 0.8;
-    filter: drop-shadow(0 0 20px rgba(139, 92, 246, 0.6));
-  }
+  /* Removed continuous animation for performance */
 }
 
 /**
@@ -460,16 +434,7 @@
 
 .work-item-card:hover .card-gradient-border {
   opacity: 1;
-  animation: border-rotate 3s linear infinite;
-}
-
-@keyframes border-rotate {
-  0% {
-    filter: hue-rotate(0deg);
-  }
-  100% {
-    filter: hue-rotate(360deg);
-  }
+  /* Removed expensive hue-rotate animation for performance */
 }
 
 /* Shine effect */
@@ -519,19 +484,7 @@
 .achievement-icon {
   color: var(--color-accent);
   filter: drop-shadow(0 0 8px rgba(236, 72, 153, 0.4));
-  animation: zap-pulse 2s ease-in-out infinite;
-}
-
-@keyframes zap-pulse {
-  0%,
-  100% {
-    transform: scale(1);
-    opacity: 1;
-  }
-  50% {
-    transform: scale(1.1);
-    opacity: 0.8;
-  }
+  /* Removed continuous animation for performance */
 }
 
 .work-description {

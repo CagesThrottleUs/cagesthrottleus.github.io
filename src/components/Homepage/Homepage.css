@@ -102,21 +102,23 @@
   height: 120%;
   background: var(--gradient-glow-intro);
   border-radius: var(--radius-full);
-  filter: blur(60px);
+  /* Reduced blur for better performance - 30px instead of 60px */
+  filter: blur(30px);
   pointer-events: none;
   z-index: -1;
   animation: pulse-glow-intro 4s ease-in-out infinite;
+  /* GPU acceleration hint */
+  will-change: opacity;
 }
 
+/* Optimized animation - removed scale transform for performance */
 @keyframes pulse-glow-intro {
   0%,
   100% {
     opacity: 0.6;
-    transform: translate(-50%, -50%) scale(1);
   }
   50% {
     opacity: 0.9;
-    transform: translate(-50%, -50%) scale(1.1);
   }
 }
 
