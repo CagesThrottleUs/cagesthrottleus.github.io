@@ -7,12 +7,16 @@
 
 .footer-container {
   border-top: 1px solid rgba(139, 92, 246, 0.4);
-  background: linear-gradient(to top, rgba(10, 14, 39, 0.95), rgba(10, 14, 39, 0.85));
+  background: linear-gradient(
+    to top,
+    rgba(10, 14, 39, 0.95),
+    rgba(10, 14, 39, 0.85)
+  );
   backdrop-filter: blur(20px);
   padding: var(--spectrum-global-dimension-size-200);
   flex-shrink: 0;
   margin-top: auto;
-  box-shadow: 
+  box-shadow:
     0 -4px 20px rgba(0, 0, 0, 0.3),
     0 0 40px rgba(139, 92, 246, 0.1),
     inset 0 1px 0 0 rgba(139, 92, 246, 0.2);
@@ -27,7 +31,7 @@
   justify-content: flex-end;
   align-items: center;
   gap: 0.5rem;
-  color: var(--color-text-secondary, #D1D5DB);
+  color: var(--color-text-secondary, #d1d5db);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -41,7 +45,7 @@
 .footer-heart {
   display: inline-flex;
   align-items: center;
-  color: #EC4899;
+  color: #ec4899;
   filter: drop-shadow(0 0 8px rgba(236, 72, 153, 0.4));
 }
 

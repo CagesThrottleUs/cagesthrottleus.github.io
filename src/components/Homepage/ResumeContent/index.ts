@@ -11,4 +11,3 @@ export type {
   ResumeContentConfig,
 } from "./types";
 export { resumeData } from "./resumeData.tsx";
-

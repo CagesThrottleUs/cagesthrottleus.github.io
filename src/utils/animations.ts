@@ -62,4 +62,3 @@ export const quickTransition = {
   duration: 0.3,
   ease: "easeOut",
 };
-

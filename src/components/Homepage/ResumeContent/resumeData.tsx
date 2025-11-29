@@ -40,22 +40,23 @@ export const resumeData: CompanyExperience[] = [
               <Flex direction="column" gap="size-100">
                 <Text>
                   As part of an internal assessment for selection to different
-                  teams, <b>I lead a group project</b> with 6 engineers to
-                  develop a <b>2-way reconciliation engine</b>.
+                  teams, <b>I lead a group project</b> with <b>6 engineers</b>{" "}
+                  to develop a <b>2-way reconciliation engine</b>.
                 </Text>
 
                 <Text>
-                  This solution was end-to-end which allowed users to upload
-                  data from 2 different sources NPCI and CBS. The custom code
-                  validated the data and then performed a 2-way reconciliation
+                  This solution was <b>end-to-end</b> which allowed users to
+                  upload data from <b>2 different sources</b> <b>NPCI</b> and{" "}
+                  <b>CBS</b>. The custom code validated the data and then
+                  performed a <b>2-way reconciliation</b>
                   of the data then generating a final report with the
                   differences.
                 </Text>
 
                 <Text>
-                  The system also managed multiple reconciliation to be done in
-                  parallel along with account management. Achieved a speed of{" "}
-                  <b>1000 transactions per second</b>. Used{" "}
+                  The system also managed <b>multiple reconciliation</b> to be
+                  done in parallel along with <b>account management</b>.
+                  Achieved a speed of <b>1000 transactions per second</b>. Used{" "}
                   <b>Spring Batch, Security, Boot, Oracle Database</b> and
                   <b> Angular</b>.
                 </Text>
@@ -69,17 +70,19 @@ export const resumeData: CompanyExperience[] = [
             description: (
               <Flex direction="column" gap="size-100">
                 <Text>
-                  Previous Implementation of UPI for banks such as HDFC, SBI
-                  etc. had a monolithic architecture. I was part of the product
-                  team responsible for rewriting and migrating the codebase to a
-                  microservices architecture. I rewrote the codebase for central
-                  pin management service that can be imported as a module
-                  directly in - payment, pin change, pin set APIs.
+                  Previous Implementation of <b>UPI</b> for banks such as{" "}
+                  <b>HDFC, SBI</b>
+                  etc. had a <b>monolithic architecture</b>. I was part of the
+                  product team responsible for <b>rewriting and migrating</b>{" "}
+                  the codebase to a<b> microservices architecture</b>. I rewrote
+                  the codebase for <b>central pin management service</b> that
+                  can be imported as a module directly in -{" "}
+                  <b>payment, pin change, pin set APIs</b>.
                 </Text>
                 <Text>
                   The code rewrite was done in <b>Spring Boot</b> and{" "}
                   <b>Java</b> which reduced the codebase size from{" "}
-                  <b>5000 lines</b> to <b>1000 lines</b>.
+                  <b>5000 lines</b> to <b>1000 lines</b> (<b>80% reduction</b>).
                 </Text>
               </Flex>
             ),
@@ -91,8 +94,8 @@ export const resumeData: CompanyExperience[] = [
             description: (
               <Flex direction="column" gap="size-100">
                 <Text>
-                  UPI has an Operational Compliance directive for each
-                  transaction. Thus for each transaction, it has to be
+                  <b>UPI</b> has an <b>Operational Compliance</b> directive for
+                  each transaction. Thus for each transaction, it has to be
                   automatically understood which rules would apply and which
                   would not.
                 </Text>
@@ -104,22 +107,24 @@ export const resumeData: CompanyExperience[] = [
                     average or less than average load
                   </b>{" "}
                   and <b>anywhere between 1s to 5s on day with high load</b>.
-                  This is because to apply the rules, we needed last 24 hours of
-                  data for each transaction.
+                  This is because to apply the rules, we needed{" "}
+                  <b>last 24 hours</b> of data for each transaction.
                 </Text>
                 <Text>
-                  I was part of team of 4 engineers who rewrote the algorithm
-                  and made it a microservice that achieved <b>1ms to 2ms</b> to
-                  complete per transaction on day with average or less than
-                  average load and <b>100ms to 500ms</b> on day with high load.
+                  I was part of team of <b>4 engineers</b> who{" "}
+                  <b>rewrote the algorithm</b>
+                  and made it a <b>microservice</b> that achieved{" "}
+                  <b>1ms to 2ms</b> to complete per transaction on day with
+                  average or less than average load and <b>100ms to 500ms</b> on
+                  day with high load.
                 </Text>
                 <Text>
                   This improved performance{" "}
                   <b>improve the overall transaction latency by 60%</b>. This
                   was achieved using{" "}
                   <b>Spring Boot, Aerospike Database and Java</b>. Further
-                  improvements on Garbage Collection allowed us to achieve even
-                  better performance.
+                  improvements on <b>Garbage Collection</b> allowed us to
+                  achieve even better performance.
                 </Text>
               </Flex>
             ),
@@ -132,23 +137,23 @@ export const resumeData: CompanyExperience[] = [
               <Flex direction="column" gap="size-100">
                 <Text>
                   To achieve speed throughout the lifecycle of transaction,
-                  multiple microservices used Aerospike as their database. To
-                  persistently store the data, microservices were required to
-                  write to DB like Oracle as well as store the changes made in
-                  Aerospike.
+                  multiple microservices used <b>Aerospike</b> as their
+                  database. To persistently store the data, microservices were
+                  required to write to DB like <b>Oracle</b> as well as store
+                  the changes made in Aerospike.
                 </Text>
                 <Text>
-                  Using native capability of Aerospike to post changes made to a
-                  table such as insert, update, delete to a Kafka topic. I
-                  developed a custom Kafka consumer to consume the changes and
-                  store them in Cassandra.
+                  Using native capability of <b>Aerospike</b> to post changes
+                  made to a table such as <b>insert, update, delete</b> to a{" "}
+                  <b>Kafka topic</b>. I developed a <b>custom Kafka consumer</b>{" "}
+                  to consume the changes and store them in <b>Cassandra</b>.
                 </Text>
                 <Text>
                   This allowed us to achieve a speed of{" "}
                   <b>10000 transactions per second</b>. The greatest challenge
-                  here to solve was to ensure both parallel processing of
-                  changes and changes made to same record are not lost
-                  (synchronization).
+                  here to solve was to ensure both <b>parallel processing</b> of
+                  changes and changes made to same record are not lost (
+                  <b>synchronization</b>).
                 </Text>
               </Flex>
             ),
@@ -160,27 +165,30 @@ export const resumeData: CompanyExperience[] = [
             description: (
               <Flex direction="column" gap="size-100">
                 <Text>
-                  All Database that used to store account numbers of bank must
-                  have the account numbers encrypted. As with time RBI directs
-                  all banks to update the encryption algorithms within a given
-                  time frame.
+                  All Database that used to store <b>account numbers</b> of bank
+                  must have the account numbers <b>encrypted</b>. As with time{" "}
+                  <b>RBI</b> directs all banks to update the{" "}
+                  <b>encryption algorithms</b> within a given time frame.
                 </Text>
                 <Text>
-                  Thus the challenge here becomes that we have a source Database
-                  and a target Database and we need to migrate the data from
-                  source to target while changing the encryption algorithm and
-                  keeping in mind both data integrity and performance while also
+                  Thus the challenge here becomes that we have a{" "}
+                  <b>source Database</b>
+                  and a <b>target Database</b> and we need to migrate the data
+                  from source to target while{" "}
+                  <b>changing the encryption algorithm</b> and keeping in mind
+                  both <b>data integrity</b> and <b>performance</b> while also
                   handling the various different tables that exist in the
                   database.
                 </Text>
                 <Text>
-                  I developed a custom migration tool that receives the
+                  I developed a <b>custom migration tool</b> that receives the
                   encryption keys, algorithm and table names and then migrates
                   the data from source to target. The tool was created such that
-                  it utilized restartability and idempotency to ensure that the
-                  data is migrated correctly. While it was also designed to be
-                  completely extensible to handle any new tables that are added
-                  in the future as well as the encryption algorithm changes.
+                  it utilized <b>restartability</b> and <b>idempotency</b> to
+                  ensure that the data is migrated correctly. While it was also
+                  designed to be completely <b>extensible</b> to handle any new
+                  tables that are added in the future as well as the encryption
+                  algorithm changes.
                 </Text>
                 <Text>
                   Tool when tested on sample data of{" "}
@@ -214,25 +222,27 @@ export const resumeData: CompanyExperience[] = [
             description: (
               <Flex direction="column" gap="size-100">
                 <Text>
-                  Started as a Software Engineer in Adobe Systems India in Cloud
-                  Security Team to pump out Secure OS by default for all the
-                  servers in the cloud.
+                  Started as a <b>Software Engineer</b> in{" "}
+                  <b>Adobe Systems India</b> in <b>Cloud Security Team</b> to
+                  pump out <b>Secure OS</b> by default for all the servers in
+                  the cloud.
                 </Text>
                 <Text>
-                  To harden our images we use a tool called as Hardener that
-                  hardens the images by applying security updates and CIS Level
-                  1 Benchmarks. It also installs the several Adobe Mandated
-                  packages like EDR etc.
+                  To harden our images we use a tool called as <b>Hardener</b>{" "}
+                  that hardens the images by applying <b>security updates</b>{" "}
+                  and <b>CIS Level 1 Benchmarks</b>. It also installs the
+                  several <b>Adobe Mandated packages</b> like <b>EDR</b> etc.
                 </Text>
                 <Text>
-                  The biggest challenge here is to develop hardeners for new
-                  Operating Systems from scratch, even when similar OSes are
-                  already supported.
+                  The biggest challenge here is to develop hardeners for{" "}
+                  <b>new Operating Systems from scratch</b>, even when similar
+                  OSes are already supported.
                 </Text>
                 <Text>
                   I developed a custom <b>Python</b> automation tool that
-                  reduces the time taken from <b>14 days to 3 days</b>, by
-                  reducing the grunt work of implementing similar CIS Checks.
+                  reduces the time taken from <b>14 days to 3 days</b> (
+                  <b>78% reduction</b>), by reducing the grunt work of
+                  implementing similar <b>CIS Checks</b>.
                 </Text>
               </Flex>
             ),
@@ -244,31 +254,32 @@ export const resumeData: CompanyExperience[] = [
             description: (
               <Flex direction="column" gap="size-100">
                 <Text>
-                  Similar to Hardener, we also provide cloud Images directly for
-                  teams to use and also give them customization options for our
-                  secured OSes. A new flavor has to registered in many scattered
+                  Similar to <b>Hardener</b>, we also provide{" "}
+                  <b>cloud Images</b> directly for teams to use and also give
+                  them <b>customization options</b> for our secured OSes. A{" "}
+                  <b>new flavor</b> has to registered in many scattered
                   configurations.
                 </Text>
                 <Text>
-                  The challenge comes in the total developer time taken to
-                  register a new flavor in grunt work. A flavor can be easily
-                  created from a similar flavor by just changing several
-                  datapoints and copy several configurations and git
-                  repositories.
+                  The challenge comes in the total <b>developer time</b> taken
+                  to register a new flavor in <b>grunt work</b>. A flavor can be
+                  easily created from a similar flavor by just changing several
+                  datapoints and copy several <b>configurations</b> and{" "}
+                  <b>git repositories</b>.
                 </Text>
                 <Text>
                   Before even starting to release the new flavor and debugging
-                  it a developer has to spend over 5 days just to register the
-                  new flavor. For this challenge I used{" "}
+                  it a developer has to spend over <b>5 days</b> just to
+                  register the new flavor. For this challenge I used{" "}
                   <b>Python, Jenkinsfile</b> and <b>Groovy</b> to automate the
                   process.
                 </Text>
                 <Text>
-                  The developed solution increased operational excellence by
-                  reducing the time taken from <b>5 days to 10 minutes</b>. It
-                  would do the entire process of registering a new flavor in
-                  less than 10 minutes and sending an email to developers for
-                  the same.
+                  The developed solution increased <b>operational excellence</b>{" "}
+                  by reducing the time taken from <b>5 days to 10 minutes</b> (
+                  <b>99.86% reduction</b>). It would do the entire process of
+                  registering a new flavor in less than <b>10 minutes</b> and
+                  sending an <b>email</b> to developers for the same.
                 </Text>
               </Flex>
             ),
@@ -280,22 +291,24 @@ export const resumeData: CompanyExperience[] = [
             description: (
               <Flex direction="column" gap="size-100">
                 <Text>
-                  With time we start to see vulnerabilites in our base OS
-                  images. However product teams receives tickets to fix the
-                  vulnerabilities in their own images which actually should be
-                  fixed in the base OS images.
+                  With time we start to see <b>vulnerabilites</b> in our{" "}
+                  <b>base OS images</b>. However product teams receives tickets
+                  to fix the vulnerabilities in their own images which actually
+                  should be fixed in the base OS images.
                 </Text>
                 <Text>
                   Thus as part of longer project to address this, I was part of
-                  team that was responsible for providing API and WebInterface
+                  team that was responsible for providing <b>API</b> and{" "}
+                  <b>WebInterface</b>
                   to show these vulnerabilites to the teams.
                 </Text>
                 <Text>
-                  The developed API and WebInterface allowed teams to see the
-                  vulnerabilities in their own images and also provided a way
-                  for product teams to understand what are their
-                  responsibilities in fixing the vulnerabilities. Used Angular
-                  and Java for the same.
+                  The developed <b>API and WebInterface</b> allowed teams to see
+                  the vulnerabilities in their own images and also provided a
+                  way for product teams to understand what are their
+                  responsibilities in fixing the vulnerabilities. Used{" "}
+                  <b>Angular</b>
+                  and <b>Java</b> for the same.
                 </Text>
               </Flex>
             ),
@@ -307,13 +320,15 @@ export const resumeData: CompanyExperience[] = [
             description: (
               <Flex direction="column" gap="size-100">
                 <Text>
-                  As part of Release Engineering team, I was responsible for
-                  building a custom CI/CD pipeline for our images for all
-                  flavors.
+                  As part of <b>Release Engineering team</b>, I was responsible
+                  for building a <b>custom CI/CD pipeline</b> for our images for
+                  all flavors.
                 </Text>
                 <Text>
-                  I spent sprints on releasing new flavors and fixing bugs in
-                  the existing flavors.
+                  I spent sprints on <b>releasing new flavors</b> and{" "}
+                  <b>fixing bugs</b> in the existing flavors. I managed{" "}
+                  <b>60+ flavors</b>, with a near{" "}
+                  <b>95% success rate on delivery of all flavors</b>.
                 </Text>
               </Flex>
             ),
@@ -325,16 +340,19 @@ export const resumeData: CompanyExperience[] = [
             description: (
               <Flex direction="column" gap="size-100">
                 <Text>
-                  The previous solution to develop, distribute and manage secure
-                  OS images was prone to failure and had a focus on imperative
-                  over declarative definition. This reduces maintainability and
-                  scalability.
+                  The previous solution to <b>develop, distribute and manage</b>{" "}
+                  secure OS images was prone to failure and had a focus on{" "}
+                  <b>imperative over declarative</b> definition. This reduces{" "}
+                  <b>maintainability</b> and
+                  <b> scalability</b>.
                 </Text>
                 <Text>
-                  As part of the new solution, I was responsible for developing
-                  WebService/UI to manage the images and the flavors as well as
-                  Distribution solution and lifecycle management solution of the
-                  images.
+                  As part of the <b>new solution</b>, I was responsible for
+                  developing
+                  <b> WebService/UI</b> to manage the images and the flavors as
+                  well as
+                  <b> Distribution solution</b> and{" "}
+                  <b>lifecycle management solution</b> of the images.
                 </Text>
                 <Text>
                   The greatest challenge here was to immediately start and show
@@ -343,10 +361,16 @@ export const resumeData: CompanyExperience[] = [
                   Distribution and Lifecycle management solutions.
                 </Text>
                 <Text>
-                  Here I recieved full independence to build solutions that
-                  would scale well and be easily maintainable. I received
-                  valuable feedback directly from customers and teams for the
-                  same.
+                  Here I recieved <b>full independence</b> to build solutions
+                  that would scale well and be easily maintainable. I received
+                  <b> valuable feedback directly from customers</b> and teams
+                  for the same.
+                </Text>
+                {/* TODO: Add metrics - number of teams using, deployment frequency, system uptime */}
+                <Text>
+                  Currently <b>10k instances</b> are online on the new images
+                  built from this platform. With over <b>5 teams</b> onboarded
+                  to use the new platform.
                 </Text>
               </Flex>
             ),

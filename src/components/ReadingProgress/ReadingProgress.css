@@ -17,9 +17,9 @@
 
 .reading-progress-bar {
   height: 100%;
-  background: linear-gradient(90deg, #8B5CF6 0%, #EC4899 50%, #F59E0B 100%);
+  background: linear-gradient(90deg, #8b5cf6 0%, #ec4899 50%, #f59e0b 100%);
   transform-origin: 0%;
-  box-shadow: 
+  box-shadow:
     0 0 15px rgba(139, 92, 246, 0.8),
     0 0 30px rgba(236, 72, 153, 0.6),
     0 0 50px rgba(245, 158, 11, 0.4);
@@ -27,14 +27,15 @@
 }
 
 @keyframes neon-pulse {
-  0%, 100% {
-    box-shadow: 
+  0%,
+  100% {
+    box-shadow:
       0 0 15px rgba(139, 92, 246, 0.8),
       0 0 30px rgba(236, 72, 153, 0.6),
       0 0 50px rgba(245, 158, 11, 0.4);
   }
   50% {
-    box-shadow: 
+    box-shadow:
       0 0 20px rgba(139, 92, 246, 1),
       0 0 40px rgba(236, 72, 153, 0.8),
       0 0 60px rgba(245, 158, 11, 0.6);
@@ -43,15 +44,15 @@
 
 /* Pulse animation when near completion */
 @keyframes progress-pulse {
-  0%, 100% {
-    box-shadow: 
+  0%,
+  100% {
+    box-shadow:
       0 0 10px rgba(139, 92, 246, 0.6),
       0 0 20px rgba(236, 72, 153, 0.4);
   }
   50% {
-    box-shadow: 
+    box-shadow:
       0 0 15px rgba(139, 92, 246, 0.8),
       0 0 30px rgba(236, 72, 153, 0.6);
   }
 }
-

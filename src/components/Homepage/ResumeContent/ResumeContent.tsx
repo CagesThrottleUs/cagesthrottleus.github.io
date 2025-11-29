@@ -1,6 +1,6 @@
 import { motion, useInView } from "framer-motion";
 import { Calendar, Award, Code, Zap } from "lucide-react";
-import { useState , useRef } from "react";
+import { useState, useRef } from "react";
 import { Heading, Text, Separator } from "react-aria-components";
 
 import type {

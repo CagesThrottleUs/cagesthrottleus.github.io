@@ -1,4 +1,4 @@
-import './CyberpunkScanlines.css';
+import "./CyberpunkScanlines.css";
 
 /**
  * Cyberpunk Scanlines Effect
@@ -13,4 +13,3 @@ const CyberpunkScanlines = () => {
 };
 
 export default CyberpunkScanlines;
-
