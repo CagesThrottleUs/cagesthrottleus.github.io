@@ -1,6 +1,6 @@
-import { motion, useInView } from "framer-motion";
+import { motion } from "framer-motion";
 import { Calendar, Award, Code, Zap } from "lucide-react";
-import { useState, useRef } from "react";
+import { useState } from "react";
 import { Heading, Text, Separator } from "react-aria-components";
 
 import type {
@@ -57,8 +57,6 @@ const WorkItemCard = ({
   companyName,
 }: WorkItemCardProps) => {
   const [isHovered, setIsHovered] = useState(false);
-  const cardRef = useRef(null);
-  const isInView = useInView(cardRef, { once: true, amount: 0.3 });
 
   const handleMouseEnter = () => {
     setIsHovered(true);
@@ -69,13 +67,11 @@ const WorkItemCard = ({
 
   return (
     <motion.div
-      ref={cardRef}
       className="work-item-wrapper no-cursor-track"
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
-      initial={{ opacity: 0, y: 30 }}
-      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-      transition={{ duration: 0.5, ease: "easeOut" }}
+      initial={{ opacity: 1, y: 0 }}
+      animate={{ opacity: 1, y: 0 }}
       style={
         {
           "--hover-scale": hoverScale.toString(),
@@ -150,16 +146,11 @@ const PositionSection = ({
   hoverScale,
   animationDuration,
 }: PositionSectionProps) => {
-  const sectionRef = useRef(null);
-  const isInView = useInView(sectionRef, { once: true, amount: 0.2 });
-
   return (
     <motion.div
-      ref={sectionRef}
       className="position-section"
-      initial={{ opacity: 0, x: -30 }}
-      animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -30 }}
-      transition={{ duration: 0.6 }}
+      initial={{ opacity: 1, x: 0 }}
+      animate={{ opacity: 1, x: 0 }}
     >
       <div className="position-header">
         <Heading level={3} className="position-title">
@@ -173,16 +164,11 @@ const PositionSection = ({
       </div>
 
       <div className="work-items-container">
-        {position.workItems.map((workItem, index) => (
+        {position.workItems.map((workItem) => (
           <motion.div
             key={workItem.id}
-            initial={{ opacity: 0, y: 20 }}
-            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-            transition={{
-              duration: 0.5,
-              delay: index * 0.1,
-              ease: "easeOut",
-            }}
+            initial={{ opacity: 1, y: 0 }}
+            animate={{ opacity: 1, y: 0 }}
           >
             <WorkItemCard
               item={workItem}
@@ -212,25 +198,17 @@ const CompanySection = ({
   hoverScale,
   animationDuration,
 }: CompanySectionProps) => {
-  const companySectionRef = useRef(null);
-  const isInView = useInView(companySectionRef, { once: true, amount: 0.1 });
-
   return (
     <motion.section
-      ref={companySectionRef}
       className="company-section"
-      initial={{ opacity: 0, scale: 0.95 }}
-      animate={
-        isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.95 }
-      }
-      transition={{ duration: 0.7, ease: "easeOut" }}
+      initial={{ opacity: 1, scale: 1 }}
+      animate={{ opacity: 1, scale: 1 }}
     >
       {/* Company heading on background (not in card) */}
       <motion.div
         className="company-header"
-        initial={{ opacity: 0, y: -20 }}
-        animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: -20 }}
-        transition={{ duration: 0.6, delay: 0.2 }}
+        initial={{ opacity: 1, y: 0 }}
+        animate={{ opacity: 1, y: 0 }}
       >
         <Heading level={1} className="company-name">
           <Award className="company-icon" size={28} />
@@ -240,9 +218,8 @@ const CompanySection = ({
 
       {/* Timeline marker (vertical line for entire company section) */}
       <motion.div
-        initial={{ scaleY: 0 }}
-        animate={isInView ? { scaleY: 1 } : { scaleY: 0 }}
-        transition={{ duration: 1, delay: 0.3, ease: "easeOut" }}
+        initial={{ scaleY: 1 }}
+        animate={{ scaleY: 1 }}
         style={{ originY: 0 }}
       >
         <Separator orientation="vertical" className="timeline-marker" />
