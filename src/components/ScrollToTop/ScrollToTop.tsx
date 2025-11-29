@@ -1,11 +1,12 @@
-import { motion, AnimatePresence } from "framer-motion";
-import { ArrowUp } from "lucide-react";
+import { ChevronUp } from "lucide-react";
 import { useState, useEffect } from "react";
+
 import "./ScrollToTop.css";
 
 /**
- * Scroll to Top Button
- * Appears when user scrolls down, smooth scroll back to top
+ * Cold War Era File Cabinet - Return to Top
+ * Styled as vintage file cabinet tab from intelligence archives
+ * Features classified filing system aesthetic with document reference
  */
 const ScrollToTop = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -33,24 +34,23 @@ const ScrollToTop = () => {
     });
   };
 
+  if (!isVisible) return null;
+
   return (
-    <AnimatePresence>
-      {isVisible && (
-        <motion.button
-          className="scroll-to-top"
-          onClick={scrollToTop}
-          initial={{ opacity: 0, scale: 0.5, y: 20 }}
-          animate={{ opacity: 1, scale: 1, y: 0 }}
-          exit={{ opacity: 0, scale: 0.5, y: 20 }}
-          whileHover={{ scale: 1.1, y: -2 }}
-          whileTap={{ scale: 0.95 }}
-          transition={{ duration: 0.3, ease: "easeOut" }}
-          aria-label="Scroll to top"
-        >
-          <ArrowUp size={20} strokeWidth={2.5} />
-        </motion.button>
-      )}
-    </AnimatePresence>
+    <button
+      className="file-tab-scroll"
+      onClick={scrollToTop}
+      aria-label="Return to top of document"
+    >
+      <div className="file-tab-content">
+        <ChevronUp className="file-tab-marker" size={20} />
+        <div className="file-tab-text">
+          <span className="file-tab-label">RETURN TO</span>
+          <span className="file-tab-action">TOP</span>
+        </div>
+      </div>
+      <div className="file-tab-stamp">FILE</div>
+    </button>
   );
 };
 

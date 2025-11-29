@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 
 import CursorTracker from "./CursorTracker";
-import { fireEvent, render } from "../../test/testUtils";
+import { fireEvent, render, waitFor } from "../../test/testUtils";
 
 describe("CursorTracker", () => {
   it("renders cursor tracker element", () => {
@@ -10,28 +10,34 @@ describe("CursorTracker", () => {
     expect(tracker).toBeInTheDocument();
   });
 
-  it("updates position on mouse move", () => {
+  it("updates position on mouse move", async () => {
     const { container } = render(<CursorTracker />);
     const tracker = document.querySelector(".cursor-tracker") as HTMLElement;
 
     // Fire event on a real DOM element
     fireEvent.mouseMove(container, { clientX: 100, clientY: 200 });
 
-    expect(tracker.style.left).toBe("100px");
-    expect(tracker.style.top).toBe("200px");
+    // Wait for requestAnimationFrame to execute
+    await waitFor(() => {
+      expect(tracker.style.getPropertyValue("--cursor-x")).toBe("100px");
+      expect(tracker.style.getPropertyValue("--cursor-y")).toBe("200px");
+    });
   });
 
-  it("remains visible by default", () => {
+  it("remains visible by default", async () => {
     const { container } = render(<CursorTracker />);
     const tracker = document.querySelector(".cursor-tracker") as HTMLElement;
 
     // Trigger a mouse move on regular element
     fireEvent.mouseMove(container, { clientX: 50, clientY: 50 });
 
-    expect(tracker.style.opacity).toBe("1");
+    // Wait for requestAnimationFrame to execute
+    await waitFor(() => {
+      expect(tracker.style.opacity).toBe("1");
+    });
   });
 
-  it("hides when hovering over no-cursor-track elements", () => {
+  it("hides when hovering over no-cursor-track elements", async () => {
     const { container } = render(
       <div>
         <CursorTracker />
@@ -48,10 +54,13 @@ describe("CursorTracker", () => {
 
     fireEvent.mouseMove(noTrackElement, { clientX: 50, clientY: 50 });
 
-    expect(tracker.style.opacity).toBe("0");
+    // Wait for requestAnimationFrame to execute
+    await waitFor(() => {
+      expect(tracker.style.opacity).toBe("0");
+    });
   });
 
-  it("shows cursor when not over no-cursor-track elements", () => {
+  it("shows cursor when not over no-cursor-track elements", async () => {
     const { container } = render(
       <div>
         <CursorTracker />
@@ -66,6 +75,26 @@ describe("CursorTracker", () => {
 
     fireEvent.mouseMove(regularElement, { clientX: 150, clientY: 150 });
 
-    expect(tracker.style.opacity).toBe("1");
+    // Wait for requestAnimationFrame to execute
+    await waitFor(() => {
+      expect(tracker.style.opacity).toBe("1");
+    });
+  });
+
+  it("cancels previous animation frame on rapid mouse moves", async () => {
+    const { container } = render(<CursorTracker />);
+    const tracker = document.querySelector(".cursor-tracker") as HTMLElement;
+
+    // Fire multiple mouse move events rapidly to trigger cancelAnimationFrame
+    fireEvent.mouseMove(container, { clientX: 10, clientY: 10 });
+    fireEvent.mouseMove(container, { clientX: 20, clientY: 20 });
+    fireEvent.mouseMove(container, { clientX: 30, clientY: 30 });
+    fireEvent.mouseMove(container, { clientX: 40, clientY: 40 });
+
+    // Wait for the last requestAnimationFrame to execute
+    await waitFor(() => {
+      expect(tracker.style.getPropertyValue("--cursor-x")).toBe("40px");
+      expect(tracker.style.getPropertyValue("--cursor-y")).toBe("40px");
+    });
   });
 });

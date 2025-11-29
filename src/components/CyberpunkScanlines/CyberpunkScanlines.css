@@ -10,7 +10,7 @@
   height: 100%;
   pointer-events: none;
   z-index: 9998;
-  opacity: 0.03;
+  opacity: var(--opacity-5);
 }
 
 .scanline-overlay {
@@ -25,21 +25,23 @@
     rgba(0, 0, 0, 0.15) 3px
   );
   animation: scanlines 8s linear infinite;
+  /* GPU acceleration for transform */
+  will-change: transform;
 }
 
 @keyframes scanlines {
   0% {
-    transform: translateY(0);
+    transform: translate3d(0, 0, 0);
   }
   100% {
-    transform: translateY(10px);
+    transform: translate3d(0, 10px, 0);
   }
 }
 
 /* Reduce scanline visibility on mobile for performance */
 @media (max-width: 48rem) {
   .cyberpunk-scanlines {
-    opacity: 0.015;
+    opacity: 0.015; /* Between --opacity-5 and --opacity-10 for performance */
   }
 }
 

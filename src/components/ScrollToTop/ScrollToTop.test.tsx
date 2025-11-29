@@ -3,14 +3,16 @@ import { describe, expect, it, vi } from "vitest";
 import ScrollToTop from "./ScrollToTop";
 import { fireEvent, render, screen } from "../../test/testUtils";
 
-describe("ScrollToTop", () => {
+describe("ScrollToTop - File Cabinet Theme", () => {
   it("does not render button initially", () => {
     render(<ScrollToTop />);
-    const button = screen.queryByRole("button", { name: /scroll to top/i });
+    const button = screen.queryByRole("button", {
+      name: /return to top of document/i,
+    });
     expect(button).not.toBeInTheDocument();
   });
 
-  it("shows button when scrolled down more than 400px", () => {
+  it("shows file tab button when scrolled down more than 400px", () => {
     render(<ScrollToTop />);
 
     // Mock scrollY
@@ -21,8 +23,35 @@ describe("ScrollToTop", () => {
 
     fireEvent.scroll(window);
 
-    const button = screen.getByRole("button", { name: /scroll to top/i });
+    const button = screen.getByRole("button", {
+      name: /return to top of document/i,
+    });
     expect(button).toBeInTheDocument();
+  });
+
+  it("renders file tab with correct text", () => {
+    render(<ScrollToTop />);
+
+    Object.defineProperty(window, "scrollY", {
+      writable: true,
+      value: 500,
+    });
+    fireEvent.scroll(window);
+
+    expect(screen.getByText("RETURN TO")).toBeInTheDocument();
+    expect(screen.getByText("TOP")).toBeInTheDocument();
+  });
+
+  it("renders file stamp", () => {
+    render(<ScrollToTop />);
+
+    Object.defineProperty(window, "scrollY", {
+      writable: true,
+      value: 500,
+    });
+    fireEvent.scroll(window);
+
+    expect(screen.getByText("FILE")).toBeInTheDocument();
   });
 
   it("hides button when scrolled to top", async () => {
@@ -35,7 +64,9 @@ describe("ScrollToTop", () => {
     });
     fireEvent.scroll(window);
 
-    const button = screen.getByRole("button", { name: /scroll to top/i });
+    const button = screen.getByRole("button", {
+      name: /return to top of document/i,
+    });
     expect(button).toBeInTheDocument();
 
     await new Promise((resolve) => setTimeout(resolve, 10));
@@ -47,11 +78,11 @@ describe("ScrollToTop", () => {
     });
     fireEvent.scroll(window);
 
-    // Button should still exist during exit animation, but check scrollY is handled
+    // Check scrollY is handled
     expect(window.scrollY).toBe(0);
   });
 
-  it("scrolls to top when button is clicked", () => {
+  it("scrolls to top when file tab is clicked", () => {
     const scrollToMock = vi.fn();
     window.scrollTo = scrollToMock;
 
@@ -64,12 +95,28 @@ describe("ScrollToTop", () => {
     });
     fireEvent.scroll(window);
 
-    const button = screen.getByRole("button", { name: /scroll to top/i });
+    const button = screen.getByRole("button", {
+      name: /return to top of document/i,
+    });
     fireEvent.click(button);
 
     expect(scrollToMock).toHaveBeenCalledWith({
       top: 0,
       behavior: "smooth",
     });
+  });
+
+  it("has correct file tab structure", () => {
+    render(<ScrollToTop />);
+
+    Object.defineProperty(window, "scrollY", {
+      writable: true,
+      value: 500,
+    });
+    fireEvent.scroll(window);
+
+    expect(document.querySelector(".file-tab-scroll")).toBeInTheDocument();
+    expect(document.querySelector(".file-tab-content")).toBeInTheDocument();
+    expect(document.querySelector(".file-tab-marker")).toBeInTheDocument();
   });
 });

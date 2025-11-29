@@ -1,76 +1,192 @@
-/**
- * Scroll to Top Button Styles
- */
-.scroll-to-top {
+/* ============================================
+ * SCROLL TO TOP - FILE CABINET TAB
+ * Cold War era file cabinet drawer tab aesthetic
+ * Vintage filing system with classified markings
+ * ============================================ */
+
+.file-tab-scroll {
   position: fixed;
-  bottom: 2rem;
-  right: 2rem;
-  width: 3.5rem;
-  height: 3.5rem;
-  border-radius: 50%;
-  border: 2px solid rgba(139, 92, 246, 0.6);
-  background: linear-gradient(
-    135deg,
-    rgba(139, 92, 246, 0.25) 0%,
-    rgba(59, 130, 246, 0.25) 100%
-  );
-  color: white;
+  bottom: var(--spacing-2xl);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+
+  /* File Tab Shape */
+  width: 120px;
+  height: auto;
+  padding: var(--spacing-md) var(--spacing-lg);
+
+  /* Styling */
+  background: var(--gradient-button);
+  border: 3px solid var(--color-border-primary);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-scroll-button);
+  backdrop-filter: var(--backdrop-blur-sm);
+
+  /* Typography */
+  font-family: var(--font-mono);
+  color: var(--color-text-primary);
+
+  /* Interaction */
   cursor: pointer;
+  transition: all 0.3s ease;
+  user-select: none;
+
+  /* Tab-like appearance */
+  border-left-width: 5px;
+  border-left-color: var(--classified-500);
+}
+
+.file-tab-scroll:hover {
+  background: var(--gradient-button-hover);
+  border-left-color: var(--classified-400);
+  box-shadow: var(--shadow-scroll-button-hover);
+  transform: translateX(-50%) translateY(-4px);
+}
+
+.file-tab-scroll:active {
+  transform: translateX(-50%) translateY(-2px);
+  box-shadow: var(--shadow-card);
+}
+
+.file-tab-scroll:focus-visible {
+  outline: 3px solid var(--color-border-accent);
+  outline-offset: 3px;
+}
+
+/* ============================================
+ * FILE TAB CONTENT
+ * ============================================ */
+
+.file-tab-content {
   display: flex;
   align-items: center;
-  justify-content: center;
-  box-shadow:
-    0 0 20px rgba(139, 92, 246, 0.5),
-    0 0 40px rgba(139, 92, 246, 0.3),
-    0 8px 32px rgba(0, 0, 0, 0.4),
-    inset 0 0 20px rgba(139, 92, 246, 0.2);
-  backdrop-filter: blur(10px);
-  z-index: 1000;
-  transition: all 0.3s ease;
+  gap: var(--spacing-sm);
+  margin-bottom: var(--spacing-xs);
 }
 
-.scroll-to-top:hover {
-  background: linear-gradient(
-    135deg,
-    rgba(139, 92, 246, 0.4) 0%,
-    rgba(59, 130, 246, 0.4) 100%
-  );
-  border-color: rgba(139, 92, 246, 1);
-  box-shadow:
-    0 0 30px rgba(139, 92, 246, 0.8),
-    0 0 60px rgba(139, 92, 246, 0.5),
-    0 0 100px rgba(236, 72, 153, 0.3),
-    0 12px 40px rgba(0, 0, 0, 0.4),
-    inset 0 0 30px rgba(139, 92, 246, 0.3);
+.file-tab-marker {
+  color: var(--classified-500);
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-bold);
+  line-height: 1;
+  text-shadow: var(--text-shadow-glow-primary);
 }
 
-.scroll-to-top:active {
-  box-shadow:
-    0 0 0 2px rgba(139, 92, 246, 0.4),
-    0 4px 16px rgba(139, 92, 246, 0.4),
-    0 2px 8px rgba(0, 0, 0, 0.3);
+.file-tab-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  text-align: left;
 }
 
-.scroll-to-top:focus-visible {
-  outline: 3px solid rgba(139, 92, 246, 0.6);
-  outline-offset: 4px;
+.file-tab-label {
+  font-size: 0.625rem;
+  color: var(--color-text-muted);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-weight: var(--font-weight-medium);
 }
 
-/* Mobile adjustments */
-@media (max-width: 48rem) {
-  .scroll-to-top {
-    bottom: 1.5rem;
-    right: 1.5rem;
-    width: 3rem;
-    height: 3rem;
+.file-tab-action {
+  font-size: var(--font-size-base);
+  color: var(--terminal-500);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-weight: var(--font-weight-bold);
+  text-shadow: var(--text-shadow-glow-accent);
+}
+
+/* ============================================
+ * FILE TAB STAMP
+ * ============================================ */
+
+.file-tab-stamp {
+  position: absolute;
+  bottom: 4px;
+  right: 8px;
+  font-size: 0.5rem;
+  color: var(--color-border-primary);
+  letter-spacing: 0.15em;
+  font-weight: var(--font-weight-bold);
+  opacity: 0.6;
+  transform: rotate(-90deg);
+  transform-origin: bottom right;
+}
+
+/* ============================================
+ * RESPONSIVE DESIGN
+ * ============================================ */
+
+@media (max-width: 768px) {
+  .file-tab-scroll {
+    bottom: var(--spacing-xl);
+    width: 100px;
+    padding: var(--spacing-sm) var(--spacing-md);
+  }
+
+  .file-tab-marker {
+    font-size: var(--font-size-xl);
+  }
+
+  .file-tab-label {
+    font-size: 0.5rem;
+  }
+
+  .file-tab-action {
+    font-size: var(--font-size-sm);
+  }
+
+  .file-tab-stamp {
+    font-size: 0.4375rem;
   }
 }
 
-@media (max-width: 30rem) {
-  .scroll-to-top {
-    bottom: 1rem;
-    right: 1rem;
-    width: 2.75rem;
-    height: 2.75rem;
+@media (max-width: 480px) {
+  .file-tab-scroll {
+    bottom: var(--spacing-lg);
+    width: 80px;
+    padding: var(--spacing-xs) var(--spacing-sm);
+  }
+
+  .file-tab-content {
+    gap: var(--spacing-xs);
+  }
+
+  .file-tab-marker {
+    font-size: var(--font-size-lg);
+  }
+
+  .file-tab-label {
+    font-size: 0.4375rem;
+  }
+
+  .file-tab-action {
+    font-size: 0.625rem;
+  }
+
+  .file-tab-stamp {
+    display: none; /* Hide stamp on very small screens */
+  }
+}
+
+/* ============================================
+ * ACCESSIBILITY
+ * ============================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  .file-tab-scroll:hover {
+    transform: translateX(-50%);
+  }
+
+  .file-tab-scroll:active {
+    transform: translateX(-50%);
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .file-tab-scroll {
+    border-width: 4px;
   }
 }

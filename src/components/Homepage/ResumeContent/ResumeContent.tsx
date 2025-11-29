@@ -1,7 +1,4 @@
-import { motion, useInView } from "framer-motion";
-import { Calendar, Award, Code, Zap } from "lucide-react";
-import { useState, useRef } from "react";
-import { Heading, Text, Separator } from "react-aria-components";
+import { Square, Circle } from "lucide-react";
 
 import type {
   ResumeContentConfig,
@@ -12,282 +9,180 @@ import type {
 import "./ResumeContent.css";
 
 /**
- * Formats a date range for display
- * @param startDate - Start date
- * @param endDate - End date (null if current)
- * @returns Formatted string like "Jun 2024 - Present"
+ * Cold War Era Personnel Dossier - Resume Content
+ * Styled as classified intelligence personnel files
+ * Features typed reports, clearance stamps, and redactions
+ */
+
+/**
+ * Formats a date range for classified documents
+ * @param startDate - Mission start date
+ * @param endDate - Mission end date (null if ongoing operation)
+ * @returns Formatted string like "JUN 2024 - PRESENT"
  */
 const formatDateRange = (startDate: Date, endDate: Date | null): string => {
-  const start = startDate.toLocaleDateString("en-US", {
-    month: "short",
-    year: "numeric",
-  });
+  const start = startDate
+    .toLocaleDateString("en-US", {
+      month: "short",
+      year: "numeric",
+    })
+    .toUpperCase();
   const end = endDate
-    ? endDate.toLocaleDateString("en-US", { month: "short", year: "numeric" })
-    : "Present";
+    ? endDate
+        .toLocaleDateString("en-US", { month: "short", year: "numeric" })
+        .toUpperCase()
+    : "PRESENT";
   return `${start} - ${end}`;
 };
 
-/**
- * Formats a date to "Month Year" format for timeline
- * @param date - The date to format
- * @returns Formatted string like "January 2024"
- */
-const formatDate = (date: Date): string => {
-  return date.toLocaleDateString("en-US", { month: "long", year: "numeric" });
-};
-
-interface WorkItemCardProps {
+interface MissionBriefingProps {
   item: WorkItem;
-  hoverScale: number;
-  animationDuration: number;
-  companyLogo: string;
-  companyName: string;
 }
 
 /**
- * Individual work item card with hover effects
- * Enhanced with animations and modern glassmorphism design
+ * Individual mission briefing card (work item)
+ * Styled as typed intelligence report with classification markings
  */
-const WorkItemCard = ({
-  item,
-  hoverScale,
-  animationDuration,
-  companyLogo,
-  companyName,
-}: WorkItemCardProps) => {
-  const [isHovered, setIsHovered] = useState(false);
-  const cardRef = useRef(null);
-  const isInView = useInView(cardRef, { once: true, amount: 0.3 });
-
-  const handleMouseEnter = () => {
-    setIsHovered(true);
-  };
-  const handleMouseLeave = () => {
-    setIsHovered(false);
-  };
-
+const MissionBriefing = ({ item }: MissionBriefingProps) => {
   return (
-    <motion.div
-      ref={cardRef}
-      className="work-item-wrapper no-cursor-track"
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
-      initial={{ opacity: 0, y: 30 }}
-      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-      transition={{ duration: 0.5, ease: "easeOut" }}
-      style={
-        {
-          "--hover-scale": hoverScale.toString(),
-          "--animation-duration": `${animationDuration.toString()}ms`,
-        } as React.CSSProperties
-      }
-    >
-      {/* Timeline info (appears on hover at top of card) */}
-      <motion.div
-        className={`timeline-info ${isHovered ? "visible" : ""}`}
-        initial={false}
-        animate={{ opacity: isHovered ? 1 : 0, x: isHovered ? 0 : -20 }}
-        transition={{ duration: 0.3 }}
-      >
-        <Text className="timeline-date">
-          <Calendar className="date-icon" size={12} />
-          {formatDate(item.startDate)}
-        </Text>
-        <img
-          src={companyLogo}
-          alt={`${companyName} logo`}
-          className="company-logo"
-        />
-      </motion.div>
+    <div className="mission-briefing">
+      <div className="briefing-header">
+        <span className="classification-marking">SECRET</span>
+        <span className="mission-date">
+          {formatDateRange(item.startDate, item.endDate)}
+        </span>
+      </div>
 
-      {/* Main card content */}
-      <motion.div
-        className="work-item-card"
-        whileHover={{ scale: hoverScale }}
-        transition={{ duration: animationDuration / 1000, ease: "easeOut" }}
-      >
-        {/* Gradient border effect */}
-        <div className="card-gradient-border" />
-
-        {/* Shine effect on hover */}
-        <motion.div
-          className="card-shine"
-          animate={{ x: isHovered ? ["0%", "200%"] : "0%" }}
-          transition={{ duration: 0.8, ease: "easeInOut" }}
-        />
-
-        <div className="card-content">
-          <div className="card-header">
-            <Text className="work-date-range">
-              <Calendar className="date-icon" size={14} />
-              {formatDateRange(item.startDate, item.endDate)}
-            </Text>
-            <Zap className="achievement-icon" size={16} />
-          </div>
-          <div className="work-description">{item.description}</div>
+      <div className="briefing-body">
+        <div className="briefing-content">
+          <div className="briefing-text">{item.description}</div>
         </div>
-      </motion.div>
-    </motion.div>
+      </div>
+    </div>
   );
 };
 
-interface PositionSectionProps {
+interface AssignmentRecordProps {
   position: Position;
-  companyLogo: string;
-  companyName: string;
-  hoverScale: number;
-  animationDuration: number;
 }
 
 /**
- * Displays a position with its work items
+ * Assignment record section (position)
+ * Styled as personnel assignment documentation
  */
-const PositionSection = ({
-  position,
-  companyLogo,
-  companyName,
-  hoverScale,
-  animationDuration,
-}: PositionSectionProps) => {
-  const sectionRef = useRef(null);
-  const isInView = useInView(sectionRef, { once: true, amount: 0.2 });
-
+const AssignmentRecord = ({ position }: AssignmentRecordProps) => {
   return (
-    <motion.div
-      ref={sectionRef}
-      className="position-section"
-      initial={{ opacity: 0, x: -30 }}
-      animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -30 }}
-      transition={{ duration: 0.6 }}
-    >
-      <div className="position-header">
-        <Heading level={3} className="position-title">
-          <Code className="position-icon" size={20} />
-          {position.title}
-        </Heading>
-        <Text className="position-date">
-          <Calendar className="date-icon" size={12} />
+    <div className="assignment-record">
+      <div className="assignment-header">
+        <div className="assignment-title-block">
+          <Square className="assignment-marker" size={16} fill="currentColor" />
+          <h3 className="assignment-title">{position.title}</h3>
+        </div>
+        <span className="assignment-duration">
           {formatDateRange(position.startDate, position.endDate)}
-        </Text>
+        </span>
       </div>
 
-      <div className="work-items-container">
-        {position.workItems.map((workItem, index) => (
-          <motion.div
-            key={workItem.id}
-            initial={{ opacity: 0, y: 20 }}
-            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-            transition={{
-              duration: 0.5,
-              delay: index * 0.1,
-              ease: "easeOut",
-            }}
-          >
-            <WorkItemCard
-              item={workItem}
-              hoverScale={hoverScale}
-              animationDuration={animationDuration}
-              companyLogo={companyLogo}
-              companyName={companyName}
-            />
-          </motion.div>
+      <div className="mission-briefings">
+        {position.workItems.map((workItem) => (
+          <MissionBriefing key={workItem.id} item={workItem} />
         ))}
       </div>
-    </motion.div>
+    </div>
   );
 };
 
-interface CompanySectionProps {
+interface PersonnelFileProps {
   company: CompanyExperience;
-  hoverScale: number;
-  animationDuration: number;
 }
 
 /**
- * Displays a company with all its positions
+ * Personnel file section (company)
+ * Styled as classified personnel dossier with file folder tab
  */
-const CompanySection = ({
-  company,
-  hoverScale,
-  animationDuration,
-}: CompanySectionProps) => {
-  const companySectionRef = useRef(null);
-  const isInView = useInView(companySectionRef, { once: true, amount: 0.1 });
-
+const PersonnelFile = ({ company }: PersonnelFileProps) => {
   return (
-    <motion.section
-      ref={companySectionRef}
-      className="company-section"
-      initial={{ opacity: 0, scale: 0.95 }}
-      animate={
-        isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.95 }
-      }
-      transition={{ duration: 0.7, ease: "easeOut" }}
-    >
-      {/* Company heading on background (not in card) */}
-      <motion.div
-        className="company-header"
-        initial={{ opacity: 0, y: -20 }}
-        animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: -20 }}
-        transition={{ duration: 0.6, delay: 0.2 }}
-      >
-        <Heading level={1} className="company-name">
-          <Award className="company-icon" size={28} />
-          {company.company}
-        </Heading>
-      </motion.div>
-
-      {/* Timeline marker (vertical line for entire company section) */}
-      <motion.div
-        initial={{ scaleY: 0 }}
-        animate={isInView ? { scaleY: 1 } : { scaleY: 0 }}
-        transition={{ duration: 1, delay: 0.3, ease: "easeOut" }}
-        style={{ originY: 0 }}
-      >
-        <Separator orientation="vertical" className="timeline-marker" />
-      </motion.div>
-
-      {/* All positions for this company */}
-      <div className="positions-container">
-        {company.positions.map((position) => (
-          <PositionSection
-            key={position.id}
-            position={position}
-            companyLogo={company.logoUrl}
-            companyName={company.company}
-            hoverScale={hoverScale}
-            animationDuration={animationDuration}
-          />
-        ))}
+    <section className="personnel-file">
+      {/* File Folder Tab */}
+      <div className="file-folder-tab">
+        <div className="tab-content">
+          <Circle className="tab-marker" size={12} fill="currentColor" />
+          <h2 className="company-name-tab">{company.company}</h2>
+        </div>
+        <div className="clearance-stamp">AUTHORIZED</div>
       </div>
-    </motion.section>
+
+      {/* File Content */}
+      <div className="file-content">
+        {/* Classification Banner */}
+        <div className="file-classification-banner">
+          <span className="banner-text">
+            PERSONNEL FILE - {company.company.toUpperCase()}
+          </span>
+        </div>
+
+        {/* Company Header with Logo */}
+        <div className="company-header-section">
+          <div className="company-info">
+            <h1 className="company-name">{company.company}</h1>
+            <div className="company-meta">
+              <span className="meta-item">FILE NO: {company.id}</span>
+              <span className="meta-separator">•</span>
+              <span className="meta-item">CLASSIFICATION: SECRET</span>
+            </div>
+          </div>
+          {company.logoUrl && (
+            <img
+              src={company.logoUrl}
+              alt={`${company.company} insignia`}
+              className="company-insignia"
+            />
+          )}
+        </div>
+
+        {/* Timeline Marker */}
+        <div className="file-timeline-marker" />
+
+        {/* All assignments for this company */}
+        <div className="assignments-container">
+          {company.positions.map((position) => (
+            <AssignmentRecord key={position.id} position={position} />
+          ))}
+        </div>
+
+        {/* File Footer */}
+        <div className="file-footer">
+          <span className="footer-text">
+            END OF FILE - AUTHORIZED PERSONNEL ONLY
+          </span>
+        </div>
+      </div>
+    </section>
   );
 };
 
 /**
  * Main ResumeContent component
- * Displays a LinkedIn-style timeline of work experience
- *
- * @param config - Configuration object containing experiences and display options
+ * Displays classified personnel dossier with work history
  *
  * Structure:
- * - Company Name (heading on background)
- *   - Position | Date Range
- *     - Work Item Cards (specific achievements)
+ * - Personnel File (Company)
+ *   - Assignment Record (Position)
+ *     - Mission Briefings (Work Items)
  *
  * Features:
- * - Automatically sorts experiences by most recent position
- * - Scales cards on hover (configurable)
- * - Shows company logo and date on hover (no cursor tracking)
- * - Consistent timeline marker with light color
+ * - Classified document aesthetic
+ * - File folder tabs for companies
+ * - Typed intelligence report style
+ * - Expandable mission briefings
+ * - No animations for static Cold War feel
  */
 const ResumeContent = ({
   experiences,
-  hoverScale = 1.25,
-  animationDuration = 300,
+  hoverScale = 1.05,
+  animationDuration = 200,
 }: ResumeContentConfig) => {
-  // Sort experiences by most recent position end date (or start date if current)
+  // Sort experiences by most recent position end date
   const sortedExperiences = [...experiences].sort((a, b) => {
     const getLatestDate = (exp: CompanyExperience) => {
       const dates = exp.positions.map((pos) => pos.endDate || new Date());
@@ -297,15 +192,39 @@ const ResumeContent = ({
   });
 
   return (
-    <div className="resume-content" style={{ justifySelf: "center" }}>
-      {sortedExperiences.map((experience) => (
-        <CompanySection
-          key={experience.id}
-          company={experience}
-          hoverScale={hoverScale}
-          animationDuration={animationDuration}
-        />
-      ))}
+    <div
+      className="dossier-container"
+      style={
+        {
+          "--hover-scale": hoverScale.toString(),
+          "--animation-duration": `${animationDuration.toString()}ms`,
+        } as React.CSSProperties
+      }
+    >
+      {/* Dossier Header */}
+      <div className="dossier-header">
+        <h1 className="dossier-title">CLASSIFIED PERSONNEL DOSSIER</h1>
+        <div className="dossier-meta">
+          <span>SUBJECT: AGENT [REDACTED]</span>
+          <span className="meta-separator">|</span>
+          <span>CLEARANCE: TOP SECRET</span>
+        </div>
+      </div>
+
+      {/* Personnel Files */}
+      <div className="personnel-files">
+        {sortedExperiences.map((experience) => (
+          <PersonnelFile key={experience.id} company={experience} />
+        ))}
+      </div>
+
+      {/* Dossier Footer */}
+      <div className="dossier-footer">
+        <div className="footer-stamp">CLASSIFIED</div>
+        <p className="footer-warning">
+          WARNING: UNAUTHORIZED ACCESS TO THIS DOSSIER IS PROHIBITED
+        </p>
+      </div>
     </div>
   );
 };

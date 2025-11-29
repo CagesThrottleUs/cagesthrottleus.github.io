@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 
 import App from "./App";
-import { render, screen } from "./test/testUtils";
+import { render } from "./test/testUtils";
 
 describe("App", () => {
   it("renders without crashing", () => {
@@ -11,14 +11,18 @@ describe("App", () => {
 
   it("renders header component", () => {
     render(<App />);
-    expect(screen.getByText("cagesthrottleus")).toBeInTheDocument();
+    expect(document.querySelector(".intelligence-header")).toBeInTheDocument();
+    expect(document.querySelector(".agency-name")).toHaveTextContent(
+      "CAGESTHROTTLEUS",
+    );
   });
 
   it("renders footer component", () => {
     render(<App />);
-    expect(
-      screen.getByText(/Built with/i, { selector: ".footer-content" }),
-    ).toBeInTheDocument();
+    expect(document.querySelector(".classified-footer")).toBeInTheDocument();
+    expect(document.querySelector(".signature-name")).toHaveTextContent(
+      "CAGESTHROTTLEUS",
+    );
   });
 
   it("renders main content area", () => {

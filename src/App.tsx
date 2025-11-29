@@ -2,6 +2,8 @@ import "./App.css";
 import { Suspense } from "react";
 import { Routes, Route } from "react-router";
 
+import BlogList from "./components/BlogList/BlogList";
+import BlogPostLayout from "./components/BlogPost/BlogPostLayout";
 import CursorTracker from "./components/CursorTracker/CursorTracker";
 import CyberpunkScanlines from "./components/CyberpunkScanlines/CyberpunkScanlines";
 import FooterComponent from "./components/Footer/Footer";
@@ -28,6 +30,30 @@ function App() {
             element={
               <Suspense fallback={<LoadingSpinner />}>
                 <Homepage />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/loading"
+            element={
+              <Suspense fallback={<LoadingSpinner />}>
+                <LoadingSpinner />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/blog"
+            element={
+              <Suspense fallback={<LoadingSpinner />}>
+                <BlogList />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/blog/:slug"
+            element={
+              <Suspense fallback={<LoadingSpinner />}>
+                <BlogPostLayout />
               </Suspense>
             }
           />

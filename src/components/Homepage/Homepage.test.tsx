@@ -4,9 +4,10 @@ import Homepage from "./Homepage";
 import { render, screen } from "../../test/testUtils";
 
 describe("Homepage", () => {
-  it("renders the main heading", () => {
+  it("renders the ASCII art name container", () => {
     render(<Homepage />);
-    expect(screen.getByText("CagesThrottleUs")).toBeInTheDocument();
+    const asciiArt = document.querySelector(".ascii-art-name");
+    expect(asciiArt).toBeInTheDocument();
   });
 
   it("renders intro content", () => {
@@ -16,45 +17,39 @@ describe("Homepage", () => {
     ).toBeInTheDocument();
   });
 
-  it("displays education information", () => {
-    render(<Homepage />);
-    expect(screen.getByText(/BITS Pilani/i)).toBeInTheDocument();
-    expect(screen.getByText(/B.E. in Computer Science/i)).toBeInTheDocument();
-  });
-
-  it("displays graduation year and CGPA", () => {
+  it("renders dossier title", () => {
     render(<Homepage />);
     expect(
-      screen.getByText(/graduated from BITS Pilani in 2023/i),
+      screen.getByText(/CLASSIFIED PERSONNEL DOSSIER/i),
     ).toBeInTheDocument();
-    expect(screen.getByText(/8.05/i)).toBeInTheDocument();
   });
 
   it("renders resume content component", () => {
     render(<Homepage />);
-    // ResumeContent should render the resume data
-    const resumeContent = document.querySelector(".resume-content");
-    expect(resumeContent).toBeInTheDocument();
+    // ResumeContent should render the resume data with new dossier structure
+    const dossierContainer = document.querySelector(".dossier-container");
+    expect(dossierContainer).toBeInTheDocument();
+  });
+
+  it("renders personnel files", () => {
+    render(<Homepage />);
+    const personnelFiles = document.querySelector(".personnel-files");
+    expect(personnelFiles).toBeInTheDocument();
   });
 
   it("has correct CSS classes", () => {
     render(<Homepage />);
     expect(document.querySelector(".homepage-intro")).toBeInTheDocument();
-    expect(document.querySelector(".text-intro-name")).toBeInTheDocument();
+    expect(document.querySelector(".ascii-art-name")).toBeInTheDocument();
+    expect(document.querySelector(".ascii-text")).toBeInTheDocument();
     expect(document.querySelector(".intro-content")).toBeInTheDocument();
   });
 
-  it("handles intersection observer for animation", async () => {
-    const { container } = render(<Homepage />);
-    const heading = container.querySelector(".text-intro-name");
-
-    // Heading should exist
-    expect(heading).toBeInTheDocument();
-
-    // Wait for potential setTimeout to execute
-    await new Promise((resolve) => setTimeout(resolve, 150));
-
-    // Heading should still exist after animation timeout
-    expect(heading).toBeInTheDocument();
+  it("renders ASCII art with CLASSIFIED label", () => {
+    render(<Homepage />);
+    const asciiText = document.querySelector(".ascii-text");
+    expect(asciiText).toBeInTheDocument();
+    // Check that the ASCII art contains the CLASSIFIED label
+    expect(asciiText?.textContent).toContain("CLASSIFIED");
   });
 });

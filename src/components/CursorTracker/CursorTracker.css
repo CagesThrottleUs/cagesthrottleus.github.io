@@ -1,19 +1,21 @@
 .cursor-tracker {
+  --cursor-x: 0px;
+  --cursor-y: 0px;
+
   position: fixed;
+  left: 0;
+  top: 0;
   width: 50px;
   height: 50px;
-  border-radius: 50%;
-  background: radial-gradient(
-    circle,
-    rgba(255, 255, 255, 0.3) 0%,
-    rgba(255, 255, 255, 0.15) 50%,
-    rgba(255, 255, 255, 0.05) 100%
-  );
+  border-radius: var(--radius-full);
+  background: var(--gradient-cursor);
   pointer-events: none;
-  transform: translate(-50%, -50%);
+  /* GPU-accelerated transform - percentage-based centering */
+  transform: translate3d(var(--cursor-x), var(--cursor-y), 0)
+    translate(-50%, -50%);
   z-index: 9999;
-  box-shadow:
-    0 0 10px rgba(255, 255, 255, 0.2),
-    0 0 20px rgba(255, 255, 255, 0.1);
-  transition: transform 0.05s ease-out;
+  box-shadow: var(--glow-cursor);
+  /* Use will-change to hint browser for optimization */
+  will-change: transform;
+  transition: opacity 150ms ease-out;
 }

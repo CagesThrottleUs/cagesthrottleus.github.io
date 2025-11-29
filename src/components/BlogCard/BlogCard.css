@@ -1,0 +1,192 @@
+/* ============================================
+ * BLOG CARD - CLASSIFIED FILE PREVIEW
+ * Cold War era dossier card aesthetic
+ * ============================================ */
+
+.blog-card {
+  position: relative;
+  background: rgba(18, 18, 18, 0.95);
+  border: var(--border-width-normal) solid var(--color-border-primary);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: var(--font-mono);
+
+  /* Subtle paper texture */
+  background-image: linear-gradient(
+    rgba(220, 38, 38, 0.02) var(--border-width-thin),
+    transparent var(--border-width-thin)
+  );
+  background-size: 100% var(--spacing-lg);
+}
+
+.blog-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--classified-500);
+  box-shadow: var(--shadow-card-hover);
+}
+
+.blog-card:focus {
+  outline: var(--border-width-normal) solid var(--color-border-accent);
+  outline-offset: var(--border-width-normal);
+}
+
+/* ============================================
+ * THUMBNAIL SECTION
+ * ============================================ */
+
+.blog-card-thumbnail {
+  position: relative;
+  width: 100%;
+  height: 12.5rem; /* 200px */
+  overflow: hidden;
+  background: var(--dark-primary);
+  border-bottom: var(--border-width-normal) solid var(--color-border-primary);
+}
+
+.blog-card-thumbnail img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.blog-card:hover .blog-card-thumbnail img {
+  transform: scale(1.05);
+}
+
+.blog-card-classification {
+  position: absolute;
+  top: var(--spacing-sm);
+  right: var(--spacing-sm);
+  background: var(--classified-500);
+  color: var(--white);
+  padding: var(--spacing-xs) var(--spacing-sm);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  box-shadow: var(--glow-primary);
+  border-radius: var(--radius-xs);
+}
+
+/* ============================================
+ * CONTENT SECTION
+ * ============================================ */
+
+.blog-card-content {
+  padding: var(--spacing-lg);
+}
+
+.blog-card-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--spacing-md);
+  font-size: var(--font-size-xs);
+  color: var(--color-text-secondary);
+  letter-spacing: 0.05em;
+}
+
+.blog-card-date {
+  color: var(--terminal-500);
+  font-weight: var(--font-weight-bold);
+}
+
+.blog-card-version {
+  color: var(--color-text-muted);
+  padding: var(--border-width-normal) var(--spacing-xs);
+  background: rgba(220, 38, 38, 0.1);
+  border: var(--border-width-thin) solid var(--color-border-primary);
+  border-radius: var(--radius-xs);
+}
+
+.blog-card-title {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-primary);
+  margin-bottom: var(--spacing-md);
+  line-height: var(--line-height-tight);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+
+  /* Clamp to 2 lines */
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.blog-card-abstract {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  line-height: var(--line-height-relaxed);
+  margin-bottom: var(--spacing-md);
+
+  /* Clamp to 3 lines */
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.blog-card-footer {
+  display: flex;
+  justify-content: flex-end;
+  padding-top: var(--spacing-md);
+  border-top: var(--border-width-thin) solid var(--color-border-primary);
+}
+
+.blog-card-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+  color: var(--classified-500);
+  letter-spacing: 0.1em;
+  transition: all 0.2s ease;
+}
+
+.blog-card:hover .blog-card-cta {
+  color: var(--classified-400);
+  text-shadow: var(--glow-text-primary);
+}
+
+/* ============================================
+ * RESPONSIVE
+ * ============================================ */
+
+@media (max-width: 48rem) {
+  .blog-card-thumbnail {
+    height: 9.375rem; /* 150px */
+  }
+
+  .blog-card-content {
+    padding: var(--spacing-md);
+  }
+
+  .blog-card-title {
+    font-size: var(--font-size-base);
+  }
+}
+
+/* ============================================
+ * ACCESSIBILITY
+ * ============================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  .blog-card,
+  .blog-card-thumbnail img {
+    transition: none;
+  }
+
+  .blog-card:hover {
+    transform: none;
+  }
+
+  .blog-card:hover .blog-card-thumbnail img {
+    transform: none;
+  }
+}

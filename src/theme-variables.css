@@ -1,0 +1,451 @@
+/**
+ * THEME VARIABLES
+ * 
+ * Centralized color palette, gradients, and typography system
+ * for the entire application. This ensures visual consistency
+ * and makes theme changes easier to manage.
+ * 
+ * Organization:
+ * 1. Base Colors (Solid colors)
+ * 2. Color Aliases (Semantic naming)
+ * 3. Gradients (Linear and Radial)
+ * 4. Typography (Fonts, Sizes, Weights)
+ * 5. Effects (Shadows, Glows, Filters)
+ * 6. Spacing & Layout
+ */
+
+:root {
+  /* ============================================
+   * 1. BASE COLORS
+   * Pure color values used throughout the app
+   * Cold War Classified Documents + Modern Vibrant Theme
+   * ============================================ */
+
+  /* Primary Palette - CLASSIFIED Red Stamps */
+  --classified-400: #ff3838;
+  --classified-500: #dc2626;
+  --classified-600: rgba(220, 38, 38, 1);
+
+  /* Accent Palette - CRT Monitor Green */
+  --terminal-400: #4ade80;
+  --terminal-500: #22c55e;
+  --terminal-600: rgba(34, 197, 94, 1);
+
+  /* Secondary Palette - Cold Steel Blue */
+  --steel-400: #60a5fa;
+  --steel-500: #3b82f6;
+  --steel-600: rgba(59, 130, 246, 1);
+
+  /* Tertiary Palette - Warning Amber */
+  --warning-400: #fbbf24;
+  --warning-500: #f59e0b;
+  --warning-600: rgba(245, 158, 11, 1);
+  --gold: #ffd700;
+
+  /* Grayscale - Cold War Intelligence Gray */
+  --white: #ffffff;
+  --gray-50: #f5f5f5;
+  --gray-200: #e8e8e8;
+  --gray-300: #d4d4d4;
+  --gray-400: #a3a3a3;
+  --gray-500: #737373;
+  --gray-600: #525252;
+  --gray-700: #404040;
+  --gray-800: #2a2a2a;
+  --gray-900: #1a1a1a;
+
+  /* Background Colors - Darkest Intelligence Files */
+  --dark-primary: #0a0a0a;
+  --dark-secondary: #121212;
+  --dark-tertiary: rgba(10, 10, 10, 1);
+  --black: rgba(0, 0, 0, 1);
+
+  /* ============================================
+   * 2. COLOR ALIASES (Semantic Naming)
+   * Use these for consistent UI elements
+   * ============================================ */
+
+  --color-primary: var(--classified-500);
+  --color-accent: var(--terminal-500);
+  --color-text-primary: var(--white);
+  --color-text-secondary: var(--gray-200);
+  --color-text-muted: var(--gray-400);
+  --color-border-primary: rgba(220, 38, 38, 0.4);
+  --color-border-accent: rgba(34, 197, 94, 0.4);
+
+  /* ============================================
+   * 3. GRADIENTS
+   * Linear and radial gradient patterns
+   * Cold War Classified + Modern Vibrant Theme
+   * ============================================ */
+
+  /* Linear Gradients - Directional */
+  --gradient-primary: linear-gradient(135deg, #dc2626 0%, #3b82f6 100%);
+  --gradient-accent: linear-gradient(135deg, #22c55e 0%, #f59e0b 100%);
+  --gradient-purple-pink: linear-gradient(135deg, #dc2626, #22c55e, #f59e0b);
+  --gradient-vertical-dark: linear-gradient(
+    180deg,
+    #0a0a0a 0%,
+    #121212 50%,
+    #0a0a0a 100%
+  );
+  --gradient-header: linear-gradient(
+    to bottom,
+    rgba(10, 10, 10, 0.95),
+    rgba(10, 10, 10, 0.85)
+  );
+  --gradient-footer: linear-gradient(
+    to top,
+    rgba(10, 10, 10, 0.95),
+    rgba(10, 10, 10, 0.85)
+  );
+  --gradient-scrollbar: linear-gradient(180deg, #dc2626 0%, #22c55e 100%);
+  --gradient-scrollbar-hover: linear-gradient(180deg, #ff3838 0%, #4ade80 100%);
+  --gradient-reading-progress: linear-gradient(
+    90deg,
+    #dc2626 0%,
+    #22c55e 50%,
+    #f59e0b 100%
+  );
+
+  /* Card & Component Gradients */
+  --gradient-card: linear-gradient(
+    135deg,
+    rgba(220, 38, 38, 0.1) 0%,
+    rgba(59, 130, 246, 0.1) 100%
+  );
+  --gradient-company-bg: linear-gradient(
+    135deg,
+    rgba(220, 38, 38, 0.25) 0%,
+    rgba(59, 130, 246, 0.25) 100%
+  );
+  --gradient-position-bg: linear-gradient(
+    135deg,
+    rgba(34, 197, 94, 0.12) 0%,
+    rgba(245, 158, 11, 0.12) 100%
+  );
+  --gradient-position-hover: linear-gradient(
+    135deg,
+    rgba(34, 197, 94, 0.08) 0%,
+    rgba(245, 158, 11, 0.08) 100%
+  );
+  --gradient-button: linear-gradient(
+    135deg,
+    rgba(220, 38, 38, 0.25) 0%,
+    rgba(59, 130, 246, 0.25) 100%
+  );
+  --gradient-button-hover: linear-gradient(
+    135deg,
+    rgba(220, 38, 38, 0.4) 0%,
+    rgba(59, 130, 246, 0.4) 100%
+  );
+  --gradient-shine: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.1) 50%,
+    transparent 100%
+  );
+
+  /* Radial Gradients - Vibrant Intelligence Glows */
+  --gradient-glow-purple: radial-gradient(
+    circle,
+    rgba(220, 38, 38, 0.15) 0%,
+    transparent 70%
+  );
+  --gradient-glow-pink: radial-gradient(
+    circle,
+    rgba(34, 197, 94, 0.12) 0%,
+    transparent 70%
+  );
+  --gradient-glow-blue: radial-gradient(
+    circle,
+    rgba(59, 130, 246, 0.08) 0%,
+    transparent 50%
+  );
+  --gradient-glow-intro: radial-gradient(
+    circle,
+    rgba(220, 38, 38, 0.1) 0%,
+    transparent 70%
+  );
+  --gradient-cursor: radial-gradient(
+    circle,
+    rgba(255, 255, 255, 0.3) 0%,
+    rgba(255, 255, 255, 0.15) 50%,
+    rgba(255, 255, 255, 0.05) 100%
+  );
+
+  /* Complex Multi-stop Radials */
+  --gradient-link-glow: radial-gradient(
+    circle,
+    rgba(220, 38, 38, 0.2) 0%,
+    rgba(34, 197, 94, 0.15) 30%,
+    rgba(59, 130, 246, 0.1) 60%,
+    transparent 100%
+  );
+  --gradient-link-hover: radial-gradient(
+    circle,
+    rgba(220, 38, 38, 0.3) 0%,
+    rgba(34, 197, 94, 0.2) 25%,
+    rgba(59, 130, 246, 0.15) 50%,
+    rgba(245, 158, 11, 0.1) 75%,
+    transparent 100%
+  );
+
+  /* Background Ambient Gradients - Cold War Intelligence Atmosphere */
+  --gradient-ambient-purple: radial-gradient(
+    circle at 20% 30%,
+    rgba(220, 38, 38, 0.15) 0%,
+    transparent 50%
+  );
+  --gradient-ambient-pink: radial-gradient(
+    circle at 80% 70%,
+    rgba(34, 197, 94, 0.12) 0%,
+    transparent 50%
+  );
+  --gradient-ambient-blue: radial-gradient(
+    circle at 50% 50%,
+    rgba(59, 130, 246, 0.08) 0%,
+    transparent 50%
+  );
+  --gradient-ambient-orb-1: radial-gradient(
+    circle,
+    rgba(220, 38, 38, 0.15) 0%,
+    transparent 70%
+  );
+  --gradient-ambient-orb-2: radial-gradient(
+    circle,
+    rgba(34, 197, 94, 0.12) 0%,
+    transparent 70%
+  );
+
+  /* Grid Pattern - Typewriter Grid Lines */
+  --gradient-grid-line-vertical: linear-gradient(
+    rgba(220, 38, 38, 0.03) 1px,
+    transparent 1px
+  );
+  --gradient-grid-line-horizontal: linear-gradient(
+    90deg,
+    rgba(220, 38, 38, 0.03) 1px,
+    transparent 1px
+  );
+
+  /* ============================================
+   * 4. TYPOGRAPHY SYSTEM
+   * Font families, sizes, weights, and line heights
+   * ============================================ */
+
+  /* Font Families */
+  --font-serif: "Crimson Pro", Georgia, serif;
+  --font-sans:
+    "Space Grotesk", "Red Hat Display", system-ui, -apple-system, sans-serif;
+  --font-display: "Red Hat Display", system-ui, -apple-system, sans-serif;
+  --font-mono: "JetBrains Mono", "Red Hat Mono", "Courier New", monospace;
+  --font-special: "Bitcount Single Ink", system-ui;
+
+  /* Font Weights */
+  --font-weight-light: 300;
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+
+  /* Font Sizes */
+  --font-size-xs: 0.75rem; /* 12px */
+  --font-size-sm: 0.875rem; /* 14px */
+  --font-size-base: 1rem; /* 16px */
+  --font-size-lg: 1.125rem; /* 18px */
+  --font-size-xl: 1.25rem; /* 20px */
+  --font-size-2xl: 1.5rem; /* 24px */
+  --font-size-3xl: 1.875rem; /* 30px */
+  --font-size-4xl: 2.25rem; /* 36px */
+
+  /* Line Heights */
+  --line-height-tight: 1.25;
+  --line-height-normal: 1.5;
+  --line-height-relaxed: 1.75;
+  --line-height-loose: 2;
+
+  /* ============================================
+   * 5. EFFECTS (Shadows, Glows, Filters)
+   * Reusable shadow and glow patterns
+   * Cold War Classified + Modern Vibrant Theme
+   * ============================================ */
+
+  /* Box Shadows - Depth */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+  --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.15);
+  --shadow-2xl: 0 25px 50px rgba(0, 0, 0, 0.25);
+
+  /* Glow Effects - Vibrant Intelligence Glows */
+  --glow-primary:
+    0 0 20px rgba(220, 38, 38, 0.4), 0 0 40px rgba(220, 38, 38, 0.2);
+  --glow-accent:
+    0 0 20px rgba(34, 197, 94, 0.4), 0 0 40px rgba(34, 197, 94, 0.2);
+  --glow-text-primary:
+    0 0 10px rgba(220, 38, 38, 0.6), 0 0 20px rgba(220, 38, 38, 0.4);
+  --glow-text-accent:
+    0 0 10px rgba(34, 197, 94, 0.6), 0 0 20px rgba(34, 197, 94, 0.4);
+  --glow-cursor:
+    0 0 10px rgba(255, 255, 255, 0.2), 0 0 20px rgba(255, 255, 255, 0.1);
+
+  /* Complex Multi-layer Shadows */
+  --shadow-header:
+    0 4px 20px rgba(0, 0, 0, 0.3), 0 0 40px rgba(220, 38, 38, 0.1),
+    inset 0 -1px 0 0 rgba(220, 38, 38, 0.2);
+  --shadow-footer:
+    0 -4px 20px rgba(0, 0, 0, 0.3), 0 0 40px rgba(220, 38, 38, 0.1),
+    inset 0 1px 0 0 rgba(220, 38, 38, 0.2);
+  --shadow-card:
+    0 0 20px rgba(220, 38, 38, 0.1), inset 0 0 60px rgba(220, 38, 38, 0.02);
+  --shadow-card-hover:
+    0 0 2px rgba(220, 38, 38, 0.6), 0 0 40px rgba(220, 38, 38, 0.3),
+    0 0 80px rgba(34, 197, 94, 0.2), 0 20px 60px rgba(59, 130, 246, 0.15),
+    inset 0 0 60px rgba(220, 38, 38, 0.05);
+  --shadow-company-name:
+    0 0 40px rgba(220, 38, 38, 0.2), inset 0 0 40px rgba(220, 38, 38, 0.1);
+  --shadow-position-header:
+    0 0 20px rgba(34, 197, 94, 0.15), inset 0 0 40px rgba(34, 197, 94, 0.05);
+  --shadow-position-hover:
+    0 0 30px rgba(34, 197, 94, 0.25), 0 0 60px rgba(245, 158, 11, 0.15),
+    inset 0 0 40px rgba(34, 197, 94, 0.08);
+  --shadow-logo:
+    0 0 0 0.25rem rgba(220, 38, 38, 0.3), 0 0 20px rgba(220, 38, 38, 0.4),
+    0 4px 20px rgba(0, 0, 0, 0.3);
+  --shadow-logo-hover:
+    0 0 0 0.35rem rgba(220, 38, 38, 0.5), 0 0 30px rgba(220, 38, 38, 0.6),
+    0 8px 28px rgba(0, 0, 0, 0.4);
+  --shadow-spinner:
+    0 0 20px rgba(220, 38, 38, 0.5), 0 0 40px rgba(34, 197, 94, 0.3);
+  --shadow-spinner-inner:
+    0 0 20px rgba(245, 158, 11, 0.5), 0 0 40px rgba(59, 130, 246, 0.3);
+  --shadow-scroll-button:
+    0 0 20px rgba(220, 38, 38, 0.5), 0 0 40px rgba(220, 38, 38, 0.3),
+    0 8px 32px rgba(0, 0, 0, 0.4), inset 0 0 20px rgba(220, 38, 38, 0.2);
+  --shadow-scroll-button-hover:
+    0 0 30px rgba(220, 38, 38, 0.8), 0 0 60px rgba(220, 38, 38, 0.5),
+    0 0 100px rgba(34, 197, 94, 0.3), 0 12px 40px rgba(0, 0, 0, 0.4),
+    inset 0 0 30px rgba(220, 38, 38, 0.3);
+  --shadow-intro-content:
+    0 0 30px rgba(220, 38, 38, 0.15), inset 0 0 60px rgba(220, 38, 38, 0.05);
+
+  /* Text Shadows */
+  --text-shadow-glow-primary: 0 0 30px rgba(220, 38, 38, 0.5);
+  --text-shadow-glow-accent:
+    0 0 15px rgba(34, 197, 94, 0.8), 0 0 30px rgba(34, 197, 94, 0.5);
+  --text-shadow-link-hover:
+    0 0 10px rgba(34, 197, 94, 0.6), 0 0 20px rgba(34, 197, 94, 0.4);
+  --text-shadow-header-hover:
+    0 0 10px rgba(220, 38, 38, 0.6), 0 0 20px rgba(220, 38, 38, 0.4);
+  --text-shadow-loading: 0 0 10px rgba(220, 38, 38, 0.5);
+
+  /* Drop Shadows (for SVG/Icons) */
+  --drop-shadow-primary: drop-shadow(0 0 10px rgba(220, 38, 38, 0.4));
+  --drop-shadow-primary-hover: drop-shadow(0 0 20px rgba(220, 38, 38, 0.6));
+  --drop-shadow-accent: drop-shadow(0 0 8px rgba(34, 197, 94, 0.4));
+  --drop-shadow-heart: drop-shadow(0 0 8px rgba(34, 197, 94, 0.4));
+  --drop-shadow-intro-name: drop-shadow(0 0 20px rgba(220, 38, 38, 0.3));
+  --drop-shadow-strong: drop-shadow(0 0 10px rgba(34, 197, 94, 0.5));
+
+  /* Backdrop Filters */
+  --backdrop-blur-sm: blur(10px);
+  --backdrop-blur-md: blur(20px);
+
+  /* ============================================
+   * 6. SPACING & LAYOUT
+   * Common spacing values
+   * ============================================ */
+
+  --spacing-xs: 0.25rem; /* 4px */
+  --spacing-sm: 0.5rem; /* 8px */
+  --spacing-md: 1rem; /* 16px */
+  --spacing-lg: 1.5rem; /* 24px */
+  --spacing-xl: 2rem; /* 32px */
+  --spacing-2xl: 3rem; /* 48px */
+  --spacing-3xl: 4rem; /* 64px */
+
+  /* Border Radius */
+  --radius-xs: 0.125rem; /* 2px */
+  --radius-sm: 0.25rem; /* 4px */
+  --radius-md: 0.5rem; /* 8px */
+  --radius-lg: 1rem; /* 16px */
+  --radius-xl: 1.25rem; /* 20px */
+  --radius-full: 50%;
+
+  /* Border Widths */
+  --border-width-thin: 0.0625rem; /* 1px */
+  --border-width-normal: 0.125rem; /* 2px */
+  --border-width-medium: 0.1875rem; /* 3px */
+  --border-width-thick: 0.25rem; /* 4px */
+
+  /* Container Max-Widths */
+  --container-sm: 37.5rem; /* 600px */
+  --container-md: 56.25rem; /* 900px */
+  --container-lg: 75rem; /* 1200px */
+  --container-xl: 90rem; /* 1440px */
+
+  /* ============================================
+   * 7. OPACITY LEVELS
+   * Consistent opacity values
+   * ============================================ */
+
+  --opacity-0: 0;
+  --opacity-5: 0.05;
+  --opacity-10: 0.1;
+  --opacity-15: 0.15;
+  --opacity-20: 0.2;
+  --opacity-25: 0.25;
+  --opacity-30: 0.3;
+  --opacity-40: 0.4;
+  --opacity-50: 0.5;
+  --opacity-60: 0.6;
+  --opacity-70: 0.7;
+  --opacity-80: 0.8;
+  --opacity-85: 0.85;
+  --opacity-90: 0.9;
+  --opacity-95: 0.95;
+  --opacity-100: 1;
+
+  /* ============================================
+   * 8. ERROR PAGE / 404 THEME
+   * Specific variables for error states
+   * Cold War Classified + Modern Vibrant Theme
+   * ============================================ */
+
+  /* Error Colors - CLASSIFIED Red Alert */
+  --error-primary: #ff0000;
+  --error-secondary: #ff3838;
+  --error-glow: rgba(255, 0, 0, 0.6);
+  --error-shadow: 0 0 20px rgba(255, 0, 0, 0.4), 0 0 40px rgba(255, 0, 0, 0.2);
+
+  /* 404 Gradients */
+  --gradient-error: linear-gradient(
+    135deg,
+    #ff0000 0%,
+    #dc2626 50%,
+    #3b82f6 100%
+  );
+  --gradient-error-text: linear-gradient(135deg, #ff0000, #ff3838, #dc2626);
+  --gradient-glitch: linear-gradient(
+    90deg,
+    #ff0000 0%,
+    #22c55e 50%,
+    #dc2626 100%
+  );
+
+  /* Glitch Effects - Typewriter Misalignment + CRT Distortion */
+  --glitch-shadow-1: 2px 2px 0 #ff0000, -2px -2px 0 #22c55e;
+  --glitch-shadow-2: 3px 3px 0 #ff0000, -3px -3px 0 #22c55e, 1px 1px 0 #dc2626;
+  --glitch-text-shadow:
+    0 0 10px rgba(255, 0, 0, 0.8), 0 0 20px rgba(34, 197, 94, 0.6);
+
+  /* Error Page Shadows */
+  --shadow-error-card:
+    0 0 40px rgba(255, 0, 0, 0.2), 0 0 80px rgba(220, 38, 38, 0.15),
+    inset 0 0 60px rgba(255, 0, 0, 0.05);
+  --shadow-error-button:
+    0 0 20px rgba(255, 0, 0, 0.5), 0 0 40px rgba(255, 0, 0, 0.3);
+  --shadow-error-button-hover:
+    0 0 30px rgba(255, 0, 0, 0.8), 0 0 60px rgba(220, 38, 38, 0.5);
+}

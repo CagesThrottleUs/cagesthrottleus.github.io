@@ -1,4 +1,433 @@
-/* NotFound component styles */
-.not-found-container {
+/* ============================================
+ * NOT FOUND PAGE - CLASSIFIED DOCUMENT THEME
+ * Cold War era intelligence file aesthetic
+ * Typewriter fonts, classification stamps, redactions
+ * ============================================ */
+
+/* Main Wrapper - Dark Intelligence Room */
+.not-found-wrapper {
   position: relative;
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-xl);
+  background: var(--dark-primary);
+
+  /* Subtle paper texture effect */
+  background-image: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(220, 38, 38, 0.02) 2px,
+    rgba(220, 38, 38, 0.02) 4px
+  );
+}
+
+/* Classified Document Container */
+.classified-document {
+  position: relative;
+  max-width: 900px;
+  width: 100%;
+  background: rgba(18, 18, 18, 0.95);
+  border: 3px solid var(--color-border-primary);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-card);
+  padding: var(--spacing-3xl);
+  font-family: var(--font-mono);
+
+  /* Subtle document texture */
+  background-image: linear-gradient(
+    rgba(220, 38, 38, 0.03) 1px,
+    transparent 1px
+  );
+  background-size: 100% 20px;
+}
+
+/* ============================================
+ * DOCUMENT HEADER - CLASSIFICATION MARKINGS
+ * ============================================ */
+
+.document-header {
+  margin-bottom: var(--spacing-xl);
+}
+
+.classification-bar {
+  background: var(--classified-500);
+  color: var(--white);
+  font-family: var(--font-mono);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+  text-align: center;
+  padding: var(--spacing-sm) var(--spacing-md);
+  letter-spacing: 0.15em;
+  margin-bottom: var(--spacing-md);
+  box-shadow: var(--glow-primary);
+}
+
+.document-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: var(--font-size-xs);
+  color: var(--color-text-secondary);
+  padding: 0 var(--spacing-sm);
+  letter-spacing: 0.05em;
+}
+
+.doc-number,
+.doc-date {
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+}
+
+/* ============================================
+ * CLASSIFICATION STAMPS
+ * ============================================ */
+
+.classified-stamp-container {
+  position: absolute;
+  top: 120px;
+  right: 60px;
+  transform: rotate(15deg);
+  z-index: 10;
+  pointer-events: none;
+}
+
+.classified-stamp {
+  border: 4px solid var(--classified-500);
+  color: var(--classified-500);
+  font-family: var(--font-mono);
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-bold);
+  padding: var(--spacing-md) var(--spacing-xl);
+  text-align: center;
+  letter-spacing: 0.2em;
+  opacity: 0.4;
+  text-shadow: var(--text-shadow-glow-primary);
+  box-shadow: var(--glow-primary);
+  border-radius: var(--radius-sm);
+}
+
+.file-stamp {
+  position: absolute;
+  bottom: 150px;
+  left: 40px;
+  transform: rotate(-12deg);
+  border: 3px solid var(--classified-400);
+  color: var(--classified-400);
+  font-family: var(--font-mono);
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-bold);
+  padding: var(--spacing-sm) var(--spacing-lg);
+  letter-spacing: 0.15em;
+  opacity: 0.5;
+  pointer-events: none;
+  border-radius: var(--radius-sm);
+}
+
+/* ============================================
+ * ERROR CODE ASCII ART
+ * ============================================ */
+
+.error-code-ascii {
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  line-height: 1.2;
+  color: var(--classified-500);
+  text-shadow: var(--glow-text-primary);
+  margin: var(--spacing-2xl) auto;
+  text-align: center;
+  overflow: hidden;
+  white-space: pre;
+  user-select: none;
+}
+
+/* ============================================
+ * DOCUMENT BODY
+ * ============================================ */
+
+.document-body {
+  margin-top: var(--spacing-2xl);
+  text-align: left;
+}
+
+.document-title {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-3xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-primary);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: var(--spacing-2xl);
+  text-align: center;
+  border-bottom: 2px solid var(--color-border-primary);
+  padding-bottom: var(--spacing-lg);
+}
+
+/* Document Sections */
+.document-section {
+  margin-bottom: var(--spacing-2xl);
+  padding: var(--spacing-lg);
+  background: rgba(220, 38, 38, 0.02);
+  border-left: 4px solid var(--color-border-primary);
+  border-radius: var(--radius-sm);
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  margin-bottom: var(--spacing-md);
+}
+
+.section-marker {
+  color: var(--classified-500);
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-bold);
+}
+
+.section-title {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-primary);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.document-text {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-base);
+  color: var(--color-text-secondary);
+  line-height: var(--line-height-relaxed);
+  margin-bottom: var(--spacing-md);
+  letter-spacing: 0.02em;
+}
+
+/* Document List */
+.document-list {
+  list-style: none;
+  padding: 0;
+  margin: var(--spacing-md) 0;
+}
+
+.document-list li {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-base);
+  color: var(--color-text-secondary);
+  padding: var(--spacing-sm) var(--spacing-md);
+  margin-bottom: var(--spacing-sm);
+  background: rgba(10, 10, 10, 0.5);
+  border-left: 3px solid var(--color-border-accent);
+  letter-spacing: 0.02em;
+}
+
+/* Redacted Text Effect */
+.redacted {
+  background: var(--gray-900);
+  color: var(--gray-900);
+  padding: 2px var(--spacing-sm);
+  margin: 0 var(--spacing-xs);
+  border: 1px solid var(--gray-800);
+  font-weight: var(--font-weight-bold);
+  user-select: none;
+  cursor: not-allowed;
+}
+
+/* ============================================
+ * DOCUMENT ACTIONS (Buttons)
+ * ============================================ */
+
+.document-actions {
+  display: flex;
+  gap: var(--spacing-lg);
+  justify-content: center;
+  margin-top: var(--spacing-3xl);
+  flex-wrap: wrap;
+}
+
+.action-btn {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: 0.08em;
+  padding: var(--spacing-md) var(--spacing-xl);
+  border: 2px solid;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  text-transform: uppercase;
+  user-select: none;
+}
+
+.btn-marker {
+  font-size: var(--font-size-lg);
+}
+
+.action-btn-primary {
+  background: var(--gradient-button);
+  border-color: var(--color-border-primary);
+  color: var(--color-text-primary);
+  box-shadow: var(--shadow-card);
+}
+
+.action-btn-primary:hover {
+  background: var(--gradient-button-hover);
+  box-shadow: var(--shadow-card-hover);
+  transform: translateY(-2px);
+}
+
+.action-btn-primary:active {
+  transform: translateY(0);
+}
+
+.action-btn-secondary {
+  background: transparent;
+  border-color: var(--color-border-accent);
+  color: var(--terminal-500);
+}
+
+.action-btn-secondary:hover {
+  background: rgba(34, 197, 94, 0.1);
+  box-shadow: var(--glow-accent);
+  transform: translateY(-2px);
+}
+
+.action-btn-secondary:active {
+  transform: translateY(0);
+}
+
+/* ============================================
+ * DOCUMENT FOOTER
+ * ============================================ */
+
+.document-footer {
+  margin-top: var(--spacing-3xl);
+  padding-top: var(--spacing-xl);
+  border-top: 2px solid var(--color-border-primary);
+}
+
+.footer-warning {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+  text-align: center;
+  padding: var(--spacing-sm);
+  letter-spacing: 0.05em;
+  margin-top: var(--spacing-sm);
+}
+
+/* ============================================
+ * RESPONSIVE DESIGN
+ * ============================================ */
+
+@media (max-width: 768px) {
+  .classified-document {
+    padding: var(--spacing-xl) var(--spacing-lg);
+  }
+
+  .classified-stamp-container {
+    top: 80px;
+    right: 20px;
+  }
+
+  .classified-stamp {
+    font-size: var(--font-size-lg);
+    padding: var(--spacing-sm) var(--spacing-md);
+  }
+
+  .file-stamp {
+    bottom: 100px;
+    left: 20px;
+    font-size: var(--font-size-sm);
+    padding: var(--spacing-xs) var(--spacing-sm);
+  }
+
+  .error-code-ascii {
+    font-size: 0.625rem;
+  }
+
+  .document-title {
+    font-size: var(--font-size-2xl);
+  }
+
+  .document-actions {
+    flex-direction: column;
+    gap: var(--spacing-md);
+  }
+
+  .action-btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .not-found-wrapper {
+    padding: var(--spacing-md);
+  }
+
+  .classified-document {
+    padding: var(--spacing-lg) var(--spacing-md);
+  }
+
+  .classified-stamp-container {
+    top: 60px;
+    right: 10px;
+  }
+
+  .classified-stamp {
+    font-size: var(--font-size-base);
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border-width: 2px;
+  }
+
+  .file-stamp {
+    display: none; /* Hide on very small screens */
+  }
+
+  .error-code-ascii {
+    font-size: 0.5rem;
+    margin: var(--spacing-lg) 0;
+  }
+
+  .document-title {
+    font-size: var(--font-size-xl);
+    letter-spacing: 0.05em;
+  }
+
+  .section-title {
+    font-size: var(--font-size-base);
+  }
+
+  .document-text,
+  .document-list li {
+    font-size: var(--font-size-sm);
+  }
+
+  .action-btn {
+    font-size: var(--font-size-sm);
+    padding: var(--spacing-sm) var(--spacing-md);
+  }
+}
+
+/* ============================================
+ * ACCESSIBILITY
+ * ============================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  .action-btn:hover {
+    transform: none;
+  }
+}
+
+/* Focus states for keyboard navigation */
+.action-btn:focus-visible {
+  outline: 3px solid var(--color-border-accent);
+  outline-offset: 3px;
 }

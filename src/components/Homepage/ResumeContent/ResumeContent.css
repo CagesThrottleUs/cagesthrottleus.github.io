@@ -1,858 +1,673 @@
-/**
- * MODERN RESUME CONTENT STYLES
- *
- * Design Philosophy:
- * - Glassmorphism with gradient accents
- * - Smooth animations with framer-motion
- * - Modern color palette with vibrant gradients
- * - Visual depth through layering and shadows
- * - Micro-interactions for engagement
- * - Professional yet visually stunning
- *
- * Typography Strategy:
- * - Headings: Sans-serif (Space Grotesk) for impact
- * - Body/Descriptions: Serif (Crimson Pro) for readability
- * - Technical details: Monospace (JetBrains Mono) for precision
- *
- * Color Scheme:
- * - Primary gradient: Purple to Blue (#8B5CF6 → #3B82F6)
- * - Accent gradient: Pink to Orange (#EC4899 → #F59E0B)
- * - Background: Dark with subtle gradients
- * - Cards: Glassmorphism with blur effects
- */
+/* ============================================
+ * PERSONNEL DOSSIER - CLASSIFIED FILES
+ * Cold War era classified personnel records
+ * Intelligence briefings, file folders, typed reports
+ * ============================================ */
 
-/**
- * CSS Variables for consistent theming
- */
-:root {
-  --gradient-primary: linear-gradient(135deg, #8b5cf6 0%, #3b82f6 100%);
-  --gradient-accent: linear-gradient(135deg, #ec4899 0%, #f59e0b 100%);
-  --gradient-card: linear-gradient(
-    135deg,
-    rgba(139, 92, 246, 0.1) 0%,
-    rgba(59, 130, 246, 0.1) 100%
-  );
-  --color-primary: #8b5cf6;
-  --color-accent: #ec4899;
-  --color-text-primary: #f9fafb;
-  --color-text-secondary: #d1d5db;
-  --color-text-muted: #9ca3af;
-  --glow-primary:
-    0 0 20px rgba(139, 92, 246, 0.4), 0 0 40px rgba(139, 92, 246, 0.2);
-  --glow-accent:
-    0 0 20px rgba(236, 72, 153, 0.4), 0 0 40px rgba(236, 72, 153, 0.2);
-}
+/* ============================================
+ * MAIN DOSSIER CONTAINER
+ * ============================================ */
 
-/**
- * Disable cursor tracking on work items
- */
-.no-cursor-track {
-  pointer-events: auto;
-}
-
-.no-cursor-track * {
-  pointer-events: auto;
-}
-
-/**
- * Main Container
- * - Centered with max-width for readability
- * - Modern spacing and layout
- * - Subtle animated background gradient
- */
-.resume-content {
+.dossier-container {
   position: relative;
-  display: flex;
-  flex-direction: column;
+  max-width: 900px;
   width: 100%;
-  max-width: 56rem;
-  margin: 0 auto 0 calc(50% - 28rem - 7rem);
-  padding: 3rem 2rem;
-  gap: 5rem;
-  font-family: var(--font-sans);
+  margin: 0 auto;
+  padding: var(--spacing-3xl) var(--spacing-xl);
+  font-family: var(--font-mono);
+  color: var(--color-text-primary);
 }
 
-/* Animated background gradient orbs */
-.resume-content::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: -10%;
-  width: 40%;
-  height: 40%;
-  background: radial-gradient(
-    circle,
-    rgba(139, 92, 246, 0.15) 0%,
-    transparent 70%
-  );
-  border-radius: 50%;
-  filter: blur(60px);
-  animation: float-1 20s ease-in-out infinite;
-  pointer-events: none;
-  z-index: -1;
+/* ============================================
+ * DOSSIER HEADER
+ * ============================================ */
+
+.dossier-header {
+  text-align: center;
+  margin-bottom: var(--spacing-3xl);
+  padding: var(--spacing-xl);
+  background: rgba(220, 38, 38, 0.05);
+  border: 2px solid var(--color-border-primary);
+  border-radius: var(--radius-md);
 }
 
-.resume-content::after {
-  content: "";
-  position: absolute;
-  bottom: 10%;
-  right: -5%;
-  width: 50%;
-  height: 50%;
-  background: radial-gradient(
-    circle,
-    rgba(236, 72, 153, 0.12) 0%,
-    transparent 70%
-  );
-  border-radius: 50%;
-  filter: blur(80px);
-  animation: float-2 25s ease-in-out infinite;
-  pointer-events: none;
-  z-index: -1;
+.dossier-title {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-3xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--classified-500);
+  letter-spacing: 0.15em;
+  margin-bottom: var(--spacing-md);
+  text-shadow: var(--text-shadow-glow-primary);
 }
 
-@keyframes float-1 {
-  0%,
-  100% {
-    transform: translate(0, 0) scale(1);
-    opacity: 0.6;
-  }
-  33% {
-    transform: translate(30px, -50px) scale(1.1);
-    opacity: 0.8;
-  }
-  66% {
-    transform: translate(-20px, 30px) scale(0.9);
-    opacity: 0.5;
-  }
+.dossier-meta {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  letter-spacing: 0.08em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: var(--spacing-md);
+  flex-wrap: wrap;
 }
 
-@keyframes float-2 {
-  0%,
-  100% {
-    transform: translate(0, 0) scale(1);
-    opacity: 0.5;
-  }
-  33% {
-    transform: translate(-40px, 40px) scale(1.15);
-    opacity: 0.7;
-  }
-  66% {
-    transform: translate(30px, -30px) scale(0.85);
-    opacity: 0.4;
-  }
+.meta-separator {
+  color: var(--color-text-muted);
 }
 
-/**
- * Company Section
- * - Enhanced with modern spacing and effects
- */
-.company-section {
-  position: relative;
+/* ============================================
+ * PERSONNEL FILES SECTION
+ * ============================================ */
+
+.personnel-files {
   display: flex;
   flex-direction: column;
-  gap: 2rem;
-  padding-left: 10rem;
+  gap: var(--spacing-3xl);
 }
 
-/**
- * Company Header
- * - Striking gradient background box
- * - Enhanced typography with Space Grotesk
- */
-.company-header {
-  margin-bottom: 0.75rem;
-  display: inline-block;
+/* ============================================
+ * PERSONNEL FILE (Company Section)
+ * ============================================ */
+
+.personnel-file {
   position: relative;
+  margin-bottom: var(--spacing-2xl);
+}
+
+/* File Folder Tab */
+.file-folder-tab {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-lg);
+  padding: var(--spacing-md) var(--spacing-xl);
+  background: var(--gradient-button);
+  border: 3px solid var(--color-border-primary);
+  border-bottom: none;
+  border-top-left-radius: var(--radius-lg);
+  border-top-right-radius: var(--radius-lg);
+  box-shadow: var(--shadow-company-name);
+  margin-left: var(--spacing-xl);
+  z-index: 2;
+}
+
+.tab-content {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+.tab-marker {
+  color: var(--terminal-500);
+  font-size: var(--font-size-xl);
+}
+
+.company-name-tab {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-primary);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+.clearance-stamp {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-xs);
+  color: var(--terminal-500);
+  letter-spacing: 0.15em;
+  padding: 2px var(--spacing-xs);
+  border: 2px solid var(--terminal-500);
+  border-radius: var(--radius-sm);
+  font-weight: var(--font-weight-bold);
+}
+
+/* ============================================
+ * FILE CONTENT
+ * ============================================ */
+
+.file-content {
+  position: relative;
+  background: rgba(18, 18, 18, 0.95);
+  border: 3px solid var(--color-border-primary);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-2xl);
+  box-shadow: var(--shadow-card);
+
+  /* Document texture */
+  background-image: linear-gradient(
+    rgba(220, 38, 38, 0.02) 1px,
+    transparent 1px
+  );
+  background-size: 100% 20px;
+}
+
+.file-classification-banner {
+  background: var(--classified-500);
+  color: var(--white);
+  text-align: center;
+  padding: var(--spacing-sm);
+  margin: calc(var(--spacing-2xl) * -1) calc(var(--spacing-2xl) * -1)
+    var(--spacing-xl);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: 0.15em;
+  box-shadow: var(--glow-primary);
+}
+
+/* ============================================
+ * COMPANY HEADER SECTION
+ * ============================================ */
+
+.company-header-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: var(--spacing-2xl);
+  padding-bottom: var(--spacing-lg);
+  border-bottom: 2px solid var(--color-border-primary);
+}
+
+.company-info {
+  flex: 1;
 }
 
 .company-name {
-  font-family: var(--font-sans);
-  font-size: 2.5rem;
+  font-family: var(--font-mono);
+  font-size: var(--font-size-3xl);
   font-weight: var(--font-weight-bold);
-  color: #ffffff;
-  margin: 0;
-  letter-spacing: -0.02em;
+  color: var(--color-text-primary);
+  margin: 0 0 var(--spacing-sm) 0;
+  letter-spacing: 0.08em;
+}
+
+.company-meta {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+  letter-spacing: 0.08em;
   display: flex;
   align-items: center;
-  gap: 1rem;
-  padding: 1rem 2rem;
-  background: linear-gradient(
-    135deg,
-    rgba(139, 92, 246, 0.25) 0%,
-    rgba(59, 130, 246, 0.25) 100%
-  );
-  border: 2px solid transparent;
-  border-radius: 1rem;
+  gap: var(--spacing-sm);
+  flex-wrap: wrap;
+}
+
+.meta-item {
+  text-transform: uppercase;
+}
+
+.company-insignia {
+  width: 60px;
+  height: 60px;
+  object-fit: contain;
+  opacity: 0.7;
+  border: 2px solid var(--color-border-accent);
+  border-radius: var(--radius-sm);
+  padding: var(--spacing-xs);
+  background: rgba(34, 197, 94, 0.05);
+}
+
+/* ============================================
+ * TIMELINE MARKER
+ * ============================================ */
+
+.file-timeline-marker {
+  position: absolute;
+  left: var(--spacing-2xl);
+  top: 200px;
+  bottom: 100px;
+  width: 3px;
+  background: var(--gradient-scrollbar);
+  box-shadow: var(--glow-accent);
+}
+
+/* ============================================
+ * ASSIGNMENTS CONTAINER
+ * ============================================ */
+
+.assignments-container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2xl);
+  padding-left: var(--spacing-2xl);
+}
+
+/* ============================================
+ * ASSIGNMENT RECORD (Position)
+ * ============================================ */
+
+.assignment-record {
   position: relative;
-  overflow: hidden;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-shadow: 0 0 30px rgba(139, 92, 246, 0.5);
-  box-shadow:
-    0 0 40px rgba(139, 92, 246, 0.2),
-    inset 0 0 40px rgba(139, 92, 246, 0.1);
+  margin-bottom: var(--spacing-xl);
 }
 
-.company-name::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: 1rem;
-  padding: 2px;
-  background: var(--gradient-primary);
-  -webkit-mask:
-    linear-gradient(#fff 0 0) content-box,
-    linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-  mask:
-    linear-gradient(#fff 0 0) content-box,
-    linear-gradient(#fff 0 0);
-  mask-composite: exclude;
-  pointer-events: none;
-  z-index: -1;
-}
-
-.company-name::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(255, 255, 255, 0.1),
-    transparent
-  );
-  animation: shimmer 3s infinite;
-}
-
-@keyframes shimmer {
-  0% {
-    left: -100%;
-  }
-  100% {
-    left: 100%;
-  }
-}
-
-.company-icon {
-  color: var(--color-primary);
-  filter: drop-shadow(var(--glow-primary));
-  animation: pulse-glow 3s ease-in-out infinite;
-}
-
-@keyframes pulse-glow {
-  0%,
-  100% {
-    opacity: 1;
-    filter: drop-shadow(0 0 10px rgba(139, 92, 246, 0.4));
-  }
-  50% {
-    opacity: 0.8;
-    filter: drop-shadow(0 0 20px rgba(139, 92, 246, 0.6));
-  }
-}
-
-/**
- * Timeline Marker
- * - Vibrant gradient with glow effect
- * - Animated appearance
- */
-.timeline-marker {
-  position: absolute;
-  left: 7rem;
-  transform: translateX(-50%);
-  top: 0;
-  bottom: 0;
-  width: 0.25rem;
-  background: var(--gradient-primary);
-  border-radius: 0.125rem;
-  box-shadow: var(--glow-primary);
-  transform-origin: top;
-}
-
-/**
- * Positions Container
- */
-.positions-container {
-  display: flex;
-  flex-direction: column;
-  gap: 3rem;
-}
-
-/**
- * Position Section
- */
-.position-section {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-}
-
-/**
- * Position Header
- * - Gradient background box with better visual hierarchy
- */
-.position-header {
+.assignment-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  flex-wrap: wrap;
-  gap: 1rem;
-  padding: 1.25rem 1.75rem;
-  background: linear-gradient(
-    135deg,
-    rgba(236, 72, 153, 0.12) 0%,
-    rgba(245, 158, 11, 0.12) 100%
-  );
-  border-radius: 1rem;
-  border: 1px solid rgba(236, 72, 153, 0.3);
-  backdrop-filter: blur(20px);
-  position: relative;
-  overflow: hidden;
-  box-shadow:
-    0 0 20px rgba(236, 72, 153, 0.15),
-    inset 0 0 40px rgba(236, 72, 153, 0.05);
+  margin-bottom: var(--spacing-lg);
+  padding: var(--spacing-md) var(--spacing-lg);
+  background: var(--gradient-position-bg);
+  border: 2px solid var(--color-border-accent);
+  border-radius: var(--radius-md);
+  transition: all 0.2s ease;
 }
 
-.position-header::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    135deg,
-    rgba(236, 72, 153, 0.08) 0%,
-    rgba(245, 158, 11, 0.08) 100%
-  );
-  opacity: 0;
-  transition: opacity 0.3s ease;
+.assignment-header:hover {
+  background: var(--gradient-position-hover);
+  box-shadow: var(--shadow-position-hover);
 }
 
-.position-header:hover::before {
-  opacity: 1;
+.assignment-title-block {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
 }
 
-.position-header:hover {
-  box-shadow:
-    0 0 30px rgba(236, 72, 153, 0.25),
-    0 0 60px rgba(245, 158, 11, 0.15),
-    inset 0 0 40px rgba(236, 72, 153, 0.08);
-  border-color: rgba(236, 72, 153, 0.5);
+.assignment-marker {
+  color: var(--terminal-500);
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-bold);
 }
 
-.position-title {
-  font-family: var(--font-sans);
-  font-size: 1.75rem;
-  font-weight: var(--font-weight-semibold);
+.assignment-title {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-bold);
   color: var(--color-text-primary);
   margin: 0;
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  letter-spacing: -0.01em;
-  position: relative;
-  z-index: 1;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
 }
 
-.position-icon {
-  color: var(--color-accent);
-  filter: drop-shadow(var(--glow-accent));
-}
-
-.position-date {
+.assignment-duration {
   font-family: var(--font-mono);
-  font-size: 0.875rem;
-  font-weight: var(--font-weight-medium);
+  font-size: var(--font-size-sm);
   color: var(--color-text-muted);
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.5rem 1rem;
-  background: rgba(139, 92, 246, 0.1);
-  border-radius: 2rem;
-  border: 1px solid rgba(139, 92, 246, 0.2);
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  letter-spacing: 0.08em;
 }
 
-.date-icon {
-  color: var(--color-primary);
-}
+/* ============================================
+ * MISSION BRIEFINGS CONTAINER
+ * ============================================ */
 
-/**
- * Work Items Container
- */
-.work-items-container {
+.mission-briefings {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: var(--spacing-lg);
+  margin-left: var(--spacing-xl);
 }
 
-/**
- * Work Item Wrapper
- */
-.work-item-wrapper {
-  position: relative;
-  display: flex;
-  align-items: flex-start;
-}
+/* ============================================
+ * MISSION BRIEFING (Work Item)
+ * ============================================ */
 
-/**
- * Timeline Information (Date + Logo)
- * - Smooth fade and slide animation
- */
-.timeline-info {
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 3rem;
-  display: flex;
-  align-items: center;
-  pointer-events: none;
-  z-index: 10;
-}
-
-.timeline-date {
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
-  font-weight: var(--font-weight-medium);
-  color: var(--color-text-muted);
-  white-space: nowrap;
-  text-align: right;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  position: absolute;
-  right: 100%;
-  transform: translateX(-5.5rem);
-  padding: 0.5rem 0.75rem;
-  background: rgba(0, 0, 0, 0.5);
-  border-radius: 0.5rem;
-  border: 1px solid rgba(139, 92, 246, 0.3);
-  backdrop-filter: blur(10px);
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-/**
- * Company Logo
- * - Enhanced with glow and animation
- */
-.company-logo {
-  width: 3rem;
-  height: 3rem;
-  border-radius: 50%;
-  object-fit: contain;
-  background: rgba(255, 255, 255, 0.95);
-  padding: 0.5rem;
-  box-shadow:
-    0 0 0 0.25rem rgba(139, 92, 246, 0.3),
-    0 0 20px rgba(139, 92, 246, 0.4),
-    0 4px 20px rgba(0, 0, 0, 0.3);
-  position: absolute;
-  left: -3rem;
-  transform: translateX(-50%);
-  z-index: 2;
-  transition: all 0.3s ease;
-}
-
-/**
- * Work Item Card
- * - Cyberpunk glassmorphism design
- * - Neon gradient border effect
- * - Smooth hover interactions with glow
- */
-.work-item-card {
-  position: relative;
-  flex: 1;
-  background: rgba(10, 14, 39, 0.6);
-  backdrop-filter: blur(20px);
-  border-radius: 1.25rem;
-  padding: 0;
-  overflow: hidden;
-  transform-origin: left center;
-  will-change: transform;
+.mission-briefing {
+  background: rgba(10, 10, 10, 0.8);
+  border: 2px solid var(--color-border-primary);
+  border-left: 4px solid var(--classified-500);
+  border-radius: var(--radius-sm);
+  padding: var(--spacing-lg);
+  transition: all var(--animation-duration, 200ms) ease;
   cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow:
-    0 0 20px rgba(139, 92, 246, 0.1),
-    inset 0 0 60px rgba(139, 92, 246, 0.02);
 }
 
-/* Gradient border effect */
-.card-gradient-border {
-  position: absolute;
-  inset: 0;
-  border-radius: 1.25rem;
-  padding: 2px;
-  background: var(--gradient-primary);
-  -webkit-mask:
-    linear-gradient(#fff 0 0) content-box,
-    linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-  mask:
-    linear-gradient(#fff 0 0) content-box,
-    linear-gradient(#fff 0 0);
-  mask-composite: exclude;
-  opacity: 0.5;
-  transition: opacity 0.3s ease;
-  z-index: -1;
+.mission-briefing:hover {
+  transform: scale(var(--hover-scale, 1.02));
+  box-shadow: var(--shadow-card-hover);
+  border-left-color: var(--classified-400);
 }
 
-.work-item-card:hover .card-gradient-border {
-  opacity: 1;
-  animation: border-rotate 3s linear infinite;
-}
-
-@keyframes border-rotate {
-  0% {
-    filter: hue-rotate(0deg);
-  }
-  100% {
-    filter: hue-rotate(360deg);
-  }
-}
-
-/* Shine effect */
-.card-shine {
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(
-    90deg,
-    transparent 0%,
-    rgba(255, 255, 255, 0.1) 50%,
-    transparent 100%
-  );
-  pointer-events: none;
-  z-index: 1;
-}
-
-/* Card content */
-.card-content {
-  position: relative;
-  z-index: 2;
-  padding: 2rem;
-}
-
-.card-header {
+.briefing-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 1rem;
-  padding-bottom: 1rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  margin-bottom: var(--spacing-md);
+  padding-bottom: var(--spacing-sm);
+  border-bottom: 1px solid var(--color-border-primary);
 }
 
-.work-date-range {
+.classification-marking {
   font-family: var(--font-mono);
-  font-size: 0.875rem;
-  font-weight: var(--font-weight-medium);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  color: var(--classified-500);
+  letter-spacing: 0.15em;
+  padding: 2px var(--spacing-xs);
+  background: rgba(220, 38, 38, 0.1);
+  border: 1px solid var(--color-border-primary);
+  border-radius: var(--radius-sm);
+}
+
+.mission-date {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-xs);
   color: var(--color-text-muted);
+  letter-spacing: 0.08em;
+}
+
+.briefing-body {
+  margin-bottom: var(--spacing-md);
+}
+
+.briefing-meta {
   display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.5rem 1rem;
-  background: var(--gradient-card);
-  border-radius: 0.5rem;
-  border: 1px solid rgba(139, 92, 246, 0.2);
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  gap: var(--spacing-sm);
+  margin-bottom: var(--spacing-sm);
+  font-size: var(--font-size-sm);
 }
 
-.achievement-icon {
-  color: var(--color-accent);
-  filter: drop-shadow(0 0 8px rgba(236, 72, 153, 0.4));
-  animation: zap-pulse 2s ease-in-out infinite;
+.meta-label {
+  color: var(--color-text-muted);
+  font-weight: var(--font-weight-bold);
 }
 
-@keyframes zap-pulse {
-  0%,
-  100% {
-    transform: scale(1);
-    opacity: 1;
-  }
-  50% {
-    transform: scale(1.1);
-    opacity: 0.8;
-  }
+.meta-value {
+  color: var(--terminal-500);
 }
 
-.work-description {
+.briefing-content {
+  padding: var(--spacing-sm) 0;
+}
+
+/* Ensure bold text styling applies to all nested elements */
+.briefing-content b,
+.briefing-content strong,
+.briefing-content [data-rac] b,
+.briefing-content [data-rac] strong,
+.briefing-content div b,
+.briefing-content div strong,
+.briefing-content span b,
+.briefing-content span strong,
+.mission-briefing b,
+.mission-briefing strong {
+  font-weight: var(--font-weight-bold) !important;
+  color: var(--terminal-400) !important;
+  text-decoration: underline;
+  text-decoration-color: var(--terminal-500);
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 3px;
+  text-shadow:
+    0 0 10px rgba(34, 197, 94, 0.5),
+    0 0 20px rgba(34, 197, 94, 0.3);
+}
+
+.briefing-text {
   font-family: var(--font-mono);
-  font-size: 0.9375rem;
-  font-weight: var(--font-weight-normal);
-  line-height: var(--line-height-relaxed);
+  font-size: var(--font-size-base);
   color: var(--color-text-secondary);
+  line-height: var(--line-height-relaxed);
   margin: 0;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
   letter-spacing: 0.02em;
 }
 
-/* Enhanced description text styles - mono bold for emphasis with neon glow */
-.work-description b,
-.work-description strong {
-  font-family: var(--font-mono);
-  font-weight: var(--font-weight-semibold);
-  background: var(--gradient-accent);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  color: transparent;
-  position: relative;
-  padding: 0 0.125rem;
-  filter: drop-shadow(0 0 10px rgba(236, 72, 153, 0.5));
-}
-
-.work-description b::after,
-.work-description strong::after {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 1px;
-  background: var(--gradient-accent);
-  opacity: 0.3;
-  transform: scaleX(0);
-  transition: transform 0.3s ease;
-}
-
-.work-item-card:hover .work-description b::after,
-.work-item-card:hover .work-description strong::after {
-  transform: scaleX(1);
-}
-
-/* Better paragraph spacing in descriptions */
-.work-description > div {
-  margin-bottom: 0.75rem;
-}
-
-.work-description > div:last-child {
-  margin-bottom: 0;
-}
-
-/* Hover effect for entire card - cyberpunk neon glow */
-.work-item-card:hover {
-  background: rgba(10, 14, 39, 0.8);
-  box-shadow:
-    0 0 2px rgba(139, 92, 246, 0.6),
-    0 0 40px rgba(139, 92, 246, 0.3),
-    0 0 80px rgba(236, 72, 153, 0.2),
-    0 20px 60px rgba(59, 130, 246, 0.15),
-    inset 0 0 60px rgba(139, 92, 246, 0.05);
-  transform: translateY(-6px);
-}
-
-/* Enhanced logo hover */
-.work-item-wrapper:hover .company-logo {
-  transform: translateX(-50%) scale(1.15);
-  box-shadow:
-    0 0 0 0.35rem rgba(139, 92, 246, 0.5),
-    0 0 30px rgba(139, 92, 246, 0.6),
-    0 8px 28px rgba(0, 0, 0, 0.4);
-}
-
-/* Link styling in descriptions - cyberpunk neon links */
-.work-description a {
-  color: var(--color-accent);
-  text-decoration: none;
-  position: relative;
-  font-weight: var(--font-weight-semibold);
-  transition: all 0.3s ease;
-  text-shadow: 0 0 5px rgba(236, 72, 153, 0.3);
-}
-
-.work-description a::after {
-  content: "";
-  position: absolute;
-  bottom: -2px;
-  left: 0;
-  right: 0;
-  height: 2px;
-  background: var(--gradient-accent);
-  transform: scaleX(0);
-  transform-origin: right;
-  transition: transform 0.3s ease;
-  box-shadow: 0 0 10px rgba(236, 72, 153, 0.5);
-}
-
-.work-description a:hover::after {
-  transform: scaleX(1);
-  transform-origin: left;
-}
-
-.work-description a:hover {
-  color: #ff5fab;
+/* Bold text styling - Terminal green with underline and glow */
+.briefing-text b,
+.briefing-text strong {
+  font-weight: var(--font-weight-bold);
+  color: var(--terminal-400) !important;
+  text-decoration: underline;
+  text-decoration-color: var(--terminal-500);
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 3px;
   text-shadow:
-    0 0 15px rgba(236, 72, 153, 0.8),
-    0 0 30px rgba(236, 72, 153, 0.5);
+    0 0 10px rgba(34, 197, 94, 0.5),
+    0 0 20px rgba(34, 197, 94, 0.3);
 }
 
-/* Code snippets in descriptions - monospace for technical precision */
-.work-description code {
+/* ============================================
+ * BRIEFING FOOTER & EXPAND BUTTON
+ * ============================================ */
+
+.briefing-footer {
+  margin-top: var(--spacing-md);
+  padding-top: var(--spacing-sm);
+  border-top: 1px solid var(--color-border-primary);
+}
+
+.expand-button {
+  background: transparent;
+  border: 1px solid var(--color-border-accent);
+  border-radius: var(--radius-sm);
+  padding: var(--spacing-xs) var(--spacing-md);
   font-family: var(--font-mono);
-  font-weight: var(--font-weight-medium);
-  background: rgba(139, 92, 246, 0.15);
-  color: var(--color-primary);
-  padding: 0.2rem 0.5rem;
-  border-radius: 0.375rem;
-  font-size: 0.9em;
-  border: 1px solid rgba(139, 92, 246, 0.3);
+  font-size: var(--font-size-xs);
+  color: var(--terminal-500);
+  letter-spacing: 0.08em;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  transition: all 0.2s ease;
 }
 
-/**
- * Responsive Design
- */
-
-/* Tablet */
-@media (max-width: 48rem) {
-  .resume-content {
-    max-width: 100%;
-    padding: 2rem 1.5rem;
-    gap: 4rem;
-    margin: 0 auto 0 calc(50% - 50vw + 4rem);
-  }
-
-  .company-section {
-    padding-left: 6rem;
-  }
-
-  .company-name {
-    font-size: 2rem;
-  }
-
-  .position-title {
-    font-size: 1.5rem;
-  }
-
-  .timeline-marker {
-    left: 5rem;
-    width: 0.2rem;
-  }
-
-  .company-logo {
-    width: 2.5rem;
-    height: 2.5rem;
-    left: -1rem;
-  }
-
-  .timeline-date {
-    font-size: 0.625rem;
-    transform: translateX(-3.5rem);
-  }
+.expand-button:hover {
+  background: rgba(34, 197, 94, 0.1);
+  border-color: var(--terminal-400);
+  box-shadow: var(--glow-accent);
 }
 
-/* Mobile */
-@media (max-width: 30rem) {
-  .resume-content {
-    padding: 1.5rem 1rem;
-    gap: 3rem;
-    margin: 0 auto;
+.expand-marker {
+  font-size: var(--font-size-sm);
+  transition: transform 0.2s ease;
+}
+
+.expand-button:hover .expand-marker {
+  transform: translateX(2px);
+}
+
+/* ============================================
+ * EXPANDED DETAILS
+ * ============================================ */
+
+.expanded-details {
+  margin-top: var(--spacing-md);
+  padding: var(--spacing-md);
+  background: rgba(34, 197, 94, 0.05);
+  border: 1px solid var(--color-border-accent);
+  border-radius: var(--radius-sm);
+}
+
+.detail-section {
+  display: flex;
+  gap: var(--spacing-sm);
+  margin-bottom: var(--spacing-xs);
+  font-size: var(--font-size-sm);
+}
+
+.detail-label {
+  color: var(--color-text-muted);
+  font-weight: var(--font-weight-bold);
+  min-width: 140px;
+}
+
+.detail-value {
+  color: var(--terminal-500);
+}
+
+/* ============================================
+ * FILE FOOTER
+ * ============================================ */
+
+.file-footer {
+  margin-top: var(--spacing-2xl);
+  padding-top: var(--spacing-lg);
+  border-top: 2px solid var(--color-border-primary);
+  text-align: center;
+}
+
+.footer-text {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+  letter-spacing: 0.1em;
+}
+
+/* ============================================
+ * DOSSIER FOOTER
+ * ============================================ */
+
+.dossier-footer {
+  margin-top: var(--spacing-3xl);
+  padding: var(--spacing-xl);
+  background: rgba(220, 38, 38, 0.05);
+  border: 2px solid var(--color-border-primary);
+  border-radius: var(--radius-md);
+  text-align: center;
+}
+
+.footer-stamp {
+  display: inline-block;
+  padding: var(--spacing-sm) var(--spacing-lg);
+  border: 3px solid var(--classified-500);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-mono);
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--classified-500);
+  letter-spacing: 0.2em;
+  margin-bottom: var(--spacing-md);
+  text-shadow: var(--text-shadow-glow-primary);
+  box-shadow: var(--glow-primary);
+}
+
+.footer-warning {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  letter-spacing: 0.08em;
+  margin: 0;
+}
+
+/* ============================================
+ * RESPONSIVE DESIGN
+ * ============================================ */
+
+@media (max-width: 768px) {
+  .dossier-container {
+    padding: var(--spacing-xl) var(--spacing-md);
   }
 
-  .company-section {
-    padding-left: 2rem;
+  .dossier-title {
+    font-size: var(--font-size-2xl);
+    letter-spacing: 0.1em;
   }
 
-  .company-name {
-    font-size: 1.75rem;
+  .dossier-meta {
+    flex-direction: column;
+    gap: var(--spacing-xs);
   }
 
-  .company-icon {
-    width: 24px;
-    height: 24px;
+  .file-folder-tab {
+    margin-left: 0;
+    width: 100%;
+    justify-content: space-between;
   }
 
-  .position-header {
+  .company-name-tab {
+    font-size: var(--font-size-lg);
+  }
+
+  .file-content {
+    padding: var(--spacing-lg);
+  }
+
+  .company-header-section {
+    flex-direction: column;
+    gap: var(--spacing-md);
+  }
+
+  .company-insignia {
+    width: 48px;
+    height: 48px;
+  }
+
+  .file-timeline-marker {
+    left: var(--spacing-md);
+  }
+
+  .assignments-container {
+    padding-left: var(--spacing-md);
+  }
+
+  .assignment-header {
     flex-direction: column;
     align-items: flex-start;
-    gap: 0.75rem;
-    padding: 1rem;
+    gap: var(--spacing-sm);
   }
 
-  .position-title {
-    font-size: 1.25rem;
+  .assignment-title {
+    font-size: var(--font-size-lg);
   }
 
-  .position-icon {
-    width: 16px;
-    height: 16px;
-  }
-
-  .position-date {
-    font-size: 0.75rem;
-    padding: 0.375rem 0.75rem;
-  }
-
-  .timeline-marker {
-    left: 1rem;
-    width: 0.15rem;
-  }
-
-  .timeline-info {
-    display: none;
-  }
-
-  .card-content {
-    padding: 1.5rem;
-  }
-
-  .work-date-range {
-    font-size: 0.75rem;
-    padding: 0.375rem 0.75rem;
-  }
-
-  .achievement-icon {
-    width: 14px;
-    height: 14px;
-  }
-
-  .work-description {
-    font-size: 0.9375rem;
-    line-height: 1.6;
+  .mission-briefings {
+    margin-left: 0;
   }
 }
 
-/* High contrast mode improvements */
-@media (prefers-contrast: high) {
+@media (max-width: 480px) {
+  .dossier-title {
+    font-size: var(--font-size-xl);
+  }
+
+  .company-name-tab {
+    font-size: var(--font-size-base);
+  }
+
+  .clearance-stamp {
+    font-size: 0.5rem;
+    padding: 1px var(--spacing-xs);
+  }
+
   .company-name {
-    -webkit-text-fill-color: var(--color-text-primary);
+    font-size: var(--font-size-xl);
   }
 
-  .card-gradient-border {
-    opacity: 1;
+  .company-meta {
+    font-size: 0.625rem;
   }
 
-  .work-description b,
-  .work-description strong {
-    -webkit-text-fill-color: var(--color-accent);
+  .assignment-title {
+    font-size: var(--font-size-base);
+  }
+
+  .briefing-text {
+    font-size: var(--font-size-sm);
+  }
+
+  .expanded-details {
+    padding: var(--spacing-sm);
+  }
+
+  .detail-label {
+    min-width: 100px;
+    font-size: var(--font-size-xs);
+  }
+
+  .detail-value {
+    font-size: var(--font-size-xs);
   }
 }
 
-/* Reduced motion for accessibility */
+/* ============================================
+ * ACCESSIBILITY
+ * ============================================ */
+
 @media (prefers-reduced-motion: reduce) {
-  * {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
+  .mission-briefing:hover {
+    transform: none;
   }
 
-  .company-icon,
-  .achievement-icon {
-    animation: none;
+  .expand-button:hover .expand-marker {
+    transform: none;
   }
+}
 
-  .card-gradient-border {
-    animation: none;
-  }
+/* Focus states for keyboard navigation */
+.expand-button:focus-visible {
+  outline: 3px solid var(--color-border-accent);
+  outline-offset: 2px;
 }
