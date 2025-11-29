@@ -1,4 +1,7 @@
+import { ArrowRight } from "lucide-react";
+
 import type { BlogMetadata } from "../../types/blog";
+
 import "./BlogCard.css";
 
 interface BlogCardProps {
@@ -36,7 +39,10 @@ function BlogCard({ metadata, onClick }: BlogCardProps) {
         <p className="blog-card-abstract">{metadata.abstract}</p>
 
         <div className="blog-card-footer">
-          <span className="blog-card-cta">READ BRIEFING →</span>
+          <span className="blog-card-cta">
+            READ BRIEFING
+            <ArrowRight size={16} />
+          </span>
         </div>
       </div>
     </div>

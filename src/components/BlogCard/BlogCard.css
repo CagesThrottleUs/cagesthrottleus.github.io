@@ -139,6 +139,9 @@
 }
 
 .blog-card-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-xs);
   font-size: var(--font-size-sm);
   font-weight: var(--font-weight-bold);
   color: var(--classified-500);

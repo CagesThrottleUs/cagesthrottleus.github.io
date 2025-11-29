@@ -1,10 +1,35 @@
-import { useState, useMemo } from "react";
+import {
+  Calendar as CalendarIcon,
+  ChevronLeft,
+  ChevronRight,
+} from "lucide-react";
+import { useMemo, useState } from "react";
+import {
+  Button,
+  Calendar,
+  CalendarCell,
+  CalendarGrid,
+  DateInput,
+  DatePicker,
+  DateSegment,
+  Dialog,
+  Group,
+  Heading,
+  Input,
+  Label,
+  Popover,
+  TextField,
+} from "react-aria-components";
 import { useNavigate } from "react-router";
-import type { BlogMetadata } from "../../types/blog";
+
 import { useBlogIndex } from "../../hooks/useBlogIndex";
 import { useBlogPage } from "../../hooks/useBlogPage";
 import BlogCard from "../BlogCard/BlogCard";
 import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
+
+import type { BlogMetadata } from "../../types/blog";
+import type { DateValue } from "react-aria-components";
+
 import "./BlogList.css";
 
 function BlogList() {
@@ -13,8 +38,8 @@ function BlogList() {
 
   // Search and filter states
   const [searchQuery, setSearchQuery] = useState("");
-  const [startDate, setStartDate] = useState("");
-  const [endDate, setEndDate] = useState("");
+  const [startDate, setStartDate] = useState<DateValue | null>(null);
+  const [endDate, setEndDate] = useState<DateValue | null>(null);
 
   // Fetch blog index and current page
   const { index, loading: indexLoading, error: indexError } = useBlogIndex();
@@ -39,8 +64,13 @@ function BlogList() {
 
       // Date range filter
       const postDate = new Date(post.publishDate);
-      const matchesStartDate = !startDate || postDate >= new Date(startDate);
-      const matchesEndDate = !endDate || postDate <= new Date(endDate);
+      const matchesStartDate =
+        !startDate ||
+        postDate >=
+          new Date(startDate.year, startDate.month - 1, startDate.day);
+      const matchesEndDate =
+        !endDate ||
+        postDate <= new Date(endDate.year, endDate.month - 1, endDate.day);
 
       return matchesTitle && matchesStartDate && matchesEndDate;
     });
@@ -71,7 +101,9 @@ function BlogList() {
             INTELLIGENCE ARCHIVE // EYES ONLY
           </div>
           <div className="document-meta">
-            <span className="doc-number">ARCHIVE-{new Date().getFullYear()}</span>
+            <span className="doc-number">
+              ARCHIVE-{new Date().getFullYear()}
+            </span>
             <span className="doc-date">TOTAL FILES: {index.totalPosts}</span>
           </div>
         </div>
@@ -80,52 +112,91 @@ function BlogList() {
 
         {/* Search & Filter Section */}
         <div className="blog-filters">
-          <div className="filter-group">
-            <label className="filter-label" htmlFor="search-query">
-              SEARCH QUERY
-            </label>
-            <input
-              id="search-query"
-              type="text"
-              className="filter-input"
-              placeholder="Enter keywords..."
-              value={searchQuery}
-              onChange={(e) => {
-                setSearchQuery(e.target.value);
-              }}
-            />
-          </div>
+          <TextField
+            className="filter-group"
+            value={searchQuery}
+            onChange={setSearchQuery}
+          >
+            <Label className="filter-label">SEARCH QUERY</Label>
+            <Input className="filter-input" placeholder="Enter keywords..." />
+          </TextField>
 
           <div className="filter-row">
-            <div className="filter-group">
-              <label className="filter-label" htmlFor="start-date">
-                START DATE
-              </label>
-              <input
-                id="start-date"
-                type="date"
-                className="filter-input"
-                value={startDate}
-                onChange={(e) => {
-                  setStartDate(e.target.value);
-                }}
-              />
-            </div>
+            <DatePicker
+              className="filter-group"
+              value={startDate}
+              onChange={setStartDate}
+            >
+              <Label className="filter-label">START DATE</Label>
+              <Group className="date-picker-group">
+                <DateInput className="filter-input date-input">
+                  {(segment) => (
+                    <DateSegment segment={segment} className="date-segment" />
+                  )}
+                </DateInput>
+                <Button className="date-picker-button">
+                  <CalendarIcon size={16} />
+                </Button>
+              </Group>
+              <Popover className="date-picker-popover">
+                <Dialog className="date-picker-dialog">
+                  <Calendar className="date-picker-calendar">
+                    <header className="calendar-header">
+                      <Button slot="previous" className="calendar-nav-btn">
+                        <ChevronLeft size={14} />
+                      </Button>
+                      <Heading className="calendar-heading" />
+                      <Button slot="next" className="calendar-nav-btn">
+                        <ChevronRight size={14} />
+                      </Button>
+                    </header>
+                    <CalendarGrid className="calendar-grid">
+                      {(date) => (
+                        <CalendarCell date={date} className="calendar-cell" />
+                      )}
+                    </CalendarGrid>
+                  </Calendar>
+                </Dialog>
+              </Popover>
+            </DatePicker>
 
-            <div className="filter-group">
-              <label className="filter-label" htmlFor="end-date">
-                END DATE
-              </label>
-              <input
-                id="end-date"
-                type="date"
-                className="filter-input"
-                value={endDate}
-                onChange={(e) => {
-                  setEndDate(e.target.value);
-                }}
-              />
-            </div>
+            <DatePicker
+              className="filter-group"
+              value={endDate}
+              onChange={setEndDate}
+            >
+              <Label className="filter-label">END DATE</Label>
+              <Group className="date-picker-group">
+                <DateInput className="filter-input date-input">
+                  {(segment) => (
+                    <DateSegment segment={segment} className="date-segment" />
+                  )}
+                </DateInput>
+                <Button className="date-picker-button">
+                  <CalendarIcon size={16} />
+                </Button>
+              </Group>
+              <Popover className="date-picker-popover">
+                <Dialog className="date-picker-dialog">
+                  <Calendar className="date-picker-calendar">
+                    <header className="calendar-header">
+                      <Button slot="previous" className="calendar-nav-btn">
+                        <ChevronLeft size={14} />
+                      </Button>
+                      <Heading className="calendar-heading" />
+                      <Button slot="next" className="calendar-nav-btn">
+                        <ChevronRight size={14} />
+                      </Button>
+                    </header>
+                    <CalendarGrid className="calendar-grid">
+                      {(date) => (
+                        <CalendarCell date={date} className="calendar-cell" />
+                      )}
+                    </CalendarGrid>
+                  </Calendar>
+                </Dialog>
+              </Popover>
+            </DatePicker>
           </div>
         </div>
 
@@ -176,7 +247,8 @@ function BlogList() {
               className="pagination-btn"
               aria-label="Previous page"
             >
-              ◄ PREVIOUS
+              <ChevronLeft size={16} />
+              PREVIOUS
             </button>
             <span className="pagination-info">
               PAGE {currentPage} OF {index.totalPages}
@@ -189,7 +261,8 @@ function BlogList() {
               className="pagination-btn"
               aria-label="Next page"
             >
-              NEXT ►
+              NEXT
+              <ChevronRight size={16} />
             </button>
           </div>
         )}
@@ -199,4 +272,3 @@ function BlogList() {
 }
 
 export default BlogList;
-
