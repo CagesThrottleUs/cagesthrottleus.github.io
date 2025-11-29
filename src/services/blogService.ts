@@ -22,12 +22,13 @@ const CACHE_DURATION = 5 * 60 * 1000; // 5 minutes in milliseconds
 /**
  * Get cached data from localStorage
  */
+// eslint-disable-next-line @typescript-eslint/no-unnecessary-type-parameters
 function getCached<T>(key: string): T | null {
   try {
     const cached = localStorage.getItem(key);
     if (!cached) return null;
 
-    const entry: CacheEntry<T> = JSON.parse(cached);
+    const entry = JSON.parse(cached) as CacheEntry<T>;
 
     // Check if cache is expired
     if (Date.now() - entry.timestamp > CACHE_DURATION) {
@@ -45,6 +46,7 @@ function getCached<T>(key: string): T | null {
 /**
  * Set data in localStorage cache
  */
+// eslint-disable-next-line @typescript-eslint/no-unnecessary-type-parameters
 function setCache<T>(key: string, data: T): void {
   try {
     const entry: CacheEntry<T> = {
@@ -80,7 +82,7 @@ export async function fetchBlogIndex(): Promise<BlogIndex> {
     throw new Error(`Failed to fetch blog index: ${response.statusText}`);
   }
 
-  const data: BlogIndex = await response.json();
+  const data = (await response.json()) as BlogIndex;
   setCache(cacheKey, data);
   return data;
 }
@@ -89,7 +91,7 @@ export async function fetchBlogIndex(): Promise<BlogIndex> {
  * Fetch a specific page of blog posts
  */
 export async function fetchPage(pageNum: number): Promise<PageManifest> {
-  const cacheKey = `blog-page-${pageNum}-v1`;
+  const cacheKey = `blog-page-${String(pageNum)}-v1`;
 
   // Try cache first
   const cached = getCached<PageManifest>(cacheKey);
@@ -98,15 +100,20 @@ export async function fetchPage(pageNum: number): Promise<PageManifest> {
   }
 
   // Fetch from GitHub
-  const response = await fetch(`${BASE_URL}/manifests/page-${pageNum}.json`, {
-    cache: "no-cache",
-  });
+  const response = await fetch(
+    `${BASE_URL}/manifests/page-${String(pageNum)}.json`,
+    {
+      cache: "no-cache",
+    },
+  );
 
   if (!response.ok) {
-    throw new Error(`Failed to fetch page ${pageNum}: ${response.statusText}`);
+    throw new Error(
+      `Failed to fetch page ${String(pageNum)}: ${response.statusText}`,
+    );
   }
 
-  const data: PageManifest = await response.json();
+  const data = (await response.json()) as PageManifest;
   setCache(cacheKey, data);
   return data;
 }
@@ -138,7 +145,7 @@ export async function fetchPostMetadata(
       return null;
     }
 
-    const data: BlogMetadata = await response.json();
+    const data = (await response.json()) as BlogMetadata;
     setCache(cacheKey, data);
     return data;
   } catch (error) {
@@ -211,4 +218,3 @@ export function getCacheStats(): {
     entries: blogKeys,
   };
 }
-

@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
+
 import { fetchPage } from "../services/blogService";
+
 import type { PageManifest } from "../types/blog";
 
 /**
@@ -14,21 +16,35 @@ export function useBlogPage(pageNumber: number, enabled: boolean = true) {
   useEffect(() => {
     if (!enabled) return;
 
-    setLoading(true);
-    setError(null);
+    let cancelled = false;
 
-    fetchPage(pageNumber)
-      .then((data) => {
-        setPageData(data);
-        setLoading(false);
-      })
-      .catch((err) => {
-        console.error(`Error fetching page ${pageNumber}:`, err);
-        setError(`Failed to load page ${pageNumber}`);
-        setLoading(false);
-      });
+    const loadPage = async () => {
+      if (!cancelled) {
+        setLoading(true);
+        setError(null);
+      }
+
+      try {
+        const data = await fetchPage(pageNumber);
+        if (!cancelled) {
+          setPageData(data);
+          setLoading(false);
+        }
+      } catch (err: unknown) {
+        if (!cancelled) {
+          console.error(`Error fetching page ${String(pageNumber)}:`, err);
+          setError(`Failed to load page ${String(pageNumber)}`);
+          setLoading(false);
+        }
+      }
+    };
+
+    void loadPage();
+
+    return () => {
+      cancelled = true;
+    };
   }, [pageNumber, enabled]);
 
   return { pageData, loading, error };
 }
-

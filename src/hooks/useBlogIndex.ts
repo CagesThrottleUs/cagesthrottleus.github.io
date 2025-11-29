@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
+
 import { fetchBlogIndex } from "../services/blogService";
+
 import type { BlogIndex } from "../types/blog";
 
 /**
@@ -17,7 +19,7 @@ export function useBlogIndex() {
         setIndex(data);
         setLoading(false);
       })
-      .catch((err) => {
+      .catch((err: unknown) => {
         console.error("Error fetching blog index:", err);
         setError("Failed to load blog index");
         setLoading(false);
@@ -26,4 +28,3 @@ export function useBlogIndex() {
 
   return { index, loading, error };
 }
-

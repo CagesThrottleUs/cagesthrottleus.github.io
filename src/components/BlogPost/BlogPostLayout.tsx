@@ -1,10 +1,10 @@
 import { ChevronLeft } from "lucide-react";
 import { useNavigate, useParams } from "react-router";
 
+import { blogComponents } from "./BlogComponents";
 import { useBlogPost } from "../../hooks/useBlogPost";
 import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
 import NotFoundComponent from "../NotFound/NotFound";
-import { blogComponents } from "./BlogComponents";
 
 import "./BlogPostLayout.css";
 

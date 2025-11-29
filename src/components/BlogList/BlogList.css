@@ -141,7 +141,7 @@
   outline-offset: 2px;
 }
 
-.date-picker-button:pressed {
+.date-picker-button:active {
   transform: scale(0.95);
 }
 
@@ -532,4 +532,3 @@
   outline: 3px solid var(--color-border-accent);
   outline-offset: 3px;
 }
-

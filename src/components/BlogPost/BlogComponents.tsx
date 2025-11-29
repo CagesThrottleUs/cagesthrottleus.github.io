@@ -96,6 +96,7 @@ export function Highlight({ children }: HighlightProps) {
  * Collection of all blog components
  * Pass this to MDXContent as the components prop
  */
+// eslint-disable-next-line react-refresh/only-export-components
 export const blogComponents = {
   Redacted,
   CallOut,

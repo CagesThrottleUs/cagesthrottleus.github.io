@@ -2,6 +2,8 @@ import "./App.css";
 import { Suspense } from "react";
 import { Routes, Route } from "react-router";
 
+import BlogList from "./components/BlogList/BlogList";
+import BlogPostLayout from "./components/BlogPost/BlogPostLayout";
 import CursorTracker from "./components/CursorTracker/CursorTracker";
 import CyberpunkScanlines from "./components/CyberpunkScanlines/CyberpunkScanlines";
 import FooterComponent from "./components/Footer/Footer";
@@ -12,8 +14,6 @@ import LoadingSpinner from "./components/LoadingSpinner/LoadingSpinner";
 import NotFoundComponent from "./components/NotFound/NotFound";
 import ReadingProgress from "./components/ReadingProgress/ReadingProgress";
 import ScrollToTop from "./components/ScrollToTop/ScrollToTop";
-import BlogList from "./components/BlogList/BlogList";
-import BlogPostLayout from "./components/BlogPost/BlogPostLayout";
 
 function App() {
   return (

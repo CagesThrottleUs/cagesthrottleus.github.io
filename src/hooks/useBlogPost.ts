@@ -1,9 +1,10 @@
-import { useEffect, useState } from "react";
 import { compile, run } from "@mdx-js/mdx";
+import { useEffect, useState } from "react";
 import * as runtime from "react/jsx-runtime";
 
-import type { BlogMetadata } from "../types/blog";
 import { fetchPostContent, fetchPostMetadata } from "../services/blogService";
+
+import type { BlogMetadata } from "../types/blog";
 
 // Type for MDX components that can be passed to compiled MDX
 interface MDXContentProps {

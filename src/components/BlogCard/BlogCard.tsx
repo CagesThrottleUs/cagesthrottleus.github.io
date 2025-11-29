@@ -11,15 +11,21 @@ interface BlogCardProps {
 
 function BlogCard({ metadata, onClick }: BlogCardProps) {
   return (
-    <div className="blog-card" onClick={onClick} role="button" tabIndex={0} onKeyDown={(e) => {
-      if (e.key === "Enter" || e.key === " ") {
-        e.preventDefault();
-        onClick();
-      }
-    }}>
+    <div
+      className="blog-card"
+      onClick={onClick}
+      role="button"
+      tabIndex={0}
+      onKeyDown={(e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          onClick();
+        }
+      }}
+    >
       <div className="blog-card-thumbnail">
         <img
-          src={`https://raw.githubusercontent.com/cagesthrottleus/cagesthrottleus.github.io/blog/${metadata.thumbnail}`}
+          src={`https://raw.githubusercontent.com/cagesthrottleus/cagesthrottleus.github.io/blog/${metadata.thumbnail ?? "thumbnails/default.svg"}`}
           alt={metadata.title}
           loading="lazy"
         />
@@ -50,4 +56,3 @@ function BlogCard({ metadata, onClick }: BlogCardProps) {
 }
 
 export default BlogCard;
-
