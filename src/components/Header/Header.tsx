@@ -1,59 +1,57 @@
-import { Flex, Heading, Link, View, Text } from "@adobe/react-spectrum";
-import "./Header.css";
-import { APPLICATION_VERSION, SUPPORTED_APPLICATIONS } from "./constants";
+import { Flex, Heading, Text } from "@adobe/react-spectrum";
+import { Link } from "react-aria-components";
 import { useNavigate } from "react-router";
+
+import { APPLICATION_VERSION, SUPPORTED_APPLICATIONS } from "./constants";
+
+import "./Header.css";
 
 function HeaderComponent() {
   const navigate = useNavigate();
   return (
-    <View
-      UNSAFE_className="app-header"
-      backgroundColor="gray-50"
-      colorVersion={6}
-      padding="size-200"
-      borderBottomWidth="thin"
-    >
-      <Flex
-        UNSAFE_className="text-header"
-        direction="row"
-        gap="size-400"
-        justifyContent="space-between"
-        alignItems="center"
-      >
+    <div className="app-header header-container no-cursor-track">
+      <div className="text-header">
         <Flex
           direction="row"
-          gap="size-100"
-          justifyContent="start"
-          // alignItems="center"
-        >
-          <Link href="/" UNSAFE_className="link-header-no-effect">
-            <Heading level={1} marginY="auto">
-              cagesthrottleus
-            </Heading>
-          </Link>
-          <Text marginTop="size-200">v{APPLICATION_VERSION}</Text>
-        </Flex>
-        <Flex
-          direction="row"
-          gap="size-500"
-          justifyContent="end"
+          gap="size-400"
+          justifyContent="space-between"
           alignItems="center"
         >
-          {SUPPORTED_APPLICATIONS.map((application) => (
-            <Heading level={2} marginY="auto">
-              <Link
-                onPress={() => {
-                  void navigate(application.url);
-                }}
-                UNSAFE_className="link-header"
-              >
-                {application.name}
-              </Link>
-            </Heading>
-          ))}
+          <Flex
+            direction="row"
+            gap="size-100"
+            justifyContent="start"
+            // alignItems="center"
+          >
+            <Link href="/" className="link-header-no-effect">
+              <Heading level={1} marginY="auto">
+                cagesthrottleus
+              </Heading>
+            </Link>
+            <Text marginTop="size-200">v{APPLICATION_VERSION}</Text>
+          </Flex>
+          <Flex
+            direction="row"
+            gap="size-500"
+            justifyContent="end"
+            alignItems="center"
+          >
+            {SUPPORTED_APPLICATIONS.map((application) => (
+              <Heading level={2} marginY="auto" key={application.url}>
+                <Link
+                  onPress={() => {
+                    void navigate(application.url);
+                  }}
+                  className="link-header"
+                >
+                  {application.name}
+                </Link>
+              </Heading>
+            ))}
+          </Flex>
         </Flex>
-      </Flex>
-    </View>
+      </div>
+    </div>
   );
 }
 

@@ -1,0 +1,57 @@
+/**
+ * Reading Progress Bar Styles
+ * A fixed top bar showing scroll progress
+ */
+.reading-progress-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: rgba(10, 14, 39, 0.8);
+  backdrop-filter: blur(10px);
+  z-index: 9999;
+  overflow: hidden;
+  border-bottom: 1px solid rgba(139, 92, 246, 0.2);
+}
+
+.reading-progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, #8B5CF6 0%, #EC4899 50%, #F59E0B 100%);
+  transform-origin: 0%;
+  box-shadow: 
+    0 0 15px rgba(139, 92, 246, 0.8),
+    0 0 30px rgba(236, 72, 153, 0.6),
+    0 0 50px rgba(245, 158, 11, 0.4);
+  animation: neon-pulse 2s ease-in-out infinite;
+}
+
+@keyframes neon-pulse {
+  0%, 100% {
+    box-shadow: 
+      0 0 15px rgba(139, 92, 246, 0.8),
+      0 0 30px rgba(236, 72, 153, 0.6),
+      0 0 50px rgba(245, 158, 11, 0.4);
+  }
+  50% {
+    box-shadow: 
+      0 0 20px rgba(139, 92, 246, 1),
+      0 0 40px rgba(236, 72, 153, 0.8),
+      0 0 60px rgba(245, 158, 11, 0.6);
+  }
+}
+
+/* Pulse animation when near completion */
+@keyframes progress-pulse {
+  0%, 100% {
+    box-shadow: 
+      0 0 10px rgba(139, 92, 246, 0.6),
+      0 0 20px rgba(236, 72, 153, 0.4);
+  }
+  50% {
+    box-shadow: 
+      0 0 15px rgba(139, 92, 246, 0.8),
+      0 0 30px rgba(236, 72, 153, 0.6);
+  }
+}
+

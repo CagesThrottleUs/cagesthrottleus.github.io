@@ -30,6 +30,9 @@ jobs:
       - name: install dependencies
         run: npm ci
 
+      - name: Run Lint
+        run: npm run lint
+
       - name: build project
         run: npm run build
 

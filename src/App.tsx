@@ -1,22 +1,32 @@
-import { View } from "@adobe/react-spectrum";
 import "./App.css";
+import { Suspense } from "react";
+import { Routes, Route } from "react-router";
+
+import CursorTracker from "./components/CursorTracker/CursorTracker";
+import CyberpunkScanlines from "./components/CyberpunkScanlines/CyberpunkScanlines";
 import FooterComponent from "./components/Footer/Footer";
 import HeaderComponent from "./components/Header/Header";
 import Homepage from "./components/Homepage/Homepage";
-import { Routes, Route } from "react-router";
-import { Suspense } from "react";
+import KeyboardShortcuts from "./components/KeyboardShortcuts/KeyboardShortcuts";
+import LoadingSpinner from "./components/LoadingSpinner/LoadingSpinner";
 import NotFoundComponent from "./components/NotFound/NotFound";
+import ReadingProgress from "./components/ReadingProgress/ReadingProgress";
+import ScrollToTop from "./components/ScrollToTop/ScrollToTop";
 
 function App() {
   return (
-    <>
+    <div className="app-wrapper">
+      <CyberpunkScanlines />
+      <KeyboardShortcuts />
+      <ReadingProgress />
       <HeaderComponent />
-      <View UNSAFE_className="app-content" backgroundColor="gray-100">
+      <div className="app-content">
+        <CursorTracker />
         <Routes>
           <Route
             path="/"
             element={
-              <Suspense fallback={<div>Loading...</div>}>
+              <Suspense fallback={<LoadingSpinner />}>
                 <Homepage />
               </Suspense>
             }
@@ -24,15 +34,16 @@ function App() {
           <Route
             path="*"
             element={
-              <Suspense fallback={<div>Loading...</div>}>
+              <Suspense fallback={<LoadingSpinner />}>
                 <NotFoundComponent />
               </Suspense>
             }
           />
         </Routes>
-      </View>
+      </div>
       <FooterComponent />
-    </>
+      <ScrollToTop />
+    </div>
   );
 }
 

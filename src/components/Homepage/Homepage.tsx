@@ -1,6 +1,9 @@
 import { Content, Flex } from "@adobe/react-spectrum";
-import { Heading } from "react-aria-components";
 import { useEffect, useRef, useState } from "react";
+import { Heading } from "react-aria-components";
+
+import ResumeContent from "./ResumeContent/ResumeContent";
+import { resumeData } from "./ResumeContent/resumeData.tsx";
 import "./Homepage.css";
 
 function Homepage() {
@@ -41,11 +44,23 @@ function Homepage() {
   }, [isVisible]);
 
   return (
-    <Flex marginTop="5vh" alignItems="center" direction="column" gap="size-200">
-      <Heading level={1} ref={headingRef} className="text-intro-name">
-        CagesThrottleUs
-      </Heading>
-      <Content>See my work below.</Content>
+    <Flex marginTop="5vh" alignItems="center" direction="column" gap="size-100">
+      <div className="homepage-intro">
+        <Heading level={1} ref={headingRef} className="text-intro-name">
+          CagesThrottleUs
+        </Heading>
+        <Content className="intro-content">
+          I like to code and keep learning. I graduated from BITS Pilani in 2023
+          with a B.E. in Computer Science with a CGPA of 8.05
+        </Content>
+      </div>
+
+      {/* Resume Content with configurable options */}
+      <ResumeContent
+        experiences={resumeData}
+        hoverScale={1.1} // Scale to 125% on hover
+        animationDuration={150} // 300ms animation
+      />
     </Flex>
   );
 }
