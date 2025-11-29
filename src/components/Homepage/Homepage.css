@@ -3,9 +3,9 @@
 }
 
 .text-intro-name {
-  font-family: "Bitcount Single Ink", system-ui;
+  font-family: var(--font-special);
   font-optical-sizing: auto;
-  font-weight: 500;
+  font-weight: var(--font-weight-medium);
   font-style: normal;
   font-size: 4em;
   font-variation-settings:
@@ -23,16 +23,16 @@
   /* Typewriter effect setup */
   overflow: hidden;
   white-space: nowrap;
-  border-right: 3px solid #ffd700;
+  border-right: 3px solid var(--gold);
   width: 0;
 
   /* Enhanced visual appeal */
-  background: linear-gradient(135deg, #8b5cf6, #ec4899, #f59e0b);
+  background: var(--gradient-purple-pink);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
   text-shadow: none;
-  filter: drop-shadow(0 0 20px rgba(139, 92, 246, 0.3));
+  filter: var(--drop-shadow-intro-name);
 }
 
 /* 
@@ -76,7 +76,7 @@
   /* 0-50%: Cursor visible (first half of blink cycle) */
   0%,
   50% {
-    border-color: #ffd700; /* Golden cursor visible */
+    border-color: var(--gold); /* Golden cursor visible */
   }
   /* 51-100%: Cursor hidden (second half of blink cycle) */
   51%,
@@ -100,12 +100,8 @@
   transform: translate(-50%, -50%);
   width: 120%;
   height: 120%;
-  background: radial-gradient(
-    circle,
-    rgba(139, 92, 246, 0.1) 0%,
-    transparent 70%
-  );
-  border-radius: 50%;
+  background: var(--gradient-glow-intro);
+  border-radius: var(--radius-full);
   filter: blur(60px);
   pointer-events: none;
   z-index: -1;
@@ -130,20 +126,18 @@
   font-size: 1.0625rem;
   font-weight: var(--font-weight-normal);
   line-height: var(--line-height-relaxed);
-  color: var(--color-text-secondary, #d1d5db);
+  color: var(--color-text-secondary);
   max-width: 48rem;
-  margin: 2rem auto;
-  padding: 1.5rem 2rem;
-  background: rgba(10, 14, 39, 0.6);
-  backdrop-filter: blur(20px);
-  border-radius: 1rem;
-  border: 1px solid rgba(139, 92, 246, 0.3);
+  margin: var(--spacing-xl) auto;
+  padding: var(--spacing-lg) var(--spacing-xl);
+  background: rgba(10, 14, 39, var(--opacity-60));
+  backdrop-filter: var(--backdrop-blur-md);
+  border-radius: var(--radius-lg);
+  border: 1px solid rgba(139, 92, 246, var(--opacity-30));
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   letter-spacing: 0.02em;
-  box-shadow:
-    0 0 30px rgba(139, 92, 246, 0.15),
-    inset 0 0 60px rgba(139, 92, 246, 0.05);
+  box-shadow: var(--shadow-intro-content);
 }
 
 /* Responsive adjustments */

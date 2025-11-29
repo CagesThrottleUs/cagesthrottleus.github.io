@@ -1,3 +1,6 @@
+/* Import centralized theme variables */
+@import "./theme-variables.css";
+
 /* Reset and base styles */
 * {
   box-sizing: border-box;
@@ -42,40 +45,9 @@ body {
  * - Code snippets
  * - Technical information
  * - Version numbers
+ * 
+ * Note: All typography variables are now defined in theme-variables.css
  */
-
-/* CSS Variables for Typography */
-:root {
-  /* Font Families */
-  --font-serif: "Crimson Pro", Georgia, serif;
-  --font-sans:
-    "Space Grotesk", "Red Hat Display", system-ui, -apple-system, sans-serif;
-  --font-display: "Red Hat Display", system-ui, -apple-system, sans-serif;
-  --font-mono: "JetBrains Mono", "Red Hat Mono", "Courier New", monospace;
-
-  /* Font Weights */
-  --font-weight-light: 300;
-  --font-weight-normal: 400;
-  --font-weight-medium: 500;
-  --font-weight-semibold: 600;
-  --font-weight-bold: 700;
-
-  /* Font Sizes */
-  --font-size-xs: 0.75rem;
-  --font-size-sm: 0.875rem;
-  --font-size-base: 1rem;
-  --font-size-lg: 1.125rem;
-  --font-size-xl: 1.25rem;
-  --font-size-2xl: 1.5rem;
-  --font-size-3xl: 1.875rem;
-  --font-size-4xl: 2.25rem;
-
-  /* Line Heights */
-  --line-height-tight: 1.25;
-  --line-height-normal: 1.5;
-  --line-height-relaxed: 1.75;
-  --line-height-loose: 2;
-}
 
 /* Legacy typography utilities (maintained for backwards compatibility) */
 .text-mono {
@@ -135,13 +107,13 @@ p {
 
 /* Selection styling */
 ::selection {
-  background: rgba(139, 92, 246, 0.3);
-  color: #ffffff;
+  background: rgba(139, 92, 246, var(--opacity-30));
+  color: var(--white);
 }
 
 ::-moz-selection {
-  background: rgba(139, 92, 246, 0.3);
-  color: #ffffff;
+  background: rgba(139, 92, 246, var(--opacity-30));
+  color: var(--white);
 }
 
 /* Custom scrollbar */
@@ -150,23 +122,23 @@ p {
 }
 
 ::-webkit-scrollbar-track {
-  background: rgba(17, 24, 39, 0.5);
+  background: rgba(17, 24, 39, var(--opacity-50));
 }
 
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, #8b5cf6 0%, #ec4899 100%);
+  background: var(--gradient-scrollbar);
   border-radius: 5px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(180deg, #9d73ff 0%, #ff5fab 100%);
+  background: var(--gradient-scrollbar-hover);
 }
 
 /* Focus styles for accessibility */
 *:focus-visible {
-  outline: 2px solid rgba(139, 92, 246, 0.6);
+  outline: 2px solid rgba(139, 92, 246, var(--opacity-60));
   outline-offset: 2px;
-  border-radius: 4px;
+  border-radius: var(--radius-sm);
 }
 
 /* Reduced motion for accessibility */
