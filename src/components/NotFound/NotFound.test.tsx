@@ -1,4 +1,5 @@
 import { describe, expect, it, vi } from "vitest";
+
 import NotFoundComponent from "./NotFound";
 import { render, screen } from "../../test/testUtils";
 
@@ -19,7 +20,7 @@ describe("NotFoundComponent", () => {
   it("renders error message", () => {
     render(<NotFoundComponent />);
     expect(
-      screen.getByText(/The page you're looking for has vanished/i)
+      screen.getByText(/The page you're looking for has vanished/i),
     ).toBeInTheDocument();
   });
 
@@ -89,10 +90,10 @@ describe("NotFoundComponent", () => {
   it("has glitch effect structure", () => {
     render(<NotFoundComponent />);
     const errorCode = document.querySelector(".error-code");
-    
+
     // Verify glitch structure exists
     expect(errorCode).toBeInTheDocument();
-    
+
     // Verify glitch layers exist
     const glitchLayers = document.querySelectorAll(".error-code-glitch");
     expect(glitchLayers.length).toBe(2);

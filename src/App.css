@@ -22,8 +22,7 @@
   right: 0;
   bottom: 0;
   background:
-    var(--gradient-ambient-purple),
-    var(--gradient-ambient-pink),
+    var(--gradient-ambient-purple), var(--gradient-ambient-pink),
     var(--gradient-ambient-blue);
   animation: gradient-shift 20s ease-in-out infinite;
   pointer-events: none;
@@ -41,8 +40,7 @@
   right: 0;
   bottom: 0;
   background-image:
-    var(--gradient-grid-line-vertical),
-    var(--gradient-grid-line-horizontal);
+    var(--gradient-grid-line-vertical), var(--gradient-grid-line-horizontal);
   background-size: 50px 50px;
   pointer-events: none;
   z-index: 0;

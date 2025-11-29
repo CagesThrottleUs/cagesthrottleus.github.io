@@ -1,7 +1,7 @@
 .cursor-tracker {
   --cursor-x: 0px;
   --cursor-y: 0px;
-  
+
   position: fixed;
   left: 0;
   top: 0;
@@ -11,7 +11,8 @@
   background: var(--gradient-cursor);
   pointer-events: none;
   /* GPU-accelerated transform - percentage-based centering */
-  transform: translate3d(var(--cursor-x), var(--cursor-y), 0) translate(-50%, -50%);
+  transform: translate3d(var(--cursor-x), var(--cursor-y), 0)
+    translate(-50%, -50%);
   z-index: 9999;
   box-shadow: var(--glow-cursor);
   /* Use will-change to hint browser for optimization */

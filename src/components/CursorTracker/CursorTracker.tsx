@@ -22,9 +22,9 @@ function CursorTracker() {
       // Use requestAnimationFrame to batch DOM updates efficiently
       animationFrameId = requestAnimationFrame(() => {
         // Use CSS custom properties for GPU-accelerated transform
-        cursor.style.setProperty('--cursor-x', `${e.clientX}px`);
-        cursor.style.setProperty('--cursor-y', `${e.clientY}px`);
-        cursor.style.opacity = isOverNoTrack ? '0' : '1';
+        cursor.style.setProperty("--cursor-x", `${String(e.clientX)}px`);
+        cursor.style.setProperty("--cursor-y", `${String(e.clientY)}px`);
+        cursor.style.opacity = isOverNoTrack ? "0" : "1";
       });
     };
 
@@ -38,12 +38,6 @@ function CursorTracker() {
     };
   }, []);
 
-  return (
-    <div
-      ref={cursorRef}
-      className="cursor-tracker"
-    />
-  );
+  return <div ref={cursorRef} className="cursor-tracker" />;
 }
-
 export default CursorTracker;

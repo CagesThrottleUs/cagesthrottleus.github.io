@@ -1,97 +1,79 @@
-:root {
-  --typewriter-character-count: 16;
-}
-
-.text-intro-name {
-  font-family: var(--font-special);
-  font-optical-sizing: auto;
-  font-weight: var(--font-weight-medium);
-  font-style: normal;
-  font-size: 4em;
-  font-variation-settings:
-    "slnt" 0,
-    "CRSV" 1,
-    "ELSH" 59.2,
-    "ELXP" 21,
-    "SZP1" 44,
-    "SZP2" 29,
-    "XPN1" 19,
-    "XPN2" 0,
-    "YPN1" -21,
-    "YPN2" 0;
-
-  /* Typewriter effect setup */
-  overflow: hidden;
-  white-space: nowrap;
-  border-right: 3px solid var(--gold);
-  width: 0;
-
-  /* Enhanced visual appeal */
-  background: var(--gradient-purple-pink);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  text-shadow: none;
-  filter: var(--drop-shadow-intro-name);
-}
-
 /* 
- * TYPEWRITER ANIMATION SYSTEM
+ * ASCII ART NAME STYLING
  * 
- * Timing Breakdown:
- * - 2s total duration (2 seconds for complete typing)
- * - 0.25s delay (250ms before animation starts)
- * - 16 steps = 0.125s per character (2s ÷ 16 = 125ms per character)
- * - 2.25s cursor start (2s typing + 0.25s delay = when cursor blinking begins)
- * 
- * Magic Numbers Explained:
- * - 0.25s delay: Smooth entry, prevents jarring start
- * - 2s duration: Realistic typing speed (125ms per character)
- * - 0.75s cursor blink: Natural blinking rhythm (750ms per blink cycle)
- * - 3px cursor: Visible but not overwhelming
- * - 51% cursor timing: Slightly longer visible than hidden for readability
+ * Cold War Classified Document Theme
+ * - Monospace font for authentic terminal/typewriter feel
+ * - CLASSIFIED red glow with terminal green accents
+ * - Box shadow for depth and intelligence file aesthetic
+ * - No animations for maximum performance
  */
-.text-intro-name.animate {
-  animation: 
-        /* Typewriter: 2s duration, 16 steps, 0.25s delay, runs once, both directions */
-    typewriter 2s steps(var(--typewriter-character-count), end) 0.25s 1 normal
-      both,
-    /* Cursor: 0.75s blink cycle, infinite, starts after 2.25s (typing complete) */
-    blink-cursor 0.75s step-end infinite 1.5s;
+.ascii-art-name {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: var(--spacing-lg);
+  width: 100%;
+  overflow-x: auto;
 }
 
-/* Typewriter width animation - reveals text character by character */
-@keyframes typewriter {
-  from {
-    width: 0; /* Start: no text visible */
-  }
-  to {
-    /* End: full text width (16 characters × 1 character unit) */
-    width: calc(var(--typewriter-character-count) * 1ch);
-  }
+.ascii-text {
+  font-family: var(--font-mono);
+  font-size: 0.5rem; /* 8px - extra compact for single-line art */
+  line-height: 1.2;
+  color: var(--classified-500);
+  text-shadow: var(--glow-text-primary);
+  margin: 0 auto;
+  padding: var(--spacing-lg);
+  background: rgba(10, 10, 10, 0.8);
+  border: 2px solid var(--color-border-primary);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-card);
+  white-space: pre;
+
+  /* Add subtle terminal green accent to borders */
+  outline: 1px solid var(--color-border-accent);
+  outline-offset: 2px;
+
+  /* Prevent text selection for cleaner look */
+  user-select: none;
+  -webkit-user-select: none;
+
+  /* Anti-aliasing for crisp text */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  /* Custom scrollbar for horizontal overflow */
+  scrollbar-width: thin;
+  scrollbar-color: var(--classified-500) rgba(10, 10, 10, 0.8);
 }
 
-/* Cursor blinking animation - creates typing cursor effect */
-@keyframes blink-cursor {
-  /* 0-50%: Cursor visible (first half of blink cycle) */
-  0%,
-  50% {
-    border-color: var(--gold); /* Golden cursor visible */
-  }
-  /* 51-100%: Cursor hidden (second half of blink cycle) */
-  51%,
-  100% {
-    border-color: transparent; /* Cursor invisible */
-  }
+/* Webkit scrollbar styling for ASCII art */
+.ascii-text::-webkit-scrollbar {
+  height: 6px;
 }
 
-/* Enhanced intro section styling */
+.ascii-text::-webkit-scrollbar-track {
+  background: rgba(10, 10, 10, 0.8);
+  border-radius: var(--radius-sm);
+}
+
+.ascii-text::-webkit-scrollbar-thumb {
+  background: var(--classified-500);
+  border-radius: var(--radius-sm);
+}
+
+.ascii-text::-webkit-scrollbar-thumb:hover {
+  background: var(--classified-400);
+}
+
+/* Enhanced intro section styling - static for performance */
 .homepage-intro {
   position: relative;
   padding: 4rem 2rem;
   text-align: center;
 }
 
+/* Removed animated glow for performance - using static shadow instead */
 .homepage-intro::before {
   content: "";
   position: absolute;
@@ -102,24 +84,10 @@
   height: 120%;
   background: var(--gradient-glow-intro);
   border-radius: var(--radius-full);
-  /* Reduced blur for better performance - 30px instead of 60px */
-  filter: blur(30px);
+  filter: blur(40px);
+  opacity: 0.7;
   pointer-events: none;
   z-index: -1;
-  animation: pulse-glow-intro 4s ease-in-out infinite;
-  /* GPU acceleration hint */
-  will-change: opacity;
-}
-
-/* Optimized animation - removed scale transform for performance */
-@keyframes pulse-glow-intro {
-  0%,
-  100% {
-    opacity: 0.6;
-  }
-  50% {
-    opacity: 0.9;
-  }
 }
 
 /* Enhanced intro content text - cyberpunk style */
@@ -142,10 +110,17 @@
   box-shadow: var(--shadow-intro-content);
 }
 
-/* Responsive adjustments */
+/* Responsive adjustments - single-line ASCII needs careful sizing */
+@media (max-width: 75rem) {
+  .ascii-text {
+    font-size: 0.4375rem; /* 7px - slightly smaller for medium screens */
+  }
+}
+
 @media (max-width: 48rem) {
-  .text-intro-name {
-    font-size: 3em;
+  .ascii-text {
+    font-size: 0.375rem; /* 6px - smaller on tablets */
+    padding: var(--spacing-md);
   }
 
   .intro-content {
@@ -155,8 +130,9 @@
 }
 
 @media (max-width: 30rem) {
-  .text-intro-name {
-    font-size: 2.5em;
+  .ascii-text {
+    font-size: 0.3125rem; /* 5px - very small on mobile, allows horizontal scroll */
+    padding: var(--spacing-sm);
   }
 
   .intro-content {
