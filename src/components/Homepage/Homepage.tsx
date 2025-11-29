@@ -47,7 +47,10 @@ function Homepage() {
       <Heading level={1} ref={headingRef} className="text-intro-name">
         CagesThrottleUs
       </Heading>
-      <Content>See my work below.</Content>
+      <Content>
+        I like to code and keep learning. I graduated from BITS Pilani in 2023
+        with a B.E. in Computer Science with a CGPA of 8.05
+      </Content>
 
       {/* Resume Content with configurable options */}
       <ResumeContent
