@@ -28,7 +28,7 @@ function HeaderComponent() {
                 cagesthrottleus
               </Heading>
             </Link>
-            <Text marginTop="size-200">v{APPLICATION_VERSION}</Text>
+            <Text marginTop="size-150">v{APPLICATION_VERSION}</Text>
           </Flex>
           <Flex
             direction="row"
