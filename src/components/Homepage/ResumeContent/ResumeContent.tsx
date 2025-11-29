@@ -1,8 +1,8 @@
-import { useState } from "react";
-import { Heading, Text, Separator } from "react-aria-components";
 import { motion, useInView } from "framer-motion";
-import { useRef } from "react";
 import { Calendar, Award, Code, Zap } from "lucide-react";
+import { useState , useRef } from "react";
+import { Heading, Text, Separator } from "react-aria-components";
+
 import type {
   ResumeContentConfig,
   CompanyExperience,

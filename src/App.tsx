@@ -1,16 +1,17 @@
 import "./App.css";
+import { Suspense } from "react";
+import { Routes, Route } from "react-router";
+
+import CursorTracker from "./components/CursorTracker/CursorTracker";
+import CyberpunkScanlines from "./components/CyberpunkScanlines/CyberpunkScanlines";
 import FooterComponent from "./components/Footer/Footer";
 import HeaderComponent from "./components/Header/Header";
 import Homepage from "./components/Homepage/Homepage";
-import { Routes, Route } from "react-router";
-import { Suspense } from "react";
+import KeyboardShortcuts from "./components/KeyboardShortcuts/KeyboardShortcuts";
+import LoadingSpinner from "./components/LoadingSpinner/LoadingSpinner";
 import NotFoundComponent from "./components/NotFound/NotFound";
-import CursorTracker from "./components/CursorTracker/CursorTracker";
 import ReadingProgress from "./components/ReadingProgress/ReadingProgress";
 import ScrollToTop from "./components/ScrollToTop/ScrollToTop";
-import LoadingSpinner from "./components/LoadingSpinner/LoadingSpinner";
-import KeyboardShortcuts from "./components/KeyboardShortcuts/KeyboardShortcuts";
-import CyberpunkScanlines from "./components/CyberpunkScanlines/CyberpunkScanlines";
 
 function App() {
   return (

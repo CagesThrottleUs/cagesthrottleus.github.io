@@ -1,6 +1,6 @@
-import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowUp } from 'lucide-react';
+import { useState, useEffect } from 'react';
 import './ScrollToTop.css';
 
 /**
@@ -21,7 +21,7 @@ const ScrollToTop = () => {
     };
 
     window.addEventListener('scroll', toggleVisibility);
-    return () => window.removeEventListener('scroll', toggleVisibility);
+    return () => { window.removeEventListener('scroll', toggleVisibility); };
   }, []);
 
   const scrollToTop = () => {

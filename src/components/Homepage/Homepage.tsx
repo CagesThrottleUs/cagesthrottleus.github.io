@@ -1,6 +1,7 @@
 import { Content, Flex } from "@adobe/react-spectrum";
-import { Heading } from "react-aria-components";
 import { useEffect, useRef, useState } from "react";
+import { Heading } from "react-aria-components";
+
 import ResumeContent from "./ResumeContent/ResumeContent";
 import { resumeData } from "./ResumeContent/resumeData.tsx";
 import "./Homepage.css";

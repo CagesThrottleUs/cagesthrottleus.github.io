@@ -1,6 +1,7 @@
-import { Text } from "react-aria-components";
-import type { CompanyExperience } from "./types";
 import { Flex } from "@adobe/react-spectrum";
+import { Text } from "react-aria-components";
+
+import type { CompanyExperience } from "./types";
 
 /**
  * Resume data structured by company and position

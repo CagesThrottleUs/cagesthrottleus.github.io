@@ -7,7 +7,7 @@ import './CyberpunkScanlines.css';
 const CyberpunkScanlines = () => {
   return (
     <div className="cyberpunk-scanlines" aria-hidden="true">
-      <div className="scanline-overlay"></div>
+      <div className="scanline-overlay" />
     </div>
   );
 };

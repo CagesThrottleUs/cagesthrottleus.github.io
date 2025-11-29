@@ -1,8 +1,10 @@
 import { Flex, Heading, Text } from "@adobe/react-spectrum";
 import { Link } from "react-aria-components";
-import "./Header.css";
-import { APPLICATION_VERSION, SUPPORTED_APPLICATIONS } from "./constants";
 import { useNavigate } from "react-router";
+
+import { APPLICATION_VERSION, SUPPORTED_APPLICATIONS } from "./constants";
+
+import "./Header.css";
 
 function HeaderComponent() {
   const navigate = useNavigate();

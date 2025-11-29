@@ -19,8 +19,8 @@ const LoadingSpinner = () => {
           ease: "linear"
         }}
       >
-        <div className="spinner-ring"></div>
-        <div className="spinner-ring-inner"></div>
+        <div className="spinner-ring" />
+        <div className="spinner-ring-inner" />
       </motion.div>
       <motion.p
         className="loading-text"

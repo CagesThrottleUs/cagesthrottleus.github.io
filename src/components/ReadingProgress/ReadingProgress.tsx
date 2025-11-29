@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
 import { motion, useScroll, useSpring } from 'framer-motion';
+import { useEffect, useState } from 'react';
 import './ReadingProgress.css';
 
 /**
@@ -22,7 +22,7 @@ const ReadingProgress = () => {
       setIsVisible(latest > 0.1);
     });
 
-    return () => unsubscribe();
+    return () => { unsubscribe(); };
   }, [scrollYProgress]);
 
   return (
