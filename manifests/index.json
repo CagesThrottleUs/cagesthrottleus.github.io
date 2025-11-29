@@ -1,9 +1,18 @@
 {
-  "version": "2025-11-29T16:21:50.874568+00:00",
-  "totalPosts": 1,
+  "version": "2025-11-29T17:05:37.480373+00:00",
+  "totalPosts": 2,
   "totalPages": 1,
   "postsPerPage": 50,
   "latestPosts": [
+    {
+      "slug": "2025-11-30-component-showcase",
+      "title": "OPERATION COMPONENT SHOWCASE: MDX CAPABILITIES DEMONSTRATION",
+      "classification": "CONFIDENTIAL // INTERNAL USE ONLY",
+      "abstract": "Comprehensive demonstration of all available MDX components for intelligence briefing authoring. This document serves as a reference implementation for future operations documentation.",
+      "publishDate": "2025-11-30",
+      "version": "1.0",
+      "thumbnail": "thumbnails/default.svg"
+    },
     {
       "slug": "2025-11-29-hello-world",
       "title": "OPERATION HELLO WORLD: INITIAL BRIEFING",
