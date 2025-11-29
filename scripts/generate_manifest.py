@@ -78,7 +78,7 @@ def get_post_metadata(mdx_file: Path) -> PostMetadata | None:
 
         # Validate required fields
         if not frontmatter.get("title"):
-            print(f"  ⚠️  Warning: {slug} missing title")
+            print(f"  [WARN] {slug} missing title")
             return None
 
         return PostMetadata(
@@ -91,7 +91,7 @@ def get_post_metadata(mdx_file: Path) -> PostMetadata | None:
             thumbnail=frontmatter.get("thumbnail", "thumbnails/default.svg"),
         )
     except Exception as e:
-        print(f"  ✗ Error processing {mdx_file}: {e}")
+        print(f"  [ERROR] Error processing {mdx_file}: {e}")
         return None
 
 
@@ -108,11 +108,11 @@ def generate_manifests():
 
     # Get all MDX files
     if not POSTS_DIR.exists():
-        print(f"✗ Posts directory not found: {POSTS_DIR}")
+        print(f"[ERROR] Posts directory not found: {POSTS_DIR}")
         return
 
     mdx_files = sorted(POSTS_DIR.glob("*.mdx"), reverse=True)  # Newest first
-    print(f"📚 Found {len(mdx_files)} MDX file(s)")
+    print(f"[INFO] Found {len(mdx_files)} MDX file(s)")
     print()
 
     # Extract metadata from all posts
@@ -126,15 +126,15 @@ def generate_manifests():
             metadata_file = METADATA_DIR / f'{metadata["slug"]}.json'
             with open(metadata_file, "w", encoding="utf-8") as f:
                 json.dump(metadata, f, indent=2)
-            print(f"  ✓ {metadata['slug']}")
+            print(f"  [OK] {metadata['slug']}")
 
     if not all_posts:
         print()
-        print("⚠️  No valid posts found")
+        print("[WARN] No valid posts found")
         return
 
     print()
-    print(f"✓ Processed {len(all_posts)} post(s)")
+    print(f"[OK] Processed {len(all_posts)} post(s)")
     print()
 
     # Sort by date (newest first)
@@ -142,7 +142,7 @@ def generate_manifests():
 
     # Generate paginated manifests
     total_pages = (len(all_posts) + POSTS_PER_PAGE - 1) // POSTS_PER_PAGE
-    print(f"📄 Generating {total_pages} page(s)...")
+    print(f"[INFO] Generating {total_pages} page(s)...")
 
     for page_num in range(1, total_pages + 1):
         start_idx = (page_num - 1) * POSTS_PER_PAGE
@@ -154,7 +154,7 @@ def generate_manifests():
         page_file = MANIFESTS_DIR / f"page-{page_num}.json"
         with open(page_file, "w", encoding="utf-8") as f:
             json.dump(page_manifest, f, indent=2)
-        print(f"  ✓ page-{page_num}.json ({len(page_posts)} posts)")
+        print(f"  [OK] page-{page_num}.json ({len(page_posts)} posts)")
 
     # Generate index manifest
     index = {
@@ -173,10 +173,10 @@ def generate_manifests():
         json.dump(index, f, indent=2)
 
     print()
-    print("📇 Generated index.json")
+    print("[OK] Generated index.json")
     print()
     print("=" * 60)
-    print(f"✨ Complete! {len(all_posts)} posts across {total_pages} page(s)")
+    print(f"[SUCCESS] Complete! {len(all_posts)} posts across {total_pages} page(s)")
     print("=" * 60)
 
 
