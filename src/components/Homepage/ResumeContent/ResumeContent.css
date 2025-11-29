@@ -430,11 +430,12 @@
   border-radius: var(--radius-xl);
   padding: 0;
   overflow: hidden;
-  transform-origin: left center;
+  transform-origin: center center;
   will-change: transform;
   cursor: pointer;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   box-shadow: var(--shadow-card);
+  z-index: 1;
 }
 
 /* Gradient border effect */
@@ -593,6 +594,7 @@
   background: rgba(10, 14, 39, var(--opacity-80));
   box-shadow: var(--shadow-card-hover);
   transform: translateY(-6px);
+  z-index: 10;
 }
 
 /* Enhanced logo hover */

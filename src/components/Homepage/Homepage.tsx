@@ -58,8 +58,8 @@ function Homepage() {
       {/* Resume Content with configurable options */}
       <ResumeContent
         experiences={resumeData}
-        hoverScale={1.1} // Scale to 125% on hover
-        animationDuration={150} // 300ms animation
+        hoverScale={1.1}
+        animationDuration={150} 
       />
     </Flex>
   );
