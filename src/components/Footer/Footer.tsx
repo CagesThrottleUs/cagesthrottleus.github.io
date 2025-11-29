@@ -2,7 +2,7 @@ import "./Footer.css";
 
 function FooterComponent() {
   return (
-    <div className="app-footer footer-container">
+    <div className="app-footer footer-container no-cursor-track">
       <footer className="text-footer">
         Built with ❤️ by CagesThrottleUs. &copy; 2025. &nbsp;
       </footer>

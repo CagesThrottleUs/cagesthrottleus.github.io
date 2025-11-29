@@ -7,7 +7,7 @@ import { useNavigate } from "react-router";
 function HeaderComponent() {
   const navigate = useNavigate();
   return (
-    <div className="app-header header-container">
+    <div className="app-header header-container no-cursor-track">
       <div className="text-header">
         <Flex
           direction="row"

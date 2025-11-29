@@ -1,6 +1,8 @@
 import { Content, Flex } from "@adobe/react-spectrum";
 import { Heading } from "react-aria-components";
 import { useEffect, useRef, useState } from "react";
+import ResumeContent from "./ResumeContent/ResumeContent";
+import { resumeData } from "./ResumeContent/resumeData.tsx";
 import "./Homepage.css";
 
 function Homepage() {
@@ -46,6 +48,13 @@ function Homepage() {
         CagesThrottleUs
       </Heading>
       <Content>See my work below.</Content>
+
+      {/* Resume Content with configurable options */}
+      <ResumeContent
+        experiences={resumeData}
+        hoverScale={1.1} // Scale to 125% on hover
+        animationDuration={150} // 300ms animation
+      />
     </Flex>
   );
 }

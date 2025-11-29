@@ -7,7 +7,7 @@
 
 .footer-container {
   border-top: var(--spectrum-alias-border-size-thin) solid var(--spectrum-global-color-gray-300);
-  width: 100%;
+  width: 100vw;
   background-color: var(--spectrum-gray-50);
   padding: var(--spectrum-global-dimension-size-200);
   flex-shrink: 0;

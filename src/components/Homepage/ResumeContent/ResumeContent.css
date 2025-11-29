@@ -1,0 +1,440 @@
+/**
+ * RESUME CONTENT STYLES (LinkedIn-inspired format)
+ *
+ * Design Philosophy:
+ * - Relative units (rem, em, %) for responsive scaling across resolutions
+ * - Company groupings with visual hierarchy
+ * - Timeline connects all experiences vertically
+ * - Cards scale on hover without cursor tracking
+ * - Centered layout with max-width constraint
+ * - Red Hat font family throughout
+ *
+ * Color Scheme:
+ * - Timeline: rgba(255, 255, 255, 0.3) - subtle, consistent across all items
+ * - White/light colors for titles with smooth fonts
+ * - Semi-transparent cards for depth
+ */
+
+/**
+ * Disable cursor tracking on work items
+ */
+.no-cursor-track {
+  pointer-events: auto;
+}
+
+.no-cursor-track * {
+  pointer-events: auto;
+}
+
+/**
+ * Main Container
+ * - Centered with max-width for readability
+ * - Flexbox column layout
+ * - Responsive padding using viewport-relative units
+ * - Left margin adjusted to visually center content accounting for timeline offset
+ * 
+ * Visual Centering:
+ * - Company sections have 10rem (160px) left padding for timeline
+ * - To visually center, shift container 5rem (half of 10rem) to the left
+ */
+.resume-content {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 50rem; /* 800px at default font size */
+  margin: 0 auto 0 calc(50% - 25rem - 7rem); /* Shift left to visually center content */
+  padding: 2rem;
+  gap: 3rem; /* Space between companies */
+}
+
+/**
+ * Company Section
+ * - Contains company header, timeline, and all positions
+ * - Relative positioning for timeline marker
+ */
+.company-section {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding-left: 10rem; /* Increased space: timeline info (5rem) + gap (2rem) + marker + margin (3rem) */
+}
+
+/**
+ * Company Header (on background, not in card)
+ * - Prominent display of company name
+ * - Golden color for emphasis
+ */
+.company-header {
+  margin-bottom: 0.5rem;
+}
+
+.company-name {
+  font-family: "Red Hat Display", sans-serif;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0;
+  letter-spacing: 0.02em;
+  font-smooth: always;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/**
+ * Timeline Marker (Vertical Line)
+ *
+ * Design:
+ * - Consistent light color across all companies/positions
+ * - Center-aligned at 7rem from left edge
+ * - Extends through entire company section
+ * - Acts as visual connector
+ * - Shares center position with company logo
+ *
+ * Color Choice:
+ * - rgba(255, 255, 255, 0.3): Light, subtle, consistent
+ * - Lighter than text background for visual hierarchy
+ */
+.timeline-marker {
+  position: absolute;
+  left: 7rem; /* Center position from left edge */
+  transform: translateX(-50%); /* Center the marker at this position */
+  top: 0;
+  bottom: 0;
+  width: 0.125rem; /* 2px - reduced thickness */
+  background-color: rgba(255, 255, 255, 0.3);
+  border-radius: 0.0625rem;
+}
+
+/**
+ * Positions Container
+ * - Holds all positions for a company
+ */
+.positions-container {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+/**
+ * Position Section
+ * - Individual position with work items
+ */
+.position-section {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/**
+ * Position Header (not in card)
+ * - Shows title and date range
+ * - Lighter styling than company header
+ */
+.position-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.position-title {
+  font-family: "Red Hat Display", sans-serif;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #fff;
+  margin: 0;
+  font-smooth: always;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.position-date {
+  font-family: "Red Hat Text", sans-serif;
+  font-size: 0.875rem;
+  color: #aaa;
+  margin: 0;
+  font-style: italic;
+  font-smooth: always;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/**
+ * Work Items Container
+ * - Holds all work item cards for a position
+ */
+.work-items-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/**
+ * Work Item Wrapper
+ * - Positions timeline elements relative to card
+ * - No cursor tracking (timeline info at fixed position)
+ */
+.work-item-wrapper {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+}
+
+/**
+ * Timeline Information (Date + Logo)
+ *
+ * Behavior:
+ * - Hidden by default (opacity: 0, translateX: -1.25rem)
+ * - Appears on card hover at TOP of card (not cursor position)
+ * - Logo sits ON TOP of timeline separator
+ * - Date appears to the left of timeline separator
+ * - No cursor Y tracking for cleaner UX
+ *
+ * Position:
+ * - Positioned relative to work-item-wrapper
+ * - Children use absolute positioning within this container
+ */
+.timeline-info {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 2.5rem; /* Match logo height */
+  opacity: 0;
+  transform: translateX(-1.25rem);
+  transition: all var(--animation-duration, 300ms) ease-out;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.timeline-info.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/**
+ * Timeline Date Styling
+ * - Small, muted text in italic
+ * - Right-aligned for visual flow toward logo
+ * - Positioned to left of logo with 0.75rem gap
+ * 
+ * Positioning:
+ * Logo is at left: -3rem (center at -3rem)
+ * Logo left edge = -3rem - 1.25rem = -4.25rem
+ * Date ends at: -4.25rem - 0.75rem gap = -5rem
+ */
+.timeline-date {
+  font-family: "Red Hat Mono", monospace;
+  font-size: 0.75rem;
+  font-style: italic;
+  color: #888;
+  white-space: nowrap;
+  text-align: right;
+  position: absolute;
+  right: 100%;
+  transform: translateX(calc(-5.25rem)); /* Position so date ends with 0.75rem (12px) gap before logo */
+  font-smooth: always;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/**
+ * Company Logo
+ * - Fixed dimensions using rem for scaling
+ * - Circular crop
+ * - White background for transparent logos
+ * - Positioned relative to work-item-wrapper (parent context)
+ * - Must align with timeline marker which is in company-section
+ * - Logo offset calculation: company-section padding (10rem) - timeline-info left offset (matches wrapper position)
+ */
+.company-logo {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  object-fit: contain;
+  background-color: white;
+  padding: 0.25rem;
+  box-shadow: 0 0 0 0.1875rem rgba(0, 0, 0, 0.8), /* Dark border for contrast against separator */
+              0 0.125rem 0.5rem rgba(0, 0, 0, 0.3); /* Subtle shadow for depth */
+  position: absolute;
+  left: -3rem; /* Adjusted to align with marker center */
+  transform: translateX(-50%); /* Center the logo */
+  z-index: 2; /* Above separator to overlay it */
+}
+
+/**
+ * Work Item Card
+ *
+ * Hover Effect:
+ * - Scale transform: 1 → var(--hover-scale, 1.25)
+ * - Box shadow intensifies on hover
+ * - Transform origin: left center (keeps timeline aligned)
+ * - GPU-accelerated via transform
+ *
+ * Layout:
+ * - Full width within wrapper
+ * - Semi-transparent background for depth
+ * - Rounded corners for modern aesthetic
+ */
+.work-item-card {
+  flex: 1;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 0.75rem;
+  padding: 1.5rem;
+  transition: transform var(--animation-duration, 300ms) ease-out,
+    box-shadow var(--animation-duration, 300ms) ease-out;
+  transform-origin: left center;
+  will-change: transform;
+  cursor: pointer;
+}
+
+.work-item-card:hover {
+  transform: scale(var(--hover-scale, 1.25));
+  box-shadow: 0 0.5rem 2rem rgba(255, 215, 0, 0.2);
+}
+
+/**
+ * Card Content
+ */
+.work-date-range {
+  font-family: "Red Hat Mono", monospace;
+  font-size: 0.875rem;
+  color: #aaa;
+  margin: 0 0 0.75rem 0;
+  font-style: italic;
+  font-smooth: always;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.work-description {
+  font-family: "Red Hat Text", sans-serif;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #ccc;
+  margin: 0;
+  font-smooth: always;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/**
+ * Responsive Design
+ *
+ * Tablet (max-width: 48rem / 768px)
+ * - Reduce padding and spacing
+ * - Smaller timeline elements
+ */
+@media (max-width: 48rem) {
+  .resume-content {
+    padding: 1.5rem;
+    gap: 2.5rem;
+    margin: 0 auto 0 calc(50% - 25rem - 4rem); /* Adjust for tablet (6rem padding / 2 = 3rem, round to 4rem) */
+  }
+
+  .company-section {
+    padding-left: 6rem;
+  }
+
+  .company-name {
+    font-size: 1.75rem;
+  }
+
+  .position-title {
+    font-size: 1.25rem;
+  }
+
+  .timeline-marker {
+    left: 5rem;
+    width: 0.09375rem; /* 1.5px for tablet */
+  }
+
+  .timeline-info {
+    height: 2rem;
+  }
+
+  .timeline-date {
+    font-size: 0.625rem;
+    transform: translateX(calc(-3.25rem)); /* Tablet: Adjusted for 5rem marker and smaller logo */
+  }
+
+  .company-logo {
+    width: 2rem;
+    height: 2rem;
+    left: -1rem; /* Tablet: -(6rem padding - 5rem marker) = -1rem */
+    box-shadow: 0 0 0 0.125rem rgba(0, 0, 0, 0.8),
+                0 0.0625rem 0.25rem rgba(0, 0, 0, 0.3);
+  }
+
+  .company-logo {
+    width: 2rem;
+    height: 2rem;
+  }
+
+  .work-item-card:hover {
+    transform: scale(1.1); /* Reduced scale for tablets */
+  }
+}
+
+/**
+ * Mobile (max-width: 30rem / 480px)
+ * - Minimal timeline elements
+ * - Focus on content readability
+ * - Reduced hover effects
+ */
+@media (max-width: 30rem) {
+  .resume-content {
+    padding: 1rem;
+    gap: 2rem;
+    margin: 0 auto; /* Mobile: center normally (timeline hidden) */
+  }
+
+  .company-section {
+    padding-left: 2rem;
+  }
+
+  .company-name {
+    font-size: 1.5rem;
+  }
+
+  .position-title {
+    font-size: 1.125rem;
+  }
+
+  .position-date {
+    font-size: 0.75rem;
+  }
+
+  .timeline-marker {
+    left: 1rem;
+    width: 0.0625rem; /* 1px for mobile */
+  }
+
+  /* Hide timeline info on mobile (not enough space) */
+  .timeline-info {
+    display: none;
+  }
+
+  .timeline-date {
+    font-size: 0.5rem;
+  }
+
+  .work-item-card {
+    padding: 1rem;
+  }
+
+  .work-date-range {
+    font-size: 0.75rem;
+  }
+
+  .work-description {
+    font-size: 0.875rem;
+  }
+
+  .work-item-card:hover {
+    transform: scale(1.05); /* Minimal scale for mobile */
+  }
+}
