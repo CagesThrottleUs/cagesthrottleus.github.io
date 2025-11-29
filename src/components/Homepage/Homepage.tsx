@@ -44,13 +44,15 @@ function Homepage() {
 
   return (
     <Flex marginTop="5vh" alignItems="center" direction="column" gap="size-100">
-      <Heading level={1} ref={headingRef} className="text-intro-name">
-        CagesThrottleUs
-      </Heading>
-      <Content>
-        I like to code and keep learning. I graduated from BITS Pilani in 2023
-        with a B.E. in Computer Science with a CGPA of 8.05
-      </Content>
+      <div className="homepage-intro">
+        <Heading level={1} ref={headingRef} className="text-intro-name">
+          CagesThrottleUs
+        </Heading>
+        <Content className="intro-content">
+          I like to code and keep learning. I graduated from BITS Pilani in 2023
+          with a B.E. in Computer Science with a CGPA of 8.05
+        </Content>
+      </div>
 
       {/* Resume Content with configurable options */}
       <ResumeContent

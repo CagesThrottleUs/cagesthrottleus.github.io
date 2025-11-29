@@ -21,10 +21,18 @@
       "YPN2" 0;
     
     /* Typewriter effect setup */
-    overflow: hidden;                    /* Hide text outside container */
-    white-space: nowrap;                 /* Prevent text wrapping */
-    border-right: 3px solid #ffd700;    /* Golden cursor (3px = visible thickness) */
-    width: 0;                           /* Start with no visible text */
+    overflow: hidden;
+    white-space: nowrap;
+    border-right: 3px solid #ffd700;
+    width: 0;
+    
+    /* Enhanced visual appeal */
+    background: linear-gradient(135deg, #8B5CF6, #EC4899, #F59E0B);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-shadow: none;
+    filter: drop-shadow(0 0 20px rgba(139, 92, 246, 0.3));
 }
 
 /* 
@@ -72,4 +80,83 @@
     51%, 100% {
         border-color: transparent; /* Cursor invisible */
     }
+}
+
+/* Enhanced intro section styling */
+.homepage-intro {
+  position: relative;
+  padding: 4rem 2rem;
+  text-align: center;
+}
+
+.homepage-intro::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 120%;
+  height: 120%;
+  background: radial-gradient(circle, rgba(139, 92, 246, 0.1) 0%, transparent 70%);
+  border-radius: 50%;
+  filter: blur(60px);
+  pointer-events: none;
+  z-index: -1;
+  animation: pulse-glow-intro 4s ease-in-out infinite;
+}
+
+@keyframes pulse-glow-intro {
+  0%, 100% {
+    opacity: 0.6;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  50% {
+    opacity: 0.9;
+    transform: translate(-50%, -50%) scale(1.1);
+  }
+}
+
+/* Enhanced intro content text - cyberpunk style */
+.intro-content {
+  font-family: var(--font-mono);
+  font-size: 1.0625rem;
+  font-weight: var(--font-weight-normal);
+  line-height: var(--line-height-relaxed);
+  color: var(--color-text-secondary, #D1D5DB);
+  max-width: 48rem;
+  margin: 2rem auto;
+  padding: 1.5rem 2rem;
+  background: rgba(10, 14, 39, 0.6);
+  backdrop-filter: blur(20px);
+  border-radius: 1rem;
+  border: 1px solid rgba(139, 92, 246, 0.3);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  letter-spacing: 0.02em;
+  box-shadow: 
+    0 0 30px rgba(139, 92, 246, 0.15),
+    inset 0 0 60px rgba(139, 92, 246, 0.05);
+}
+
+/* Responsive adjustments */
+@media (max-width: 48rem) {
+  .text-intro-name {
+    font-size: 3em;
+  }
+  
+  .intro-content {
+    font-size: 1rem;
+    padding: 1.25rem 1.5rem;
+  }
+}
+
+@media (max-width: 30rem) {
+  .text-intro-name {
+    font-size: 2.5em;
+  }
+  
+  .intro-content {
+    font-size: 0.9375rem;
+    padding: 1rem;
+  }
 }

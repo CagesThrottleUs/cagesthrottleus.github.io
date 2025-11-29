@@ -6,10 +6,18 @@ import { Routes, Route } from "react-router";
 import { Suspense } from "react";
 import NotFoundComponent from "./components/NotFound/NotFound";
 import CursorTracker from "./components/CursorTracker/CursorTracker";
+import ReadingProgress from "./components/ReadingProgress/ReadingProgress";
+import ScrollToTop from "./components/ScrollToTop/ScrollToTop";
+import LoadingSpinner from "./components/LoadingSpinner/LoadingSpinner";
+import KeyboardShortcuts from "./components/KeyboardShortcuts/KeyboardShortcuts";
+import CyberpunkScanlines from "./components/CyberpunkScanlines/CyberpunkScanlines";
 
 function App() {
   return (
     <div className="app-wrapper">
+      <CyberpunkScanlines />
+      <KeyboardShortcuts />
+      <ReadingProgress />
       <HeaderComponent />
       <div className="app-content">
         <CursorTracker />
@@ -17,7 +25,7 @@ function App() {
           <Route
             path="/"
             element={
-              <Suspense fallback={<div>Loading...</div>}>
+              <Suspense fallback={<LoadingSpinner />}>
                 <Homepage />
               </Suspense>
             }
@@ -25,7 +33,7 @@ function App() {
           <Route
             path="*"
             element={
-              <Suspense fallback={<div>Loading...</div>}>
+              <Suspense fallback={<LoadingSpinner />}>
                 <NotFoundComponent />
               </Suspense>
             }
@@ -33,6 +41,7 @@ function App() {
         </Routes>
       </div>
       <FooterComponent />
+      <ScrollToTop />
     </div>
   );
 }

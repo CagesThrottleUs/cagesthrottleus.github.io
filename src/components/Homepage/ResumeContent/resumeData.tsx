@@ -182,10 +182,10 @@ export const resumeData: CompanyExperience[] = [
                   in the future as well as the encryption algorithm changes.
                 </Text>
                 <Text>
-                  Tool when tested on sample data of 30 million records took 15
-                  minutes to complete which achieved a speed of 2 million
-                  records per minute. This was achieved using{" "}
-                  <b>Spring Batch and Java</b>.
+                  Tool when tested on sample data of{" "}
+                  <b>30 million records took 15 minutes </b>to complete which
+                  achieved a speed of <b>2 million records per minute</b>. This
+                  was achieved using <b>Spring Batch and Java</b>.
                 </Text>
               </Flex>
             ),

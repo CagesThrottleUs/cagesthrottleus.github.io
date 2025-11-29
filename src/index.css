@@ -1,3 +1,13 @@
+/* Reset and base styles */
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+}
+
 .app {
   margin: 0;
   padding: 0;
@@ -6,25 +16,164 @@
 body {
   padding: 0;
   margin: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
 }
 
+/**
+ * TYPOGRAPHY SYSTEM
+ * 
+ * Strategic Font Hierarchy:
+ * 
+ * SERIF (Crimson Pro) - Elegance & Readability
+ * - Body copy and long-form content
+ * - Descriptions and paragraphs
+ * - Anywhere users need to read and absorb information
+ * 
+ * SANS-SERIF (Space Grotesk, Red Hat Display) - Modern & Clean
+ * - Headings and titles
+ * - Navigation and UI elements
+ * - Attention-grabbing elements
+ * 
+ * MONOSPACE (JetBrains Mono, Red Hat Mono) - Technical & Precise
+ * - Dates and timestamps
+ * - Code snippets
+ * - Technical information
+ * - Version numbers
+ */
+
+/* CSS Variables for Typography */
+:root {
+  /* Font Families */
+  --font-serif: "Crimson Pro", Georgia, serif;
+  --font-sans: "Space Grotesk", "Red Hat Display", system-ui, -apple-system, sans-serif;
+  --font-display: "Red Hat Display", system-ui, -apple-system, sans-serif;
+  --font-mono: "JetBrains Mono", "Red Hat Mono", "Courier New", monospace;
+  
+  /* Font Weights */
+  --font-weight-light: 300;
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+  
+  /* Font Sizes */
+  --font-size-xs: 0.75rem;
+  --font-size-sm: 0.875rem;
+  --font-size-base: 1rem;
+  --font-size-lg: 1.125rem;
+  --font-size-xl: 1.25rem;
+  --font-size-2xl: 1.5rem;
+  --font-size-3xl: 1.875rem;
+  --font-size-4xl: 2.25rem;
+  
+  /* Line Heights */
+  --line-height-tight: 1.25;
+  --line-height-normal: 1.5;
+  --line-height-relaxed: 1.75;
+  --line-height-loose: 2;
+}
+
+/* Legacy typography utilities (maintained for backwards compatibility) */
 .text-mono {
-  font-family: "Red Hat Mono", monospace;
+  font-family: var(--font-mono);
   font-optical-sizing: auto;
-  font-weight: 400;  /* 300 to 700 is the range */
+  font-weight: var(--font-weight-normal);
   font-style: normal;
 }
 
 .text-display {
-  font-family: "Red Hat Display", sans-serif;
+  font-family: var(--font-display);
   font-optical-sizing: auto;
-  font-weight: 400;  /* 300 to 900 is the range */
+  font-weight: var(--font-weight-normal);
   font-style: normal;
 }
 
 .text {
-  font-family: "Red Hat Text", sans-serif;
+  font-family: var(--font-sans);
   font-optical-sizing: auto;
-  font-weight: 400;  /* 300 to 700 is the range */
+  font-weight: var(--font-weight-normal);
   font-style: normal;
+}
+
+/* New typography utility classes */
+.text-serif {
+  font-family: var(--font-serif);
+  font-weight: var(--font-weight-normal);
+  line-height: var(--line-height-relaxed);
+}
+
+.text-sans {
+  font-family: var(--font-sans);
+  font-weight: var(--font-weight-normal);
+  line-height: var(--line-height-normal);
+}
+
+/* Heading styles with sans-serif */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-sans);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height-tight);
+  letter-spacing: -0.02em;
+}
+
+/* Body text with serif for readability */
+p {
+  font-family: var(--font-serif);
+  font-weight: var(--font-weight-normal);
+  line-height: var(--line-height-relaxed);
+  font-size: var(--font-size-lg);
+}
+
+/* Selection styling */
+::selection {
+  background: rgba(139, 92, 246, 0.3);
+  color: #ffffff;
+}
+
+::-moz-selection {
+  background: rgba(139, 92, 246, 0.3);
+  color: #ffffff;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(17, 24, 39, 0.5);
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #8B5CF6 0%, #EC4899 100%);
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #9D73FF 0%, #FF5FAB 100%);
+}
+
+/* Focus styles for accessibility */
+*:focus-visible {
+  outline: 2px solid rgba(139, 92, 246, 0.6);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Reduced motion for accessibility */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
