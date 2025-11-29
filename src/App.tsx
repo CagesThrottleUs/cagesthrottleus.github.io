@@ -12,6 +12,8 @@ import LoadingSpinner from "./components/LoadingSpinner/LoadingSpinner";
 import NotFoundComponent from "./components/NotFound/NotFound";
 import ReadingProgress from "./components/ReadingProgress/ReadingProgress";
 import ScrollToTop from "./components/ScrollToTop/ScrollToTop";
+import BlogList from "./components/BlogList/BlogList";
+import BlogPostLayout from "./components/BlogPost/BlogPostLayout";
 
 function App() {
   return (
@@ -36,6 +38,22 @@ function App() {
             element={
               <Suspense fallback={<LoadingSpinner />}>
                 <LoadingSpinner />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/blog"
+            element={
+              <Suspense fallback={<LoadingSpinner />}>
+                <BlogList />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/blog/:slug"
+            element={
+              <Suspense fallback={<LoadingSpinner />}>
+                <BlogPostLayout />
               </Suspense>
             }
           />

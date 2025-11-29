@@ -19,6 +19,8 @@
   },
   "dependencies": {
     "@adobe/react-spectrum": "^3.45.0",
+    "@mdx-js/mdx": "^3.1.1",
+    "@mdx-js/react": "^3.1.1",
     "@spectrum-icons/illustrations": "^3.6.26",
     "@spectrum-icons/ui": "^3.6.20",
     "@spectrum-icons/workflow": "^4.2.25",

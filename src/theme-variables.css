@@ -366,11 +366,24 @@
   --spacing-3xl: 4rem; /* 64px */
 
   /* Border Radius */
+  --radius-xs: 0.125rem; /* 2px */
   --radius-sm: 0.25rem; /* 4px */
   --radius-md: 0.5rem; /* 8px */
   --radius-lg: 1rem; /* 16px */
   --radius-xl: 1.25rem; /* 20px */
   --radius-full: 50%;
+  
+  /* Border Widths */
+  --border-width-thin: 0.0625rem; /* 1px */
+  --border-width-normal: 0.125rem; /* 2px */
+  --border-width-medium: 0.1875rem; /* 3px */
+  --border-width-thick: 0.25rem; /* 4px */
+  
+  /* Container Max-Widths */
+  --container-sm: 37.5rem; /* 600px */
+  --container-md: 56.25rem; /* 900px */
+  --container-lg: 75rem; /* 1200px */
+  --container-xl: 90rem; /* 1440px */
 
   /* ============================================
    * 7. OPACITY LEVELS
