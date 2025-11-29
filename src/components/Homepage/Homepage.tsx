@@ -1,4 +1,4 @@
-import { Content, Flex } from "@adobe/react-spectrum";
+import { Flex } from "@adobe/react-spectrum";
 import { useEffect, useRef, useState } from "react";
 import { Heading } from "react-aria-components";
 
@@ -49,10 +49,10 @@ function Homepage() {
         <Heading level={1} ref={headingRef} className="text-intro-name">
           CagesThrottleUs
         </Heading>
-        <Content className="intro-content">
+        <div className="intro-content">
           I like to code and keep learning. I graduated from BITS Pilani in 2023
           with a B.E. in Computer Science with a CGPA of 8.05
-        </Content>
+        </div>
       </div>
 
       {/* Resume Content with configurable options */}
