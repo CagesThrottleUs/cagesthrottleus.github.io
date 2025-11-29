@@ -1,8 +1,4 @@
-import {
-  Heading,
-  IllustratedMessage,
-  View,
-} from "@adobe/react-spectrum";
+import { Heading, IllustratedMessage, View } from "@adobe/react-spectrum";
 import NotFound from "@spectrum-icons/illustrations/NotFound";
 import { Link } from "react-aria-components";
 import { useNavigate } from "react-router";

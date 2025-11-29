@@ -49,7 +49,7 @@ export default [
     rules: {
       // React Hooks rules
       ...reactHooks.configs.recommended.rules,
-      
+
       // React Refresh rules
       "react-refresh/only-export-components": [
         "warn",
@@ -74,7 +74,10 @@ export default [
       "react/react-in-jsx-scope": "off", // Not needed in React 17+
       "react/require-render-return": "error",
       "react/self-closing-comp": "warn",
-      "react/jsx-curly-brace-presence": ["warn", { props: "never", children: "never" }],
+      "react/jsx-curly-brace-presence": [
+        "warn",
+        { props: "never", children: "never" },
+      ],
       "react/jsx-boolean-value": ["warn", "never"],
 
       // Accessibility rules (WCAG standards)

@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect } from "react";
 
 /**
  * Keyboard Shortcuts Component
@@ -10,25 +10,25 @@ const KeyboardShortcuts = () => {
   useEffect(() => {
     const handleKeyPress = (event: KeyboardEvent) => {
       // Home key - scroll to top
-      if (event.key === 'Home') {
+      if (event.key === "Home") {
         event.preventDefault();
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+        window.scrollTo({ top: 0, behavior: "smooth" });
       }
-      
+
       // End key - scroll to bottom
-      if (event.key === 'End') {
+      if (event.key === "End") {
         event.preventDefault();
-        window.scrollTo({ 
-          top: document.documentElement.scrollHeight, 
-          behavior: 'smooth' 
+        window.scrollTo({
+          top: document.documentElement.scrollHeight,
+          behavior: "smooth",
         });
       }
     };
 
-    window.addEventListener('keydown', handleKeyPress);
-    
+    window.addEventListener("keydown", handleKeyPress);
+
     return () => {
-      window.removeEventListener('keydown', handleKeyPress);
+      window.removeEventListener("keydown", handleKeyPress);
     };
   }, []);
 
@@ -36,4 +36,3 @@ const KeyboardShortcuts = () => {
 };
 
 export default KeyboardShortcuts;
-

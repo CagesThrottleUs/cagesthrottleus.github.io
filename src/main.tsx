@@ -12,13 +12,10 @@ createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <HashRouter>
       <div className="app text-mono text-display text">
-        <Provider
-          theme={darkTheme}
-          id="app-provider"
-        >
+        <Provider theme={darkTheme} id="app-provider">
           <App />
         </Provider>
       </div>
     </HashRouter>
-  </StrictMode>
+  </StrictMode>,
 );

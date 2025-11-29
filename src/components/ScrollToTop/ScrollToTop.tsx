@@ -1,7 +1,7 @@
-import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowUp } from 'lucide-react';
-import { useState, useEffect } from 'react';
-import './ScrollToTop.css';
+import { motion, AnimatePresence } from "framer-motion";
+import { ArrowUp } from "lucide-react";
+import { useState, useEffect } from "react";
+import "./ScrollToTop.css";
 
 /**
  * Scroll to Top Button
@@ -20,14 +20,16 @@ const ScrollToTop = () => {
       }
     };
 
-    window.addEventListener('scroll', toggleVisibility);
-    return () => { window.removeEventListener('scroll', toggleVisibility); };
+    window.addEventListener("scroll", toggleVisibility);
+    return () => {
+      window.removeEventListener("scroll", toggleVisibility);
+    };
   }, []);
 
   const scrollToTop = () => {
     window.scrollTo({
       top: 0,
-      behavior: 'smooth'
+      behavior: "smooth",
     });
   };
 
@@ -42,7 +44,7 @@ const ScrollToTop = () => {
           exit={{ opacity: 0, scale: 0.5, y: 20 }}
           whileHover={{ scale: 1.1, y: -2 }}
           whileTap={{ scale: 0.95 }}
-          transition={{ duration: 0.3, ease: 'easeOut' }}
+          transition={{ duration: 0.3, ease: "easeOut" }}
           aria-label="Scroll to top"
         >
           <ArrowUp size={20} strokeWidth={2.5} />
@@ -53,4 +55,3 @@ const ScrollToTop = () => {
 };
 
 export default ScrollToTop;
-

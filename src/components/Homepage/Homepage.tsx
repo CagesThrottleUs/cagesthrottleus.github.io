@@ -29,7 +29,7 @@ function Homepage() {
       {
         threshold: 0.3, // Trigger when 30% of the element is visible
         rootMargin: "0px 0px -50px 0px", // Start animation slightly before fully visible
-      }
+      },
     );
 
     if (currentHeading) {

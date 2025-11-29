@@ -1,6 +1,6 @@
-import { motion, useScroll, useSpring } from 'framer-motion';
-import { useEffect, useState } from 'react';
-import './ReadingProgress.css';
+import { motion, useScroll, useSpring } from "framer-motion";
+import { useEffect, useState } from "react";
+import "./ReadingProgress.css";
 
 /**
  * Reading Progress Bar
@@ -13,16 +13,18 @@ const ReadingProgress = () => {
   const scaleX = useSpring(scrollYProgress, {
     stiffness: 100,
     damping: 30,
-    restDelta: 0.001
+    restDelta: 0.001,
   });
 
   useEffect(() => {
-    const unsubscribe = scrollYProgress.on('change', (latest) => {
+    const unsubscribe = scrollYProgress.on("change", (latest) => {
       // Show progress bar after scrolling 10%
       setIsVisible(latest > 0.1);
     });
 
-    return () => { unsubscribe(); };
+    return () => {
+      unsubscribe();
+    };
   }, [scrollYProgress]);
 
   return (
@@ -32,13 +34,9 @@ const ReadingProgress = () => {
       animate={{ opacity: isVisible ? 1 : 0 }}
       transition={{ duration: 0.3 }}
     >
-      <motion.div
-        className="reading-progress-bar"
-        style={{ scaleX }}
-      />
+      <motion.div className="reading-progress-bar" style={{ scaleX }} />
     </motion.div>
   );
 };
 
 export default ReadingProgress;
-

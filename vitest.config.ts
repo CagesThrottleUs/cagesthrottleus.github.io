@@ -1,14 +1,22 @@
 import react from "@vitejs/plugin-react";
-import { defineConfig } from "vite";
+import { defineConfig } from "vitest/config";
 
-// https://vite.dev/config/
 export default defineConfig({
   plugins: [react()],
   test: {
     globals: true,
     environment: "jsdom",
     setupFiles: "./src/test/setup.ts",
-    css: true,
+    css: {
+      modules: {
+        classNameStrategy: "non-scoped",
+      },
+    },
+    server: {
+      deps: {
+        inline: [/@adobe/, /@spectrum/, /@react-spectrum/],
+      },
+    },
     coverage: {
       provider: "v8",
       reporter: ["text", "json", "html", "lcov"],

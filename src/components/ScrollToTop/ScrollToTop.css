@@ -9,13 +9,17 @@
   height: 3.5rem;
   border-radius: 50%;
   border: 2px solid rgba(139, 92, 246, 0.6);
-  background: linear-gradient(135deg, rgba(139, 92, 246, 0.25) 0%, rgba(59, 130, 246, 0.25) 100%);
+  background: linear-gradient(
+    135deg,
+    rgba(139, 92, 246, 0.25) 0%,
+    rgba(59, 130, 246, 0.25) 100%
+  );
   color: white;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 
+  box-shadow:
     0 0 20px rgba(139, 92, 246, 0.5),
     0 0 40px rgba(139, 92, 246, 0.3),
     0 8px 32px rgba(0, 0, 0, 0.4),
@@ -26,9 +30,13 @@
 }
 
 .scroll-to-top:hover {
-  background: linear-gradient(135deg, rgba(139, 92, 246, 0.4) 0%, rgba(59, 130, 246, 0.4) 100%);
+  background: linear-gradient(
+    135deg,
+    rgba(139, 92, 246, 0.4) 0%,
+    rgba(59, 130, 246, 0.4) 100%
+  );
   border-color: rgba(139, 92, 246, 1);
-  box-shadow: 
+  box-shadow:
     0 0 30px rgba(139, 92, 246, 0.8),
     0 0 60px rgba(139, 92, 246, 0.5),
     0 0 100px rgba(236, 72, 153, 0.3),
@@ -37,7 +45,7 @@
 }
 
 .scroll-to-top:active {
-  box-shadow: 
+  box-shadow:
     0 0 0 2px rgba(139, 92, 246, 0.4),
     0 4px 16px rgba(139, 92, 246, 0.4),
     0 2px 8px rgba(0, 0, 0, 0.3);
@@ -66,4 +74,3 @@
     height: 2.75rem;
   }
 }
-
