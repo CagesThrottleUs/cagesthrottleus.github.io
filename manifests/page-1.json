@@ -1,0 +1,14 @@
+{
+  "page": 1,
+  "posts": [
+    {
+      "slug": "2025-11-29-hello-world",
+      "title": "OPERATION HELLO WORLD: INITIAL BRIEFING",
+      "classification": "TOP SECRET // NOFORN",
+      "abstract": "First deployment of intelligence dissemination system. Mission parameters established. All systems operational.",
+      "publishDate": "2025-11-29",
+      "version": "1.0",
+      "thumbnail": "thumbnails/default.svg"
+    }
+  ]
+}

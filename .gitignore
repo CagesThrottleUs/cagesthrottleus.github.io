@@ -1,0 +1,22 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+
+# macOS
+.DS_Store
+
+# IDEs
+.vscode/
+.idea/
+
+# Temporary files
+*.tmp
+*.bak
+*~
+
+# Generated manifests (tracked, but good to have pattern)
+# manifests/ files are auto-generated but should be committed
+
