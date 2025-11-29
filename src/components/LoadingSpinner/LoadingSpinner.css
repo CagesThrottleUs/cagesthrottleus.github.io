@@ -1,62 +1,319 @@
-/**
- * Loading Spinner Styles
- */
+/* ============================================
+ * LOADING SPINNER - TELETYPE TRANSMISSION
+ * Cold War era teletype machine aesthetic
+ * Morse code dots/dashes, typewriter style
+ * ============================================ */
+
 .loading-container {
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
   min-height: 50vh;
-  gap: 2rem;
+  padding: var(--spacing-xl);
 }
 
-.loading-spinner {
-  position: relative;
-  width: 60px;
-  height: 60px;
-}
-
-.spinner-ring {
-  position: absolute;
+/* Teletype Message Box */
+.teletype-box {
+  max-width: 600px;
   width: 100%;
-  height: 100%;
-  border: 3px solid transparent;
-  border-top-color: var(--purple-500);
-  border-right-color: var(--pink-500);
-  border-radius: var(--radius-full);
-  box-shadow: var(--shadow-spinner);
+  background: rgba(18, 18, 18, 0.95);
+  border: 3px solid var(--color-border-primary);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-card);
+  font-family: var(--font-mono);
+  overflow: hidden;
 }
 
-.spinner-ring-inner {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 70%;
-  height: 70%;
-  transform: translate(-50%, -50%);
-  border: 3px solid transparent;
-  border-bottom-color: var(--orange-500);
-  border-left-color: var(--blue-500);
-  border-radius: var(--radius-full);
-  animation: spin-reverse 1s linear infinite;
-  box-shadow: var(--shadow-spinner-inner);
+/* Teletype Header */
+.teletype-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--classified-500);
+  color: var(--white);
+  padding: var(--spacing-sm) var(--spacing-lg);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: 0.1em;
+  box-shadow: var(--glow-primary);
 }
 
-@keyframes spin-reverse {
-  from {
-    transform: translate(-50%, -50%) rotate(0deg);
+.teletype-label {
+  text-transform: uppercase;
+}
+
+.teletype-status {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  animation: pulse-status 2s ease-in-out infinite;
+}
+
+@keyframes pulse-status {
+  0%,
+  100% {
+    opacity: 1;
   }
-  to {
-    transform: translate(-50%, -50%) rotate(-360deg);
+  50% {
+    opacity: 0.5;
   }
+}
+
+/* Teletype Display Area */
+.teletype-display {
+  padding: var(--spacing-2xl) var(--spacing-xl);
+  text-align: center;
+}
+
+.loading-ascii {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  line-height: 1.2;
+  color: var(--terminal-500);
+  text-shadow: var(--glow-text-accent);
+  margin: 0 auto var(--spacing-xl);
+  white-space: pre;
+  user-select: none;
+}
+
+/* ============================================
+ * MORSE CODE LOADING ANIMATION
+ * ============================================ */
+
+.morse-container {
+  margin: var(--spacing-2xl) 0;
+  padding: var(--spacing-lg);
+  background: rgba(220, 38, 38, 0.03);
+  border: 1px solid var(--color-border-primary);
+  border-radius: var(--radius-sm);
+}
+
+.morse-line {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: var(--spacing-md);
+}
+
+/* Morse Dot */
+.morse-dot {
+  width: 12px;
+  height: 12px;
+  background: var(--terminal-500);
+  border-radius: var(--radius-full);
+  box-shadow: var(--glow-accent);
+  animation: morse-blink 1.5s ease-in-out infinite;
+}
+
+.morse-dot:nth-child(1) {
+  animation-delay: 0s;
+}
+
+.morse-dot:nth-child(3) {
+  animation-delay: 0.5s;
+}
+
+.morse-dot:nth-child(5) {
+  animation-delay: 1s;
+}
+
+/* Morse Dash */
+.morse-dash {
+  width: 36px;
+  height: 12px;
+  background: var(--terminal-500);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--glow-accent);
+  animation: morse-blink 1.5s ease-in-out infinite;
+}
+
+.morse-dash:nth-child(2) {
+  animation-delay: 0.25s;
+}
+
+.morse-dash:nth-child(4) {
+  animation-delay: 0.75s;
+}
+
+@keyframes morse-blink {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.3;
+    transform: scale(0.9);
+  }
+}
+
+/* ============================================
+ * LOADING MESSAGE
+ * ============================================ */
+
+.loading-message {
+  margin: var(--spacing-2xl) 0;
+  font-family: var(--font-mono);
+  font-size: var(--font-size-lg);
+  color: var(--color-text-primary);
+  letter-spacing: 0.1em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: var(--spacing-md);
+}
+
+.loading-prefix {
+  color: var(--classified-500);
+  font-weight: var(--font-weight-bold);
 }
 
 .loading-text {
-  font-family: var(--font-mono);
-  font-size: var(--font-size-base);
+  color: var(--terminal-500);
   font-weight: var(--font-weight-medium);
-  color: var(--color-text-secondary);
-  letter-spacing: 0.15em;
+  min-width: 140px;
+  text-align: left;
+}
+
+/* ============================================
+ * PROGRESS BAR
+ * ============================================ */
+
+.progress-bar-container {
+  margin-top: var(--spacing-xl);
+}
+
+.progress-bar {
+  width: 100%;
+  height: 8px;
+  background: rgba(10, 10, 10, 0.8);
+  border: 1px solid var(--color-border-primary);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  position: relative;
+}
+
+.progress-fill {
+  height: 100%;
+  background: var(--gradient-reading-progress);
+  animation: progress-fill 3s ease-in-out infinite;
+  box-shadow: var(--glow-accent);
+}
+
+@keyframes progress-fill {
+  0% {
+    width: 0%;
+  }
+  50% {
+    width: 75%;
+  }
+  100% {
+    width: 0%;
+  }
+}
+
+.progress-markers {
+  display: flex;
+  justify-content: space-between;
+  margin-top: var(--spacing-sm);
+  font-family: var(--font-mono);
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+}
+
+/* ============================================
+ * TELETYPE FOOTER
+ * ============================================ */
+
+.teletype-footer {
+  background: rgba(220, 38, 38, 0.1);
+  border-top: 2px solid var(--color-border-primary);
+  padding: var(--spacing-sm) var(--spacing-lg);
+  text-align: center;
+}
+
+.security-notice {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+  letter-spacing: 0.1em;
   text-transform: uppercase;
-  text-shadow: var(--text-shadow-loading);
+}
+
+/* ============================================
+ * RESPONSIVE DESIGN
+ * ============================================ */
+
+@media (max-width: 768px) {
+  .teletype-box {
+    max-width: 100%;
+  }
+
+  .loading-ascii {
+    font-size: 0.625rem;
+  }
+
+  .loading-message {
+    font-size: var(--font-size-base);
+    flex-direction: column;
+    gap: var(--spacing-sm);
+  }
+
+  .morse-line {
+    gap: var(--spacing-sm);
+  }
+
+  .morse-dot {
+    width: 10px;
+    height: 10px;
+  }
+
+  .morse-dash {
+    width: 28px;
+    height: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .loading-container {
+    padding: var(--spacing-md);
+  }
+
+  .teletype-display {
+    padding: var(--spacing-xl) var(--spacing-md);
+  }
+
+  .loading-ascii {
+    font-size: 0.5rem;
+  }
+
+  .loading-message {
+    font-size: var(--font-size-sm);
+  }
+
+  .loading-text {
+    min-width: 120px;
+  }
+
+  .progress-markers span:nth-child(2),
+  .progress-markers span:nth-child(4) {
+    display: none; /* Hide 25% and 75% markers on small screens */
+  }
+}
+
+/* ============================================
+ * ACCESSIBILITY
+ * ============================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  .morse-dot,
+  .morse-dash,
+  .progress-fill,
+  .teletype-status {
+    animation: none;
+  }
+
+  .progress-fill {
+    width: 50%; /* Static progress state */
+  }
 }

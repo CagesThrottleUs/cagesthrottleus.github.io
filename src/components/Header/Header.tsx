@@ -1,4 +1,4 @@
-import { Flex, Heading, Text } from "@adobe/react-spectrum";
+import { Lock, Square } from "lucide-react";
 import { Link } from "react-aria-components";
 import { useNavigate } from "react-router";
 
@@ -6,51 +6,72 @@ import { APPLICATION_VERSION, SUPPORTED_APPLICATIONS } from "./constants";
 
 import "./Header.css";
 
+/**
+ * Cold War Era Intelligence Agency Header
+ * Styled as classified document header with agency branding
+ * Features security clearance level and navigation tabs
+ */
 function HeaderComponent() {
   const navigate = useNavigate();
+
   return (
     <div className="app-header header-container no-cursor-track">
-      <div className="text-header">
-        <Flex
-          direction="row"
-          gap="size-400"
-          justifyContent="space-between"
-          alignItems="center"
-        >
-          <Flex
-            direction="row"
-            gap="size-100"
-            justifyContent="start"
-            // alignItems="center"
-          >
-            <Link href="/" className="link-header-no-effect">
-              <Heading level={1} marginY="auto">
-                cagesthrottleus
-              </Heading>
+      <header className="intelligence-header">
+        {/* Classification Banner */}
+        <div className="header-classification-banner">
+          <span className="banner-left">TOP SECRET</span>
+          <span className="banner-center">CLASSIFIED MATERIAL</span>
+          <span className="banner-right">NOFORN</span>
+        </div>
+
+        {/* Agency Header */}
+        <div className="agency-header">
+          {/* Agency Seal & Branding */}
+          <div className="agency-branding">
+            <Link href="/" className="agency-link">
+              <div className="agency-seal">
+                <div className="seal-outer-ring" />
+                <div className="seal-inner-content">
+                  <span className="seal-letter">C</span>
+                </div>
+              </div>
+              <div className="agency-info">
+                <h1 className="agency-name">CAGESTHROTTLEUS</h1>
+                <span className="agency-subtitle">
+                  UNIT [REDACTED] | v{APPLICATION_VERSION}
+                </span>
+              </div>
             </Link>
-            <Text marginTop="size-150">v{APPLICATION_VERSION}</Text>
-          </Flex>
-          <Flex
-            direction="row"
-            gap="size-500"
-            justifyContent="end"
-            alignItems="center"
-          >
+          </div>
+
+          {/* Navigation Tabs */}
+          <nav className="header-navigation">
             {SUPPORTED_APPLICATIONS.map((application) => (
-              <Heading level={2} marginY="auto" key={application.url}>
-                <Link
-                  onPress={() => {
-                    void navigate(application.url);
-                  }}
-                  className="link-header"
-                >
-                  {application.name}
-                </Link>
-              </Heading>
+              <button
+                key={application.url}
+                className="nav-tab"
+                onClick={() => {
+                  void navigate(application.url);
+                }}
+                aria-label={`Navigate to ${application.name}`}
+              >
+                <Square className="tab-marker" size={12} fill="currentColor" />
+                <span className="tab-label">
+                  {application.name.toUpperCase()}
+                </span>
+              </button>
             ))}
-          </Flex>
-        </Flex>
-      </div>
+          </nav>
+        </div>
+
+        {/* Security Clearance Notice */}
+        <div className="clearance-notice">
+          <Lock className="clearance-icon" size={14} />
+          <span className="clearance-text">SECURITY CLEARANCE: TOP SECRET</span>
+          <span className="clearance-separator">|</span>
+          <span className="clearance-access">AUTHORIZED PERSONNEL ONLY</span>
+        </div>
+      </header>
     </div>
   );
 }

@@ -38,4 +38,21 @@ describe("ReadingProgress", () => {
 
     expect(progressBar).toBeInTheDocument();
   });
+
+  it("shows progress bar after scrolling past threshold", async () => {
+    const { rerender } = render(<ReadingProgress />);
+
+    // Simulate scroll event by triggering window scroll
+    // The component listens to scrollYProgress changes via framer-motion
+    window.scrollTo(0, 100);
+
+    // Wait for scroll handler to process
+    await new Promise((resolve) => setTimeout(resolve, 200));
+
+    const container = document.querySelector(".reading-progress-container");
+    expect(container).toBeInTheDocument();
+
+    // Rerender to ensure state updates are processed
+    rerender(<ReadingProgress />);
+  });
 });

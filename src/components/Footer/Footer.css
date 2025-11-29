@@ -1,51 +1,215 @@
+/* ============================================
+ * FOOTER - CLASSIFIED DOCUMENT SIGNATURE
+ * Cold War era document end markings
+ * Classification bars, signature blocks, security notices
+ * ============================================ */
+
 .app-footer {
   position: relative;
   bottom: 0;
-  text-align: end;
-  font-weight: 600;
+  width: 100%;
+  margin-top: auto;
+  flex-shrink: 0;
 }
 
 .footer-container {
-  border-top: 1px solid var(--color-border-primary);
+  border-top: 3px solid var(--color-border-primary);
   background: var(--gradient-footer);
   backdrop-filter: var(--backdrop-blur-md);
-  padding: var(--spectrum-global-dimension-size-200);
-  flex-shrink: 0;
-  margin-top: auto;
   box-shadow: var(--shadow-footer);
+  padding: 0;
 }
 
-.text-footer {
-  font-family: var(--font-sans);
-  font-optical-sizing: auto;
-  font-weight: var(--font-weight-medium);
-  font-style: normal;
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  gap: 0.5rem;
-  color: var(--color-text-secondary, #d1d5db);
+/* Classified Footer Styling */
+.classified-footer {
+  font-family: var(--font-mono);
+  color: var(--color-text-secondary);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-.footer-content {
+/* ============================================
+ * CLASSIFICATION BAR
+ * ============================================ */
+
+.footer-classification-bar {
+  background: var(--classified-500);
+  color: var(--white);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  padding: var(--spacing-xs) var(--spacing-xl);
   display: flex;
-  align-items: center;
-  gap: 0.375rem;
+  justify-content: space-between;
+  box-shadow: var(--glow-primary);
 }
 
-.footer-heart {
-  display: inline-flex;
-  align-items: center;
-  color: var(--pink-500);
-  filter: var(--drop-shadow-heart);
+.classification-left,
+.classification-right {
+  flex: 1;
 }
 
-/* Mobile adjustments */
-@media (max-width: 30rem) {
-  .text-footer {
-    justify-content: center;
-    font-size: 0.875rem;
+.classification-right {
+  text-align: right;
+}
+
+/* ============================================
+ * SIGNATURE BLOCK
+ * ============================================ */
+
+.signature-block {
+  padding: var(--spacing-lg) var(--spacing-xl);
+  background: rgba(220, 38, 38, 0.03);
+  border-bottom: 1px solid var(--color-border-primary);
+}
+
+.signature-line {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--spacing-sm) 0;
+  font-size: var(--font-size-sm);
+  letter-spacing: 0.05em;
+}
+
+.signature-label {
+  color: var(--color-text-muted);
+  font-weight: var(--font-weight-medium);
+  text-transform: uppercase;
+  min-width: 140px;
+}
+
+.signature-name {
+  color: var(--classified-500);
+  font-weight: var(--font-weight-bold);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.signature-value {
+  color: var(--color-text-secondary);
+  font-weight: var(--font-weight-medium);
+  text-transform: uppercase;
+}
+
+/* ============================================
+ * SECURITY WARNING
+ * ============================================ */
+
+.security-warning {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: var(--spacing-md);
+  padding: var(--spacing-md) var(--spacing-xl);
+  background: rgba(0, 0, 0, 0.3);
+  border-bottom: 1px solid var(--color-border-accent);
+}
+
+.warning-marker {
+  color: var(--warning-500);
+  font-size: var(--font-size-lg);
+}
+
+.warning-text {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+/* ============================================
+ * DOCUMENT REFERENCE
+ * ============================================ */
+
+.document-reference {
+  padding: var(--spacing-sm) var(--spacing-xl);
+  text-align: center;
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+  letter-spacing: 0.1em;
+  background: rgba(10, 10, 10, 0.5);
+  font-weight: var(--font-weight-medium);
+}
+
+/* ============================================
+ * RESPONSIVE DESIGN
+ * ============================================ */
+
+@media (max-width: 768px) {
+  .footer-classification-bar {
+    font-size: 0.625rem;
+    padding: var(--spacing-xs) var(--spacing-md);
   }
+
+  .signature-block {
+    padding: var(--spacing-md);
+  }
+
+  .signature-line {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--spacing-xs);
+    padding: var(--spacing-xs) 0;
+  }
+
+  .signature-label {
+    min-width: auto;
+    font-size: var(--font-size-xs);
+  }
+
+  .signature-name,
+  .signature-value {
+    font-size: var(--font-size-sm);
+  }
+
+  .security-warning {
+    padding: var(--spacing-sm) var(--spacing-md);
+    gap: var(--spacing-sm);
+  }
+
+  .warning-text {
+    font-size: 0.625rem;
+  }
+
+  .document-reference {
+    padding: var(--spacing-xs) var(--spacing-md);
+    font-size: 0.625rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .footer-classification-bar {
+    flex-direction: column;
+    text-align: center;
+    gap: var(--spacing-xs);
+  }
+
+  .classification-right {
+    text-align: center;
+    display: none; /* Hide duplicate classification on very small screens */
+  }
+
+  .signature-line {
+    font-size: var(--font-size-xs);
+  }
+
+  .warning-marker {
+    font-size: var(--font-size-base);
+  }
+
+  .warning-text {
+    font-size: 0.5rem;
+    letter-spacing: 0.05em;
+  }
+}
+
+/* ============================================
+ * ACCESSIBILITY
+ * ============================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  /* All animations already removed for static Cold War theme */
 }

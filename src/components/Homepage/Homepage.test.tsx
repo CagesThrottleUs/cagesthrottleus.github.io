@@ -17,25 +17,24 @@ describe("Homepage", () => {
     ).toBeInTheDocument();
   });
 
-  it("displays education information", () => {
-    render(<Homepage />);
-    expect(screen.getByText(/BITS Pilani/i)).toBeInTheDocument();
-    expect(screen.getByText(/B.E. in Computer Science/i)).toBeInTheDocument();
-  });
-
-  it("displays graduation year and CGPA", () => {
+  it("renders dossier title", () => {
     render(<Homepage />);
     expect(
-      screen.getByText(/graduated from BITS Pilani in 2023/i),
+      screen.getByText(/CLASSIFIED PERSONNEL DOSSIER/i),
     ).toBeInTheDocument();
-    expect(screen.getByText(/8.05/i)).toBeInTheDocument();
   });
 
   it("renders resume content component", () => {
     render(<Homepage />);
-    // ResumeContent should render the resume data
-    const resumeContent = document.querySelector(".resume-content");
-    expect(resumeContent).toBeInTheDocument();
+    // ResumeContent should render the resume data with new dossier structure
+    const dossierContainer = document.querySelector(".dossier-container");
+    expect(dossierContainer).toBeInTheDocument();
+  });
+
+  it("renders personnel files", () => {
+    render(<Homepage />);
+    const personnelFiles = document.querySelector(".personnel-files");
+    expect(personnelFiles).toBeInTheDocument();
   });
 
   it("has correct CSS classes", () => {

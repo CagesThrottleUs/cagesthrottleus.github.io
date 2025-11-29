@@ -32,6 +32,14 @@ function App() {
             }
           />
           <Route
+            path="/loading"
+            element={
+              <Suspense fallback={<LoadingSpinner />}>
+                <LoadingSpinner />
+              </Suspense>
+            }
+          />
+          <Route
             path="*"
             element={
               <Suspense fallback={<LoadingSpinner />}>

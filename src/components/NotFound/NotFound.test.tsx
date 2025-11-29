@@ -3,42 +3,65 @@ import { describe, expect, it, vi } from "vitest";
 import NotFoundComponent from "./NotFound";
 import { render, screen } from "../../test/testUtils";
 
-describe("NotFoundComponent", () => {
-  it("renders 404 error code", () => {
+describe("NotFoundComponent - Classified Document Theme", () => {
+  it("renders 404 error code in ASCII art", () => {
     render(<NotFoundComponent />);
-    const errorCodes = screen.getAllByText("404");
-    // Should have main code + 2 glitch layers
-    expect(errorCodes.length).toBeGreaterThanOrEqual(1);
-    expect(errorCodes[0]).toBeInTheDocument();
+    const asciiArt = document.querySelector(".error-code-ascii");
+    expect(asciiArt).toBeInTheDocument();
+    // ASCII art is visual representation, just verify it exists
+    expect(asciiArt?.textContent.length).toBeGreaterThan(0);
   });
 
-  it("renders page not found title", () => {
+  it("renders classified document title", () => {
     render(<NotFoundComponent />);
-    expect(screen.getByText("Page Not Found")).toBeInTheDocument();
+    expect(screen.getByText(/PAGE NOT FOUND/i)).toBeInTheDocument();
+    expect(screen.getByText(/FILE NOT FOUND/i)).toBeInTheDocument();
   });
 
-  it("renders error message", () => {
+  it("renders classification markings", () => {
     render(<NotFoundComponent />);
     expect(
-      screen.getByText(/The page you're looking for has vanished/i),
-    ).toBeInTheDocument();
+      screen.getAllByText(/TOP SECRET \/\/ NOFORN/i).length,
+    ).toBeGreaterThanOrEqual(1);
   });
 
-  it("renders back to home button", () => {
+  it("renders CLASSIFIED stamp", () => {
+    render(<NotFoundComponent />);
+    expect(screen.getByText("CLASSIFIED")).toBeInTheDocument();
+  });
+
+  it("renders FILE NOT FOUND stamp", () => {
+    render(<NotFoundComponent />);
+    expect(screen.getByText("FILE NOT FOUND")).toBeInTheDocument();
+  });
+
+  it("renders document sections", () => {
+    render(<NotFoundComponent />);
+    expect(screen.getByText("STATUS")).toBeInTheDocument();
+    expect(screen.getByText("RECOMMENDED ACTION")).toBeInTheDocument();
+  });
+
+  it("renders redacted text elements", () => {
+    render(<NotFoundComponent />);
+    const redactedElements = document.querySelectorAll(".redacted");
+    expect(redactedElements.length).toBeGreaterThan(0);
+  });
+
+  it("renders return to headquarters button", () => {
     render(<NotFoundComponent />);
     const homeButton = screen.getByLabelText("Return to homepage");
     expect(homeButton).toBeInTheDocument();
-    expect(homeButton).toHaveTextContent("Back to Home");
+    expect(homeButton).toHaveTextContent("RETURN TO HEADQUARTERS");
   });
 
-  it("renders go back button", () => {
+  it("renders previous location button", () => {
     render(<NotFoundComponent />);
     const backButton = screen.getByLabelText("Go back to previous page");
     expect(backButton).toBeInTheDocument();
-    expect(backButton).toHaveTextContent("Go Back");
+    expect(backButton).toHaveTextContent("PREVIOUS LOCATION");
   });
 
-  it("navigates to home when home button is clicked", async () => {
+  it("navigates to home when headquarters button is clicked", async () => {
     const { user } = render(<NotFoundComponent />);
     const homeButton = screen.getByLabelText("Return to homepage");
 
@@ -48,7 +71,7 @@ describe("NotFoundComponent", () => {
     expect(homeButton).toBeInTheDocument();
   });
 
-  it("goes back when back button is clicked", async () => {
+  it("goes back when previous location button is clicked", async () => {
     const { user } = render(<NotFoundComponent />);
     const backSpy = vi.spyOn(window.history, "back");
     const backButton = screen.getByLabelText("Go back to previous page");
@@ -58,44 +81,24 @@ describe("NotFoundComponent", () => {
     expect(backSpy).toHaveBeenCalled();
   });
 
-  it("has correct main wrapper", () => {
+  it("has classified document structure", () => {
     render(<NotFoundComponent />);
     expect(document.querySelector(".not-found-wrapper")).toBeInTheDocument();
+    expect(document.querySelector(".classified-document")).toBeInTheDocument();
   });
 
-  it("has correct container", () => {
+  it("renders document header and footer", () => {
     render(<NotFoundComponent />);
-    expect(document.querySelector(".not-found-container")).toBeInTheDocument();
+    expect(document.querySelector(".document-header")).toBeInTheDocument();
+    expect(document.querySelector(".document-footer")).toBeInTheDocument();
   });
 
-  it("renders background orbs", () => {
+  it("renders security warning", () => {
     render(<NotFoundComponent />);
-    expect(document.querySelector(".not-found-bg-orbs")).toBeInTheDocument();
-    expect(document.querySelector(".orb-1")).toBeInTheDocument();
-    expect(document.querySelector(".orb-2")).toBeInTheDocument();
-    expect(document.querySelector(".orb-3")).toBeInTheDocument();
-  });
-
-  it("renders decorative elements", () => {
-    render(<NotFoundComponent />);
-    expect(document.querySelector(".error-decorations")).toBeInTheDocument();
-  });
-
-  it("renders error icons", () => {
-    render(<NotFoundComponent />);
-    expect(document.querySelector(".error-icon")).toBeInTheDocument();
-    expect(document.querySelector(".error-icon-accent")).toBeInTheDocument();
-  });
-
-  it("has glitch effect structure", () => {
-    render(<NotFoundComponent />);
-    const errorCode = document.querySelector(".error-code");
-
-    // Verify glitch structure exists
-    expect(errorCode).toBeInTheDocument();
-
-    // Verify glitch layers exist
-    const glitchLayers = document.querySelectorAll(".error-code-glitch");
-    expect(glitchLayers.length).toBe(2);
+    expect(
+      screen.getByText(
+        /UNAUTHORIZED DISCLOSURE SUBJECT TO CRIMINAL SANCTIONS/i,
+      ),
+    ).toBeInTheDocument();
   });
 });

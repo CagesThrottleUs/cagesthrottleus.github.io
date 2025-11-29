@@ -25,8 +25,9 @@ function Homepage() {
           </pre>
         </div>
         <div className="intro-content">
-          I like to code and keep learning. I graduated from BITS Pilani in 2023
-          with a B.E. in Computer Science with a CGPA of 8.05
+          I like to code and keep learning. This webpage is meant to be a little
+          trollish and fun. Do not take it seriously as a professional
+          portfolio.
         </div>
       </div>
 

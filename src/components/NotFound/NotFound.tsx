@@ -1,103 +1,129 @@
-import { Home, AlertTriangle, Zap } from "lucide-react";
-import { useEffect, useState } from "react";
+import { Square, ChevronRight, ChevronLeft } from "lucide-react";
 import { useNavigate } from "react-router";
+
 import "./NotFound.css";
 
 function NotFoundComponent() {
   const navigate = useNavigate();
-  const [glitchActive, setGlitchActive] = useState(false);
-
-  useEffect(() => {
-    // Trigger random glitch effects
-    const glitchInterval = setInterval(
-      () => {
-        setGlitchActive(true);
-        setTimeout(() => {
-          setGlitchActive(false);
-        }, 200);
-      },
-      3000 + Math.random() * 2000,
-    );
-
-    return () => {
-      clearInterval(glitchInterval);
-    };
-  }, []);
 
   return (
     <div className="not-found-wrapper">
-      {/* Animated Background Elements */}
-      <div className="not-found-bg-orbs">
-        <div className="orb orb-1" />
-        <div className="orb orb-2" />
-        <div className="orb orb-3" />
-      </div>
-
-      <div className="not-found-grid" />
-
-      <div className="not-found-container">
-        {/* Main Error Display */}
-        <div className="error-display">
-          <div className={`error-code ${glitchActive ? "glitch" : ""}`}>
-            <span className="error-code-main">404</span>
-            <span className="error-code-glitch" aria-hidden="true">
-              404
-            </span>
-            <span className="error-code-glitch" aria-hidden="true">
-              404
+      <div className="classified-document">
+        <div className="document-header">
+          <div className="classification-bar">TOP SECRET // NOFORN</div>
+          <div className="document-meta">
+            <span className="doc-number">DOC-404-NFND</span>
+            <span className="doc-date">
+              CLASSIFIED: {new Date().getFullYear()}
             </span>
           </div>
+        </div>
 
-          <div className="error-icon-container">
-            <AlertTriangle className="error-icon" size={48} />
-            <Zap className="error-icon-accent" size={24} />
+        {/* CLASSIFIED Stamp */}
+        <div className="classified-stamp-container">
+          <div className="classified-stamp">CLASSIFIED</div>
+        </div>
+
+        {/* Error Code as Document Number */}
+        <pre className="error-code-ascii">
+          {`
+  ██╗  ██╗ ██████╗ ██╗  ██╗
+  ██║  ██║██╔═████╗██║  ██║
+  ███████║██║██╔██║███████║
+  ╚════██║████╔╝██║╚════██║
+       ██║╚██████╔╝     ██║
+       ╚═╝ ╚═════╝      ╚═╝
+`}
+        </pre>
+
+        {/* Document Body */}
+        <div className="document-body">
+          <h1 className="document-title">PAGE NOT FOUND</h1>
+
+          <div className="document-section">
+            <div className="section-header">
+              <Square
+                className="section-marker"
+                size={14}
+                fill="currentColor"
+              />
+              <span className="section-title">STATUS</span>
+            </div>
+            <p className="document-text">
+              The requested file could not be located in our archives. This file
+              may have been:
+            </p>
+            <ul className="document-list">
+              <li>
+                <span className="redacted">[REDACTED]</span> RELOCATED TO SECURE
+                FACILITY
+              </li>
+              <li>
+                <span className="redacted">[REDACTED]</span> DESTROYED PER
+                PROTOCOL
+              </li>
+              <li>
+                <span className="redacted">[REDACTED]</span> NEVER EXISTED
+                (DISINFORMATION)
+              </li>
+              <li>
+                <span className="redacted">[REDACTED]</span> ABOVE YOUR
+                CLEARANCE LEVEL
+              </li>
+            </ul>
           </div>
 
-          <h1 className="error-title">
-            <span className={glitchActive ? "glitch-text" : ""}>
-              Page Not Found
-            </span>
-          </h1>
+          <div className="document-section">
+            <div className="section-header">
+              <Square
+                className="section-marker"
+                size={14}
+                fill="currentColor"
+              />
+              <span className="section-title">RECOMMENDED ACTION</span>
+            </div>
+            <p className="document-text">
+              You are advised to return to headquarters or review previous
+              briefing materials.
+            </p>
+          </div>
 
-          <p className="error-message">
-            The page you&apos;re looking for has vanished into the digital void.
-            <br />
-            It might have been moved, deleted, or never existed.
-          </p>
-
-          {/* Action Buttons */}
-          <div className="error-actions">
+          {/* Action Buttons styled as Document Actions */}
+          <div className="document-actions">
             <button
-              className="error-btn error-btn-primary"
+              className="action-btn action-btn-primary"
               onClick={() => {
                 void navigate("/");
               }}
               aria-label="Return to homepage"
             >
-              <Home size={20} />
-              <span>Back to Home</span>
+              <ChevronRight className="btn-marker" size={16} />
+              RETURN TO HEADQUARTERS
             </button>
 
             <button
-              className="error-btn error-btn-secondary"
+              className="action-btn action-btn-secondary"
               onClick={() => {
                 window.history.back();
               }}
               aria-label="Go back to previous page"
             >
-              <span>Go Back</span>
+              <ChevronLeft className="btn-marker" size={16} />
+              PREVIOUS LOCATION
             </button>
           </div>
         </div>
 
-        {/* Decorative Elements */}
-        <div className="error-decorations">
-          <div className="decoration-line line-1" />
-          <div className="decoration-line line-2" />
-          <div className="decoration-line line-3" />
-          <div className="decoration-circle circle-1" />
-          <div className="decoration-circle circle-2" />
+        {/* Document Footer - Classification Markings */}
+        <div className="document-footer">
+          <div className="classification-bar">TOP SECRET // NOFORN</div>
+          <div className="footer-warning">
+            UNAUTHORIZED DISCLOSURE SUBJECT TO CRIMINAL SANCTIONS
+          </div>
         </div>
+
+        {/* FILE NOT FOUND Stamp */}
+        <div className="file-stamp">FILE NOT FOUND</div>
       </div>
     </div>
   );
