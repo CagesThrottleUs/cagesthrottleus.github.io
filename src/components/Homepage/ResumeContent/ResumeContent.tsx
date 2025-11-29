@@ -1,5 +1,8 @@
 import { useState } from "react";
 import { Heading, Text, Separator } from "react-aria-components";
+import { motion, useInView } from "framer-motion";
+import { useRef } from "react";
+import { Calendar, Award, Code, Zap } from "lucide-react";
 import type {
   ResumeContentConfig,
   CompanyExperience,
@@ -44,7 +47,7 @@ interface WorkItemCardProps {
 
 /**
  * Individual work item card with hover effects
- * No cursor tracking - timeline info appears at fixed position
+ * Enhanced with animations and modern glassmorphism design
  */
 const WorkItemCard = ({
   item,
@@ -54,6 +57,8 @@ const WorkItemCard = ({
   companyName,
 }: WorkItemCardProps) => {
   const [isHovered, setIsHovered] = useState(false);
+  const cardRef = useRef(null);
+  const isInView = useInView(cardRef, { once: true, amount: 0.3 });
 
   const handleMouseEnter = () => {
     setIsHovered(true);
@@ -63,10 +68,14 @@ const WorkItemCard = ({
   };
 
   return (
-    <div
+    <motion.div
+      ref={cardRef}
       className="work-item-wrapper no-cursor-track"
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
+      initial={{ opacity: 0, y: 30 }}
+      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+      transition={{ duration: 0.5, ease: "easeOut" }}
       style={
         {
           "--hover-scale": hoverScale.toString(),
@@ -75,23 +84,51 @@ const WorkItemCard = ({
       }
     >
       {/* Timeline info (appears on hover at top of card) */}
-      <div className={`timeline-info ${isHovered ? "visible" : ""}`}>
-        <Text className="timeline-date">{formatDate(item.startDate)}</Text>
+      <motion.div
+        className={`timeline-info ${isHovered ? "visible" : ""}`}
+        initial={false}
+        animate={{ opacity: isHovered ? 1 : 0, x: isHovered ? 0 : -20 }}
+        transition={{ duration: 0.3 }}
+      >
+        <Text className="timeline-date">
+          <Calendar className="date-icon" size={12} />
+          {formatDate(item.startDate)}
+        </Text>
         <img
           src={companyLogo}
           alt={`${companyName} logo`}
           className="company-logo"
         />
-      </div>
+      </motion.div>
 
       {/* Main card content */}
-      <div className="work-item-card">
-        <Text className="work-date-range">
-          {formatDateRange(item.startDate, item.endDate)}
-        </Text>
-        <div className="work-description">{item.description}</div>
-      </div>
-    </div>
+      <motion.div
+        className="work-item-card"
+        whileHover={{ scale: hoverScale }}
+        transition={{ duration: animationDuration / 1000, ease: "easeOut" }}
+      >
+        {/* Gradient border effect */}
+        <div className="card-gradient-border" />
+
+        {/* Shine effect on hover */}
+        <motion.div
+          className="card-shine"
+          animate={{ x: isHovered ? ["0%", "200%"] : "0%" }}
+          transition={{ duration: 0.8, ease: "easeInOut" }}
+        />
+
+        <div className="card-content">
+          <div className="card-header">
+            <Text className="work-date-range">
+              <Calendar className="date-icon" size={14} />
+              {formatDateRange(item.startDate, item.endDate)}
+            </Text>
+            <Zap className="achievement-icon" size={16} />
+          </div>
+          <div className="work-description">{item.description}</div>
+        </div>
+      </motion.div>
+    </motion.div>
   );
 };
 
@@ -113,30 +150,51 @@ const PositionSection = ({
   hoverScale,
   animationDuration,
 }: PositionSectionProps) => {
+  const sectionRef = useRef(null);
+  const isInView = useInView(sectionRef, { once: true, amount: 0.2 });
+
   return (
-    <div className="position-section">
+    <motion.div
+      ref={sectionRef}
+      className="position-section"
+      initial={{ opacity: 0, x: -30 }}
+      animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -30 }}
+      transition={{ duration: 0.6 }}
+    >
       <div className="position-header">
         <Heading level={3} className="position-title">
+          <Code className="position-icon" size={20} />
           {position.title}
         </Heading>
         <Text className="position-date">
+          <Calendar className="date-icon" size={12} />
           {formatDateRange(position.startDate, position.endDate)}
         </Text>
       </div>
 
       <div className="work-items-container">
-        {position.workItems.map((workItem) => (
-          <WorkItemCard
+        {position.workItems.map((workItem, index) => (
+          <motion.div
             key={workItem.id}
-            item={workItem}
-            hoverScale={hoverScale}
-            animationDuration={animationDuration}
-            companyLogo={companyLogo}
-            companyName={companyName}
-          />
+            initial={{ opacity: 0, y: 20 }}
+            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+            transition={{
+              duration: 0.5,
+              delay: index * 0.1,
+              ease: "easeOut",
+            }}
+          >
+            <WorkItemCard
+              item={workItem}
+              hoverScale={hoverScale}
+              animationDuration={animationDuration}
+              companyLogo={companyLogo}
+              companyName={companyName}
+            />
+          </motion.div>
         ))}
       </div>
-    </div>
+    </motion.div>
   );
 };
 
@@ -154,17 +212,41 @@ const CompanySection = ({
   hoverScale,
   animationDuration,
 }: CompanySectionProps) => {
+  const companySectionRef = useRef(null);
+  const isInView = useInView(companySectionRef, { once: true, amount: 0.1 });
+
   return (
-    <section className="company-section">
+    <motion.section
+      ref={companySectionRef}
+      className="company-section"
+      initial={{ opacity: 0, scale: 0.95 }}
+      animate={
+        isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.95 }
+      }
+      transition={{ duration: 0.7, ease: "easeOut" }}
+    >
       {/* Company heading on background (not in card) */}
-      <div className="company-header">
-        <Heading level={2} className="company-name">
+      <motion.div
+        className="company-header"
+        initial={{ opacity: 0, y: -20 }}
+        animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: -20 }}
+        transition={{ duration: 0.6, delay: 0.2 }}
+      >
+        <Heading level={1} className="company-name">
+          <Award className="company-icon" size={28} />
           {company.company}
         </Heading>
-      </div>
+      </motion.div>
 
       {/* Timeline marker (vertical line for entire company section) */}
-      <Separator orientation="vertical" className="timeline-marker" />
+      <motion.div
+        initial={{ scaleY: 0 }}
+        animate={isInView ? { scaleY: 1 } : { scaleY: 0 }}
+        transition={{ duration: 1, delay: 0.3, ease: "easeOut" }}
+        style={{ originY: 0 }}
+      >
+        <Separator orientation="vertical" className="timeline-marker" />
+      </motion.div>
 
       {/* All positions for this company */}
       <div className="positions-container">
@@ -179,7 +261,7 @@ const CompanySection = ({
           />
         ))}
       </div>
-    </section>
+    </motion.section>
   );
 };
 

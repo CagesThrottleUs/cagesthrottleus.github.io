@@ -1,19 +1,39 @@
 /**
- * RESUME CONTENT STYLES (LinkedIn-inspired format)
+ * MODERN RESUME CONTENT STYLES
  *
  * Design Philosophy:
- * - Relative units (rem, em, %) for responsive scaling across resolutions
- * - Company groupings with visual hierarchy
- * - Timeline connects all experiences vertically
- * - Cards scale on hover without cursor tracking
- * - Centered layout with max-width constraint
- * - Red Hat font family throughout
+ * - Glassmorphism with gradient accents
+ * - Smooth animations with framer-motion
+ * - Modern color palette with vibrant gradients
+ * - Visual depth through layering and shadows
+ * - Micro-interactions for engagement
+ * - Professional yet visually stunning
  *
  * Color Scheme:
- * - Timeline: rgba(255, 255, 255, 0.3) - subtle, consistent across all items
- * - White/light colors for titles with smooth fonts
- * - Semi-transparent cards for depth
+ * - Primary gradient: Purple to Blue (#8B5CF6 → #3B82F6)
+ * - Accent gradient: Pink to Orange (#EC4899 → #F59E0B)
+ * - Background: Dark with subtle gradients
+ * - Cards: Glassmorphism with blur effects
  */
+
+/* Import Google Fonts for better typography */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+
+/**
+ * CSS Variables for consistent theming
+ */
+:root {
+  --gradient-primary: linear-gradient(135deg, #8B5CF6 0%, #3B82F6 100%);
+  --gradient-accent: linear-gradient(135deg, #EC4899 0%, #F59E0B 100%);
+  --gradient-card: linear-gradient(135deg, rgba(139, 92, 246, 0.1) 0%, rgba(59, 130, 246, 0.1) 100%);
+  --color-primary: #8B5CF6;
+  --color-accent: #EC4899;
+  --color-text-primary: #F9FAFB;
+  --color-text-secondary: #D1D5DB;
+  --color-text-muted: #9CA3AF;
+  --glow-primary: 0 0 20px rgba(139, 92, 246, 0.4), 0 0 40px rgba(139, 92, 246, 0.2);
+  --glow-accent: 0 0 20px rgba(236, 72, 153, 0.4), 0 0 40px rgba(236, 72, 153, 0.2);
+}
 
 /**
  * Disable cursor tracking on work items
@@ -29,152 +49,295 @@
 /**
  * Main Container
  * - Centered with max-width for readability
- * - Flexbox column layout
- * - Responsive padding using viewport-relative units
- * - Left margin adjusted to visually center content accounting for timeline offset
- * 
- * Visual Centering:
- * - Company sections have 10rem (160px) left padding for timeline
- * - To visually center, shift container 5rem (half of 10rem) to the left
+ * - Modern spacing and layout
+ * - Subtle animated background gradient
  */
 .resume-content {
+  position: relative;
   display: flex;
   flex-direction: column;
   width: 100%;
-  max-width: 50rem; /* 800px at default font size */
-  margin: 0 auto 0 calc(50% - 25rem - 7rem); /* Shift left to visually center content */
-  padding: 2rem;
-  gap: 3rem; /* Space between companies */
+  max-width: 56rem;
+  margin: 0 auto 0 calc(50% - 28rem - 7rem);
+  padding: 3rem 2rem;
+  gap: 5rem;
+  font-family: 'Inter', 'Red Hat Display', sans-serif;
+}
+
+/* Animated background gradient orbs */
+.resume-content::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -10%;
+  width: 40%;
+  height: 40%;
+  background: radial-gradient(circle, rgba(139, 92, 246, 0.15) 0%, transparent 70%);
+  border-radius: 50%;
+  filter: blur(60px);
+  animation: float-1 20s ease-in-out infinite;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.resume-content::after {
+  content: '';
+  position: absolute;
+  bottom: 10%;
+  right: -5%;
+  width: 50%;
+  height: 50%;
+  background: radial-gradient(circle, rgba(236, 72, 153, 0.12) 0%, transparent 70%);
+  border-radius: 50%;
+  filter: blur(80px);
+  animation: float-2 25s ease-in-out infinite;
+  pointer-events: none;
+  z-index: -1;
+}
+
+@keyframes float-1 {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+    opacity: 0.6;
+  }
+  33% {
+    transform: translate(30px, -50px) scale(1.1);
+    opacity: 0.8;
+  }
+  66% {
+    transform: translate(-20px, 30px) scale(0.9);
+    opacity: 0.5;
+  }
+}
+
+@keyframes float-2 {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+    opacity: 0.5;
+  }
+  33% {
+    transform: translate(-40px, 40px) scale(1.15);
+    opacity: 0.7;
+  }
+  66% {
+    transform: translate(30px, -30px) scale(0.85);
+    opacity: 0.4;
+  }
 }
 
 /**
  * Company Section
- * - Contains company header, timeline, and all positions
- * - Relative positioning for timeline marker
+ * - Enhanced with modern spacing and effects
  */
 .company-section {
   position: relative;
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
-  padding-left: 10rem; /* Increased space: timeline info (5rem) + gap (2rem) + marker + margin (3rem) */
+  gap: 2rem;
+  padding-left: 10rem;
 }
 
 /**
- * Company Header (on background, not in card)
- * - Prominent display of company name
- * - Golden color for emphasis
+ * Company Header
+ * - Striking gradient background box
+ * - Enhanced typography with Space Grotesk
  */
 .company-header {
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.75rem;
+  display: inline-block;
+  position: relative;
 }
 
 .company-name {
-  font-family: "Red Hat Display", sans-serif;
-  font-size: 2rem;
+  font-family: 'Space Grotesk', 'Inter', sans-serif;
+  font-size: 2.5rem;
   font-weight: 700;
-  color: #ffffff;
+  color: #FFFFFF;
   margin: 0;
-  letter-spacing: 0.02em;
-  font-smooth: always;
+  letter-spacing: -0.02em;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 2rem;
+  background: linear-gradient(135deg, rgba(139, 92, 246, 0.2) 0%, rgba(59, 130, 246, 0.2) 100%);
+  border: 2px solid transparent;
+  border-radius: 1rem;
+  position: relative;
+  overflow: hidden;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
+.company-name::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 1rem;
+  padding: 2px;
+  background: var(--gradient-primary);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  pointer-events: none;
+}
+
+.company-name::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  animation: shimmer 3s infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    left: -100%;
+  }
+  100% {
+    left: 100%;
+  }
+}
+
+.company-icon {
+  color: var(--color-primary);
+  filter: drop-shadow(var(--glow-primary));
+  animation: pulse-glow 3s ease-in-out infinite;
+}
+
+@keyframes pulse-glow {
+  0%, 100% {
+    opacity: 1;
+    filter: drop-shadow(0 0 10px rgba(139, 92, 246, 0.4));
+  }
+  50% {
+    opacity: 0.8;
+    filter: drop-shadow(0 0 20px rgba(139, 92, 246, 0.6));
+  }
+}
+
 /**
- * Timeline Marker (Vertical Line)
- *
- * Design:
- * - Consistent light color across all companies/positions
- * - Center-aligned at 7rem from left edge
- * - Extends through entire company section
- * - Acts as visual connector
- * - Shares center position with company logo
- *
- * Color Choice:
- * - rgba(255, 255, 255, 0.3): Light, subtle, consistent
- * - Lighter than text background for visual hierarchy
+ * Timeline Marker
+ * - Vibrant gradient with glow effect
+ * - Animated appearance
  */
 .timeline-marker {
   position: absolute;
-  left: 7rem; /* Center position from left edge */
-  transform: translateX(-50%); /* Center the marker at this position */
+  left: 7rem;
+  transform: translateX(-50%);
   top: 0;
   bottom: 0;
-  width: 0.125rem; /* 2px - reduced thickness */
-  background-color: rgba(255, 255, 255, 0.3);
-  border-radius: 0.0625rem;
+  width: 0.25rem;
+  background: var(--gradient-primary);
+  border-radius: 0.125rem;
+  box-shadow: var(--glow-primary);
+  transform-origin: top;
 }
 
 /**
  * Positions Container
- * - Holds all positions for a company
  */
 .positions-container {
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  gap: 3rem;
 }
 
 /**
  * Position Section
- * - Individual position with work items
  */
 .position-section {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 1.5rem;
 }
 
 /**
- * Position Header (not in card)
- * - Shows title and date range
- * - Lighter styling than company header
+ * Position Header
+ * - Gradient background box with better visual hierarchy
  */
 .position-header {
   display: flex;
   justify-content: space-between;
-  align-items: baseline;
+  align-items: center;
   flex-wrap: wrap;
-  gap: 0.5rem;
+  gap: 1rem;
+  padding: 1.25rem 1.75rem;
+  background: linear-gradient(135deg, rgba(236, 72, 153, 0.08) 0%, rgba(245, 158, 11, 0.08) 100%);
+  border-radius: 1rem;
+  border: 1px solid rgba(236, 72, 153, 0.15);
+  backdrop-filter: blur(20px);
+  position: relative;
+  overflow: hidden;
+}
+
+.position-header::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(236, 72, 153, 0.05) 0%, rgba(245, 158, 11, 0.05) 100%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.position-header:hover::before {
+  opacity: 1;
 }
 
 .position-title {
-  font-family: "Red Hat Display", sans-serif;
-  font-size: 1.5rem;
+  font-family: 'Space Grotesk', 'Inter', sans-serif;
+  font-size: 1.75rem;
   font-weight: 600;
-  color: #fff;
+  color: var(--color-text-primary);
   margin: 0;
-  font-smooth: always;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  letter-spacing: -0.01em;
+  position: relative;
+  z-index: 1;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
+.position-icon {
+  color: var(--color-accent);
+  filter: drop-shadow(var(--glow-accent));
+}
+
 .position-date {
-  font-family: "Red Hat Text", sans-serif;
+  font-family: 'JetBrains Mono', 'Red Hat Mono', monospace;
   font-size: 0.875rem;
-  color: #aaa;
-  margin: 0;
-  font-style: italic;
-  font-smooth: always;
+  color: var(--color-text-muted);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  background: rgba(139, 92, 246, 0.1);
+  border-radius: 2rem;
+  border: 1px solid rgba(139, 92, 246, 0.2);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.date-icon {
+  color: var(--color-primary);
 }
 
 /**
  * Work Items Container
- * - Holds all work item cards for a position
  */
 .work-items-container {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 1.5rem;
 }
 
 /**
  * Work Item Wrapper
- * - Positions timeline elements relative to card
- * - No cursor tracking (timeline info at fixed position)
  */
 .work-item-wrapper {
   position: relative;
@@ -184,155 +347,250 @@
 
 /**
  * Timeline Information (Date + Logo)
- *
- * Behavior:
- * - Hidden by default (opacity: 0, translateX: -1.25rem)
- * - Appears on card hover at TOP of card (not cursor position)
- * - Logo sits ON TOP of timeline separator
- * - Date appears to the left of timeline separator
- * - No cursor Y tracking for cleaner UX
- *
- * Position:
- * - Positioned relative to work-item-wrapper
- * - Children use absolute positioning within this container
+ * - Smooth fade and slide animation
  */
 .timeline-info {
   position: absolute;
   left: 0;
   top: 0;
   width: 100%;
-  height: 2.5rem; /* Match logo height */
-  opacity: 0;
-  transform: translateX(-1.25rem);
-  transition: all var(--animation-duration, 300ms) ease-out;
+  height: 3rem;
+  display: flex;
+  align-items: center;
   pointer-events: none;
   z-index: 10;
 }
 
-.timeline-info.visible {
-  opacity: 1;
-  transform: translateX(0);
-}
-
-/**
- * Timeline Date Styling
- * - Small, muted text in italic
- * - Right-aligned for visual flow toward logo
- * - Positioned to left of logo with 0.75rem gap
- * 
- * Positioning:
- * Logo is at left: -3rem (center at -3rem)
- * Logo left edge = -3rem - 1.25rem = -4.25rem
- * Date ends at: -4.25rem - 0.75rem gap = -5rem
- */
 .timeline-date {
-  font-family: "Red Hat Mono", monospace;
+  font-family: 'JetBrains Mono', monospace;
   font-size: 0.75rem;
-  font-style: italic;
-  color: #888;
+  font-weight: 500;
+  color: var(--color-text-muted);
   white-space: nowrap;
   text-align: right;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
   position: absolute;
   right: 100%;
-  transform: translateX(calc(-5.25rem)); /* Position so date ends with 0.75rem (12px) gap before logo */
-  font-smooth: always;
+  transform: translateX(-5.5rem);
+  padding: 0.5rem 0.75rem;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 0.5rem;
+  border: 1px solid rgba(139, 92, 246, 0.3);
+  backdrop-filter: blur(10px);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 /**
  * Company Logo
- * - Fixed dimensions using rem for scaling
- * - Circular crop
- * - White background for transparent logos
- * - Positioned relative to work-item-wrapper (parent context)
- * - Must align with timeline marker which is in company-section
- * - Logo offset calculation: company-section padding (10rem) - timeline-info left offset (matches wrapper position)
+ * - Enhanced with glow and animation
  */
 .company-logo {
-  width: 2.5rem;
-  height: 2.5rem;
+  width: 3rem;
+  height: 3rem;
   border-radius: 50%;
   object-fit: contain;
-  background-color: white;
-  padding: 0.25rem;
-  box-shadow: 0 0 0 0.1875rem rgba(0, 0, 0, 0.8), /* Dark border for contrast against separator */
-              0 0.125rem 0.5rem rgba(0, 0, 0, 0.3); /* Subtle shadow for depth */
+  background: rgba(255, 255, 255, 0.95);
+  padding: 0.5rem;
+  box-shadow: 
+    0 0 0 0.25rem rgba(139, 92, 246, 0.3),
+    0 0 20px rgba(139, 92, 246, 0.4),
+    0 4px 20px rgba(0, 0, 0, 0.3);
   position: absolute;
-  left: -3rem; /* Adjusted to align with marker center */
-  transform: translateX(-50%); /* Center the logo */
-  z-index: 2; /* Above separator to overlay it */
+  left: -3rem;
+  transform: translateX(-50%);
+  z-index: 2;
+  transition: all 0.3s ease;
 }
 
 /**
  * Work Item Card
- *
- * Hover Effect:
- * - Scale transform: 1 → var(--hover-scale, 1.25)
- * - Box shadow intensifies on hover
- * - Transform origin: left center (keeps timeline aligned)
- * - GPU-accelerated via transform
- *
- * Layout:
- * - Full width within wrapper
- * - Semi-transparent background for depth
- * - Rounded corners for modern aesthetic
+ * - Modern glassmorphism design
+ * - Gradient border effect
+ * - Smooth hover interactions
  */
 .work-item-card {
+  position: relative;
   flex: 1;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 0.75rem;
-  padding: 1.5rem;
-  transition: transform var(--animation-duration, 300ms) ease-out,
-    box-shadow var(--animation-duration, 300ms) ease-out;
+  background: rgba(17, 24, 39, 0.4);
+  backdrop-filter: blur(20px);
+  border-radius: 1.25rem;
+  padding: 0;
+  overflow: hidden;
   transform-origin: left center;
   will-change: transform;
   cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.work-item-card:hover {
-  transform: scale(var(--hover-scale, 1.25));
-  box-shadow: 0 0.5rem 2rem rgba(255, 215, 0, 0.2);
+/* Gradient border effect */
+.card-gradient-border {
+  position: absolute;
+  inset: 0;
+  border-radius: 1.25rem;
+  padding: 2px;
+  background: var(--gradient-primary);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  opacity: 0.5;
+  transition: opacity 0.3s ease;
 }
 
-/**
- * Card Content
- */
+.work-item-card:hover .card-gradient-border {
+  opacity: 1;
+  animation: border-rotate 3s linear infinite;
+}
+
+@keyframes border-rotate {
+  0% {
+    filter: hue-rotate(0deg);
+  }
+  100% {
+    filter: hue-rotate(360deg);
+  }
+}
+
+/* Shine effect */
+.card-shine {
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.1) 50%,
+    transparent 100%
+  );
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Card content */
+.card-content {
+  position: relative;
+  z-index: 2;
+  padding: 2rem;
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
 .work-date-range {
-  font-family: "Red Hat Mono", monospace;
+  font-family: 'JetBrains Mono', monospace;
   font-size: 0.875rem;
-  color: #aaa;
-  margin: 0 0 0.75rem 0;
-  font-style: italic;
-  font-smooth: always;
+  font-weight: 500;
+  color: var(--color-text-muted);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  background: var(--gradient-card);
+  border-radius: 0.5rem;
+  border: 1px solid rgba(139, 92, 246, 0.2);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.achievement-icon {
+  color: var(--color-accent);
+  filter: drop-shadow(0 0 8px rgba(236, 72, 153, 0.4));
+  animation: zap-pulse 2s ease-in-out infinite;
+}
+
+@keyframes zap-pulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 0.8;
+  }
 }
 
 .work-description {
-  font-family: "Red Hat Text", sans-serif;
+  font-family: 'Inter', sans-serif;
   font-size: 1rem;
-  line-height: 1.6;
-  color: #ccc;
+  line-height: 1.7;
+  color: var(--color-text-secondary);
   margin: 0;
-  font-smooth: always;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+/* Enhanced description text styles */
+.work-description b,
+.work-description strong {
+  font-weight: 700;
+  background: var(--gradient-accent);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  position: relative;
+  padding: 0 0.125rem;
+}
+
+.work-description b::after,
+.work-description strong::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: var(--gradient-accent);
+  opacity: 0.3;
+  transform: scaleX(0);
+  transition: transform 0.3s ease;
+}
+
+.work-item-card:hover .work-description b::after,
+.work-item-card:hover .work-description strong::after {
+  transform: scaleX(1);
+}
+
+/* Better paragraph spacing in descriptions */
+.work-description > div {
+  margin-bottom: 0.75rem;
+}
+
+.work-description > div:last-child {
+  margin-bottom: 0;
+}
+
+/* Hover effect for entire card */
+.work-item-card:hover {
+  background: rgba(17, 24, 39, 0.6);
+  box-shadow: 
+    0 0 0 1px rgba(139, 92, 246, 0.3),
+    0 20px 60px rgba(139, 92, 246, 0.2),
+    0 8px 32px rgba(0, 0, 0, 0.4);
+  transform: translateY(-4px);
 }
 
 /**
  * Responsive Design
- *
- * Tablet (max-width: 48rem / 768px)
- * - Reduce padding and spacing
- * - Smaller timeline elements
  */
+
+/* Tablet */
 @media (max-width: 48rem) {
   .resume-content {
-    padding: 1.5rem;
-    gap: 2.5rem;
-    margin: 0 auto 0 calc(50% - 25rem - 4rem); /* Adjust for tablet (6rem padding / 2 = 3rem, round to 4rem) */
+    max-width: 100%;
+    padding: 2rem 1.5rem;
+    gap: 4rem;
+    margin: 0 auto 0 calc(50% - 50vw + 4rem);
   }
 
   .company-section {
@@ -340,56 +598,36 @@
   }
 
   .company-name {
-    font-size: 1.75rem;
+    font-size: 2rem;
   }
 
   .position-title {
-    font-size: 1.25rem;
+    font-size: 1.5rem;
   }
 
   .timeline-marker {
     left: 5rem;
-    width: 0.09375rem; /* 1.5px for tablet */
+    width: 0.2rem;
   }
 
-  .timeline-info {
-    height: 2rem;
+  .company-logo {
+    width: 2.5rem;
+    height: 2.5rem;
+    left: -1rem;
   }
 
   .timeline-date {
     font-size: 0.625rem;
-    transform: translateX(calc(-3.25rem)); /* Tablet: Adjusted for 5rem marker and smaller logo */
-  }
-
-  .company-logo {
-    width: 2rem;
-    height: 2rem;
-    left: -1rem; /* Tablet: -(6rem padding - 5rem marker) = -1rem */
-    box-shadow: 0 0 0 0.125rem rgba(0, 0, 0, 0.8),
-                0 0.0625rem 0.25rem rgba(0, 0, 0, 0.3);
-  }
-
-  .company-logo {
-    width: 2rem;
-    height: 2rem;
-  }
-
-  .work-item-card:hover {
-    transform: scale(1.1); /* Reduced scale for tablets */
+    transform: translateX(-3.5rem);
   }
 }
 
-/**
- * Mobile (max-width: 30rem / 480px)
- * - Minimal timeline elements
- * - Focus on content readability
- * - Reduced hover effects
- */
+/* Mobile */
 @media (max-width: 30rem) {
   .resume-content {
-    padding: 1rem;
-    gap: 2rem;
-    margin: 0 auto; /* Mobile: center normally (timeline hidden) */
+    padding: 1.5rem 1rem;
+    gap: 3rem;
+    margin: 0 auto;
   }
 
   .company-section {
@@ -397,44 +635,94 @@
   }
 
   .company-name {
-    font-size: 1.5rem;
+    font-size: 1.75rem;
+  }
+
+  .company-icon {
+    width: 24px;
+    height: 24px;
+  }
+
+  .position-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+    padding: 1rem;
   }
 
   .position-title {
-    font-size: 1.125rem;
+    font-size: 1.25rem;
+  }
+
+  .position-icon {
+    width: 16px;
+    height: 16px;
   }
 
   .position-date {
     font-size: 0.75rem;
+    padding: 0.375rem 0.75rem;
   }
 
   .timeline-marker {
     left: 1rem;
-    width: 0.0625rem; /* 1px for mobile */
+    width: 0.15rem;
   }
 
-  /* Hide timeline info on mobile (not enough space) */
   .timeline-info {
     display: none;
   }
 
-  .timeline-date {
-    font-size: 0.5rem;
-  }
-
-  .work-item-card {
-    padding: 1rem;
+  .card-content {
+    padding: 1.5rem;
   }
 
   .work-date-range {
     font-size: 0.75rem;
+    padding: 0.375rem 0.75rem;
+  }
+
+  .achievement-icon {
+    width: 14px;
+    height: 14px;
   }
 
   .work-description {
-    font-size: 0.875rem;
+    font-size: 0.9375rem;
+    line-height: 1.6;
+  }
+}
+
+/* High contrast mode improvements */
+@media (prefers-contrast: high) {
+  .company-name {
+    -webkit-text-fill-color: var(--color-text-primary);
   }
 
-  .work-item-card:hover {
-    transform: scale(1.05); /* Minimal scale for mobile */
+  .card-gradient-border {
+    opacity: 1;
+  }
+
+  .work-description b,
+  .work-description strong {
+    -webkit-text-fill-color: var(--color-accent);
+  }
+}
+
+/* Reduced motion for accessibility */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .company-icon,
+  .achievement-icon {
+    animation: none;
+  }
+
+  .card-gradient-border {
+    animation: none;
   }
 }
