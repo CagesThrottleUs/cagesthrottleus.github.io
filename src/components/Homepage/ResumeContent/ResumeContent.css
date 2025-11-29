@@ -181,11 +181,12 @@
   border-radius: 1rem;
   padding: 2px;
   background: var(--gradient-primary);
-  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  mask-composite: exclude;
   -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: exclude;
   pointer-events: none;
+  z-index: -1;
 }
 
 .company-name::after {
@@ -453,12 +454,13 @@
   border-radius: 1.25rem;
   padding: 2px;
   background: var(--gradient-primary);
-  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  mask-composite: exclude;
   -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: exclude;
   opacity: 0.5;
   transition: opacity 0.3s ease;
+  z-index: -1;
 }
 
 .work-item-card:hover .card-gradient-border {
@@ -562,9 +564,10 @@
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  color: transparent;
   position: relative;
   padding: 0 0.125rem;
-  text-shadow: 0 0 10px rgba(236, 72, 153, 0.5);
+  filter: drop-shadow(0 0 10px rgba(236, 72, 153, 0.5));
 }
 
 .work-description b::after,
