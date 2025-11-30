@@ -20,3 +20,8 @@ __pycache__/
 # Generated manifests (tracked, but good to have pattern)
 # manifests/ files are auto-generated but should be committed
 
+node_modules/
+.vite/
+coverage/
+dist/
+
