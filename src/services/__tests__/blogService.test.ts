@@ -19,8 +19,9 @@ const localStorageMock = (() => {
       store[key] = value;
     },
     removeItem: (key: string) => {
-      // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
-      delete store[key];
+      // Use object destructuring instead of delete for dynamic keys
+      const { [key]: _, ...rest } = store;
+      store = rest;
     },
     clear: () => {
       store = {};

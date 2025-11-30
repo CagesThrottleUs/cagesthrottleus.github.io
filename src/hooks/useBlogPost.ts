@@ -7,6 +7,7 @@ import { fetchPostContent, fetchPostMetadata } from "../services/blogService";
 import type { BlogMetadata } from "../types/blog";
 
 // Type for MDX components that can be passed to compiled MDX
+// Using `any` here is required by MDX's type system - components can accept any props
 interface MDXContentProps {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   components?: Record<string, React.ComponentType<any>>;

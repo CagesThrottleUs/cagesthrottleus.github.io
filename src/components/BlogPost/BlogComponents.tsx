@@ -6,7 +6,6 @@
  * blog authors to know CSS class names.
  */
 
-import mermaid from "mermaid";
 import { useEffect, useRef, useState } from "react";
 
 import { MERMAID_CONFIG } from "../../utils/constants";
@@ -143,13 +142,14 @@ interface MermaidProps {
   caption?: string;
 }
 
-// Initialize mermaid once with Cold War classified theme
+// Track mermaid initialization globally
 let mermaidInitialized = false;
 
 /**
  * Mermaid diagram component with classified document styling
  * Renders diagrams using Cold War intelligence color palette
  * Uses safe ref-based rendering (no dangerouslySetInnerHTML)
+ * Lazy loads Mermaid library only when component is used
  *
  * Usage:
  * <Mermaid caption="Fig 1.1: System Architecture">
@@ -164,43 +164,68 @@ export function Mermaid({ children, caption }: MermaidProps) {
   const diagramRef = useRef<HTMLDivElement>(null);
   const [error, setError] = useState<string>("");
   const [isRendered, setIsRendered] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    if (!mermaidInitialized) {
-      mermaid.initialize(MERMAID_CONFIG);
-      mermaidInitialized = true;
-    }
+    const currentRef = diagramRef.current;
+    let cancelled = false;
 
-    const renderDiagram = async () => {
-      if (!diagramRef.current) return;
+    const loadAndRenderDiagram = async () => {
+      if (!currentRef) return;
 
       try {
-        // Clear previous content
-        diagramRef.current.innerHTML = "";
-        diagramRef.current.removeAttribute("data-processed");
+        setIsLoading(true);
+
+        // Lazy load mermaid library (only when Mermaid component is used)
+        const mermaidModule = await import("mermaid");
+        const mermaid = mermaidModule.default;
+
+        // Check if cancelled after async import
+        if (cancelled) return;
+
+        // Initialize mermaid once with Cold War classified theme
+        if (!mermaidInitialized) {
+          mermaid.initialize(MERMAID_CONFIG);
+          mermaidInitialized = true;
+        }
+
+        // Clear previous content safely (use innerHTML to avoid DOM removal errors)
+        currentRef.innerHTML = "";
+        currentRef.removeAttribute("data-processed");
 
         // Create a temporary div for mermaid to process
         const tempDiv = document.createElement("div");
         tempDiv.className = "mermaid";
         tempDiv.textContent = children.trim();
-        diagramRef.current.appendChild(tempDiv);
+        currentRef.appendChild(tempDiv);
 
         // Render the diagram directly into the DOM (safe approach)
         await mermaid.run({
           nodes: [tempDiv],
         });
 
+        // Prevent state updates after unmount (cleanup can set cancelled during async)
+        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+        if (cancelled) return;
         setError("");
         setIsRendered(true);
       } catch (err) {
+        if (cancelled) return;
         setError(
           err instanceof Error ? err.message : "Failed to render diagram",
         );
         setIsRendered(false);
+      } finally {
+        if (cancelled) return;
+        setIsLoading(false);
       }
     };
 
-    void renderDiagram();
+    void loadAndRenderDiagram();
+
+    return () => {
+      cancelled = true;
+    };
   }, [children]);
 
   if (error) {
@@ -219,8 +244,20 @@ export function Mermaid({ children, caption }: MermaidProps) {
       <div
         ref={diagramRef}
         className="blog-mermaid-diagram"
-        style={{ opacity: isRendered ? 1 : 0, transition: "opacity 0.2s" }}
-      />
+        style={{
+          opacity: isRendered ? 1 : 0,
+          transition: "opacity 0.3s",
+          minHeight: isLoading ? "200px" : undefined,
+        }}
+      >
+        {isLoading && (
+          <div
+            style={{ textAlign: "center", padding: "3rem", color: "#22c55e" }}
+          >
+            Loading diagram renderer...
+          </div>
+        )}
+      </div>
       {caption && <figcaption className="blog-caption">{caption}</figcaption>}
     </figure>
   );

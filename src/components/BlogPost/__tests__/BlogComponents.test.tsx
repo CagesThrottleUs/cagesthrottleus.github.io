@@ -18,7 +18,7 @@ vi.mock("mermaid", () => ({
     render: vi.fn().mockResolvedValue({
       svg: "<svg><text>Mocked Diagram</text></svg>",
     }),
-    run: vi.fn().mockResolvedValue(undefined),
+    run: vi.fn().mockImplementation(() => Promise.resolve()),
   },
 }));
 
