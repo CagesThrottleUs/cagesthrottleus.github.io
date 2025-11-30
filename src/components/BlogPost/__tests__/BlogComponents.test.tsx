@@ -1,5 +1,5 @@
-import { render, screen } from "@testing-library/react";
-import { describe, it, expect } from "vitest";
+import { render, screen, waitFor } from "@testing-library/react";
+import { describe, it, expect, vi } from "vitest";
 
 import {
   Redacted,
@@ -7,7 +7,20 @@ import {
   CallOut,
   SectionMarker,
   ImageWithCaption,
+  Table,
+  Mermaid,
 } from "../BlogComponents";
+
+// Mock mermaid
+vi.mock("mermaid", () => ({
+  default: {
+    initialize: vi.fn(),
+    render: vi.fn().mockResolvedValue({
+      svg: "<svg><text>Mocked Diagram</text></svg>",
+    }),
+    run: vi.fn().mockImplementation(() => Promise.resolve()),
+  },
+}));
 
 describe("BlogComponents", () => {
   describe("Redacted", () => {
@@ -115,6 +128,113 @@ describe("BlogComponents", () => {
       );
       const figure = container.querySelector(".blog-figure");
       expect(figure).toBeInTheDocument();
+    });
+  });
+
+  describe("Table", () => {
+    it("should render table with headers and rows", () => {
+      render(
+        <Table
+          headers={["Metric", "Value", "Status"]}
+          rows={[
+            ["Initial Load", "2 seconds", "Optimal"],
+            ["Cache Hit", "87%", "Good"],
+          ]}
+        />,
+      );
+
+      expect(screen.getByText("Metric")).toBeInTheDocument();
+      expect(screen.getByText("Value")).toBeInTheDocument();
+      expect(screen.getByText("Status")).toBeInTheDocument();
+      expect(screen.getByText("Initial Load")).toBeInTheDocument();
+      expect(screen.getByText("2 seconds")).toBeInTheDocument();
+      expect(screen.getByText("Optimal")).toBeInTheDocument();
+    });
+
+    it("should apply blog-table class", () => {
+      const { container } = render(
+        <Table headers={["Col1"]} rows={[["Data"]]} />,
+      );
+      const table = container.querySelector(".blog-table");
+      expect(table).toBeInTheDocument();
+    });
+
+    it("should support JSX elements in cells", () => {
+      render(
+        <Table
+          headers={["Metric", "Value"]}
+          rows={[
+            [<span key="1">Test</span>, <Highlight key="2">87%</Highlight>],
+          ]}
+        />,
+      );
+
+      expect(screen.getByText("Test")).toBeInTheDocument();
+      expect(screen.getByText("87%")).toBeInTheDocument();
+      const highlight = screen.getByText("87%");
+      expect(highlight.tagName).toBe("MARK");
+    });
+
+    it("should render correct number of rows and columns", () => {
+      const { container } = render(
+        <Table
+          headers={["A", "B", "C"]}
+          rows={[
+            ["1", "2", "3"],
+            ["4", "5", "6"],
+          ]}
+        />,
+      );
+
+      const rows = container.querySelectorAll("tbody tr");
+      expect(rows.length).toBe(2);
+
+      const firstRowCells = rows[0].querySelectorAll("td");
+      expect(firstRowCells.length).toBe(3);
+    });
+  });
+
+  describe("Mermaid", () => {
+    it("should render mermaid diagram", async () => {
+      const diagramCode = `
+        graph TD
+          A[Start] --> B[End]
+      `;
+
+      const { container } = render(<Mermaid>{diagramCode}</Mermaid>);
+
+      await waitFor(() => {
+        const mermaidDiv = container.querySelector(".blog-mermaid-diagram");
+        expect(mermaidDiv).toBeInTheDocument();
+      });
+    });
+
+    it("should render caption when provided", async () => {
+      const diagramCode = "graph TD\nA--&gt;B";
+
+      render(<Mermaid caption="Fig 1.1: System Flow">{diagramCode}</Mermaid>);
+
+      await waitFor(() => {
+        expect(screen.getByText("Fig 1.1: System Flow")).toBeInTheDocument();
+      });
+    });
+
+    it("should apply blog-mermaid class", async () => {
+      const { container } = render(<Mermaid>{"graph TD\nA--&gt;B"}</Mermaid>);
+
+      await waitFor(() => {
+        const figure = container.querySelector(".blog-mermaid");
+        expect(figure).toBeInTheDocument();
+      });
+    });
+
+    it("should render without caption", async () => {
+      const { container } = render(<Mermaid>{"graph TD\nA--&gt;B"}</Mermaid>);
+
+      await waitFor(() => {
+        const caption = container.querySelector(".blog-caption");
+        expect(caption).not.toBeInTheDocument();
+      });
     });
   });
 });

@@ -21,6 +21,7 @@ const CACHE_DURATION = 5 * 60 * 1000; // 5 minutes in milliseconds
 
 /**
  * Get cached data from localStorage
+ * Type parameter only used for return type inference but necessary for type safety
  */
 // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-parameters
 function getCached<T>(key: string): T | null {
@@ -45,6 +46,7 @@ function getCached<T>(key: string): T | null {
 
 /**
  * Set data in localStorage cache
+ * Type parameter only used for input type but necessary for type safety with getCached
  */
 // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-parameters
 function setCache<T>(key: string, data: T): void {
