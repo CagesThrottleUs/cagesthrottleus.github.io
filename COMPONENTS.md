@@ -58,7 +58,7 @@ ALERT: Unauthorized access detected in sector 7.
 ```
 
 **Visual Style:**
-- **info**: Green border, subtle green background
+- **info**: Blue border, subtle blue background
 - **warning**: Amber border, subtle amber background  
 - **error**: Red border, subtle red background
 - **success**: Bright green border, green background
@@ -139,6 +139,128 @@ Text with a bright green highlighted background, making it stand out from surrou
 
 ---
 
+### 6. `<Table>`
+
+Display tabular data with support for JSX components in cells (unlike markdown tables).
+
+**Props:**
+- `headers`: Array of header strings
+- `rows`: Array of row arrays, where each row contains cell content (can include JSX components)
+
+**Example:**
+```mdx
+<Table
+  headers={['Metric', 'Value', 'Status']}
+  rows={[
+    ['Initial Load Time', <Highlight>&lt;2 seconds</Highlight>, '✓ Optimal'],
+    ['Cache Hit Rate', <Highlight>87%</Highlight>, '✓ Optimal'],
+    ['API Calls/Visit', <Highlight>1-3</Highlight>, '✓ Optimal']
+  ]}
+/>
+```
+
+**Why use Table instead of markdown tables?**
+- Markdown tables cannot render JSX components (they appear as literal text)
+- Table component supports `<Highlight>`, `<Redacted>`, and other components in cells
+- Same classified document styling as markdown tables
+- Fully responsive and accessible
+
+**Example with mixed content:**
+```mdx
+<Table
+  headers={['Operation', 'Location', 'Classification']}
+  rows={[
+    ['Nightfall', <Redacted>London</Redacted>, 'TOP SECRET'],
+    ['Phantom', 'Berlin', 'SECRET'],
+    ['Ghost Protocol', <Redacted>Moscow</Redacted>, <Highlight>CLASSIFIED</Highlight>]
+  ]}
+/>
+```
+
+---
+
+### 7. `<Mermaid>`
+
+Render diagrams using Mermaid syntax with Cold War classified styling.
+
+**Props:**
+- `children`: Mermaid diagram code as string
+- `caption`: Optional caption for the diagram
+
+**Example - Flowchart:**
+```mdx
+<Mermaid caption="Fig 1.1: System Architecture">
+{`
+graph TD
+  A[Client] --> B[API Gateway]
+  B --> C[Authentication Service]
+  B --> D[Content Delivery]
+  C --> E[Database]
+  D --> E
+`}
+</Mermaid>
+```
+
+**Example - Sequence Diagram:**
+```mdx
+<Mermaid caption="Fig 2.1: Authentication Flow">
+{`
+sequenceDiagram
+  participant User
+  participant App
+  participant Auth
+  participant DB
+  
+  User->>App: Login Request
+  App->>Auth: Validate Credentials
+  Auth->>DB: Query User
+  DB-->>Auth: User Data
+  Auth-->>App: Token
+  App-->>User: Success
+`}
+</Mermaid>
+```
+
+**Example - Git Graph:**
+```mdx
+<Mermaid>
+{`
+gitGraph
+  commit
+  branch develop
+  checkout develop
+  commit
+  commit
+  checkout main
+  merge develop
+  commit
+`}
+</Mermaid>
+```
+
+**Supported Diagram Types:**
+- Flowcharts (`graph TD`, `graph LR`)
+- Sequence diagrams (`sequenceDiagram`)
+- Class diagrams (`classDiagram`)
+- State diagrams (`stateDiagram`)
+- Entity relationship diagrams (`erDiagram`)
+- Git graphs (`gitGraph`)
+- Gantt charts (`gantt`)
+- Pie charts (`pie`)
+
+**Theme Colors:**
+Diagrams automatically use the Cold War classified palette:
+- Red borders and primary nodes (#dc2626)
+- Green connectors and arrows (#22c55e)
+- Blue accents (#3b82f6)
+- Amber highlights (#f59e0b)
+- Monospace font (JetBrains Mono)
+
+**Security Note:**
+Uses safe ref-based rendering (no dangerouslySetInnerHTML), making it secure for user-generated content.
+
+---
+
 ## Complete Example Post
 
 Here's a complete example showing all components in action:
@@ -185,6 +307,30 @@ Each operative will be equipped with:
 <CallOut type="success">
 All equipment has been tested and certified for this operation.
 </CallOut>
+
+### 2.1 Performance Metrics
+
+<Table
+  headers={['Metric', 'Value', 'Status']}
+  rows={[
+    ['Initial Load Time', <Highlight>&lt;2 seconds</Highlight>, '✓ Optimal'],
+    ['Cache Hit Rate', <Highlight>87%</Highlight>, '✓ Optimal'],
+    ['API Calls/Visit', <Highlight>1-3</Highlight>, '✓ Optimal']
+  ]}
+/>
+
+### 2.2 System Architecture
+
+<Mermaid caption="Fig 2.2: Operational System Flow">
+{`
+graph TD
+  A[Operative] --> B[Secure Gateway]
+  B --> C[Command Center]
+  C --> D[Intelligence Database]
+  B --> E[Field Operations]
+  E --> D
+`}
+</Mermaid>
 
 <SectionMarker number="3.0">Contingency Protocols</SectionMarker>
 
@@ -260,6 +406,11 @@ You don't need to worry about CSS or styling - just use the components!
 - The component will be added in the next version
 
 ## Version History
+
+- **v1.1** (2025-11-30): Enhanced component library
+  - Added `Table` component with JSX support in cells
+  - Added `Mermaid` component for diagrams
+  - Updated `CallOut` info type to use blue theme
 
 - **v1.0** (2025-11-29): Initial component library
   - Redacted
