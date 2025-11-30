@@ -1,5 +1,7 @@
 import { ArrowRight } from "lucide-react";
 
+import { BLOG_BASE_URL } from "../../utils/constants";
+
 import type { BlogMetadata } from "../../types/blog";
 
 import "./BlogCard.css";
@@ -25,7 +27,7 @@ function BlogCard({ metadata, onClick }: BlogCardProps) {
     >
       <div className="blog-card-thumbnail">
         <img
-          src={`https://raw.githubusercontent.com/cagesthrottleus/cagesthrottleus.github.io/blog/${metadata.thumbnail ?? "thumbnails/default.svg"}`}
+          src={`${BLOG_BASE_URL}/${metadata.thumbnail ?? "thumbnails/default.svg"}`}
           alt={metadata.title}
           loading="lazy"
         />

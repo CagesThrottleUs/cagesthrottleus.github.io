@@ -6,18 +6,14 @@
  * No authentication required (public repository).
  */
 
+import { BLOG_BASE_URL, BLOG_CACHE_DURATION } from "../utils/constants";
+
 import type {
   BlogIndex,
   BlogMetadata,
   PageManifest,
   CacheEntry,
 } from "../types/blog";
-
-// Configuration
-const REPO = "cagesthrottleus/cagesthrottleus.github.io";
-const BLOG_BRANCH = "blog";
-const BASE_URL = `https://raw.githubusercontent.com/${REPO}/${BLOG_BRANCH}`;
-const CACHE_DURATION = 5 * 60 * 1000; // 5 minutes in milliseconds
 
 /**
  * Get cached data from localStorage
@@ -32,7 +28,7 @@ function getCached<T>(key: string): T | null {
     const entry = JSON.parse(cached) as CacheEntry<T>;
 
     // Check if cache is expired
-    if (Date.now() - entry.timestamp > CACHE_DURATION) {
+    if (Date.now() - entry.timestamp > BLOG_CACHE_DURATION) {
       localStorage.removeItem(key);
       return null;
     }
@@ -76,7 +72,7 @@ export async function fetchBlogIndex(): Promise<BlogIndex> {
   }
 
   // Fetch from GitHub
-  const response = await fetch(`${BASE_URL}/manifests/index.json`, {
+  const response = await fetch(`${BLOG_BASE_URL}/manifests/index.json`, {
     cache: "no-cache", // Bypass browser cache, use our localStorage
   });
 
@@ -103,7 +99,7 @@ export async function fetchPage(pageNum: number): Promise<PageManifest> {
 
   // Fetch from GitHub
   const response = await fetch(
-    `${BASE_URL}/manifests/page-${String(pageNum)}.json`,
+    `${BLOG_BASE_URL}/manifests/page-${String(pageNum)}.json`,
     {
       cache: "no-cache",
     },
@@ -137,7 +133,7 @@ export async function fetchPostMetadata(
   // Fetch from GitHub
   try {
     const response = await fetch(
-      `${BASE_URL}/manifests/metadata/${slug}.json`,
+      `${BLOG_BASE_URL}/manifests/metadata/${slug}.json`,
       {
         cache: "no-cache",
       },
@@ -169,7 +165,7 @@ export async function fetchPostContent(slug: string): Promise<string> {
   }
 
   // Fetch from GitHub
-  const response = await fetch(`${BASE_URL}/posts/${slug}.mdx`, {
+  const response = await fetch(`${BLOG_BASE_URL}/posts/${slug}.mdx`, {
     cache: "no-cache",
   });
 
