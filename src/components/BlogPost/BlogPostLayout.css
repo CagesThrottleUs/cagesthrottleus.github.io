@@ -375,7 +375,7 @@
   background: rgba(10, 10, 10, 0.6);
   border: var(--border-width-normal) solid var(--color-border-primary);
   border-radius: var(--radius-sm);
-  box-shadow: 
+  box-shadow:
     0 0 20px rgba(220, 38, 38, 0.1),
     inset 0 0 40px rgba(220, 38, 38, 0.03);
 }
