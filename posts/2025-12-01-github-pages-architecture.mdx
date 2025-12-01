@@ -48,8 +48,9 @@ This is where the <Highlight>Github Actions</Highlight> comes into play. Here th
 
 Once the above process is successful, we then use the built code as an artifact and deploy it to the `gh-pages` branch. This then updates the website with the latest changes.
 
-<Mermaid caption="Fig 1.1: Github Actions Workflow">
-{`
+<Mermaid 
+  caption="Fig 1.1: Github Actions Workflow"
+  text={`
 flowchart TB
     subgraph MAINFLOW["\`MAIN BRANCH WORKFLOW\`"]
         direction TB
@@ -110,7 +111,7 @@ flowchart TB
     class M20,M35 successStyle
     class M19 errorStyle
 `}
-</Mermaid>
+/>
 
 <CallOut type="warning">
 Always ensure that the important branches are protected in the sense that only authorized personnel can merge the code into the branch.
@@ -143,8 +144,9 @@ Without first diving into the blog post mechanics, let us assume that there is a
 
 Then assuming that the folder `posts` is located in the root folder then for each post that we make, we will use a python script to generate the manifests accordingly, which can be thought as a way to cache an API response directly on the git repository.
 
-<Mermaid caption="Fig 1.2: Generating Manifests">
-{`
+<Mermaid 
+  caption="Fig 1.2: Generating Manifests"
+  text={`
 flowchart TB
     Start(["\`Start: generate_manifests\`"]) --> Init["\`Create manifests/ and metadata/ directories\`"]
     Init --> CheckPosts{"\`Posts directory exists?\`"}
@@ -207,7 +209,7 @@ flowchart TB
     style Warn fill:#fff4e1
     style End fill:#e1e1e1
 `}
-</Mermaid>
+/>
 
 So this script allows us to have decoupling of the blog post contents from the main application. This saves bundling all posts together.
 
@@ -236,20 +238,20 @@ thumbnail: thumbnails/2024-11-29-your-post-slug.jpg
 
 Here is the attached workflow for the blog post.
 
-```mermaid
+const diagram_3_2 = `
 flowchart TD
-    Start(["`Workflow Triggered`"]) --> Trigger{"`Trigger Type`"}
+    Start(["\`Workflow Triggered\`"]) --> Trigger{"\`Trigger Type\`"}
     Trigger -->|Push to 'blog' branch with posts/** changes| Setup
     Trigger -->|Manual Dispatch| Setup
-    Setup["`Checkout blog branch`"] --> Python["`Set up Python 3.x`"]
-    Python --> Generate["`Run generate_manifest.py`"]
-    Generate --> Config["`Configure Git User GitHub Actions Bot`"]
-    Config --> Stage["`Stage manifests/ directory`"]
-    Stage --> Check{"`Changes Detected?`"}
-    Check -->|No changes| NoOp["`Echo: No changes to commit`"]
-    Check -->|Changes present| Commit["`Commit with message: chore: update blog manifests`"]
-    NoOp --> End(["`Workflow Complete`"])
-    Commit --> Push["`Push to origin`"]
+    Setup["\`Checkout blog branch\`"] --> Python["\`Set up Python 3.x\`"]
+    Python --> Generate["\`Run generate_manifest.py\`"]
+    Generate --> Config["\`Configure Git User GitHub Actions Bot\`"]
+    Config --> Stage["\`Stage manifests/ directory\`"]
+    Stage --> Check{"\`Changes Detected?\`"}
+    Check -->|No changes| NoOp["\`Echo: No changes to commit\`"]
+    Check -->|Changes present| Commit["\`Commit with message: chore: update blog manifests\`"]
+    NoOp --> End(["\`Workflow Complete\`"])
+    Commit --> Push["\`Push to origin\`"]
     Push --> End
 
     style Start fill:#e1f5e1
@@ -257,7 +259,9 @@ flowchart TD
     style Check fill:#fff4e1
     style Commit fill:#e1f0ff
     style Push fill:#e1f0ff
-```
+`;
+
+<Mermaid text={diagram_3_2} caption="Fig 1.3: Workflow for the blog post" />
 
 <SectionMarker number="4.0">Conclusion</SectionMarker>
 
