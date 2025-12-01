@@ -1,11 +1,9 @@
 ---
 title: Understanding the architecture of this blog's architecture
 classification: RESTRICTED // SAP // ORCON
-abstract:
-  This document explains the architecture of this blog such that it remains
-  always free
+abstract: This document explains the architecture of this blog such that it remains always free
 publishDate: 2025-12-01
-version: 1.0
+version: 1.1
 thumbnail: thumbnails/post-2025-12-01-github-pages-architecture.svg
 ---
 
@@ -40,9 +38,9 @@ As we already have an idea on how can we provide a static website, we can use a 
 
 But this process is error prone and not scalable. Thus we need to automate the process of building and deploying the application.
 
-<Callout type="info">
+<CallOut type="info">
   Focus on automation over manual process. I use Github Actions to have stateful build and deployment process.
-</Callout>
+</CallOut>
 
 If we are automating the deployment process, we can add guard policies to <Highlight>ensure that only "working" code is deployed</Highlight>.
 
@@ -114,9 +112,9 @@ flowchart TB
 `}
 </Mermaid>
 
-<Callout type="warning">
+<CallOut type="warning">
 Always ensure that the important branches are protected in the sense that only authorized personnel can merge the code into the branch.
-</Callout>
+</CallOut>
 
 <SectionMarker number="3.0">How are we fetching the blog posts?</SectionMarker>
 
