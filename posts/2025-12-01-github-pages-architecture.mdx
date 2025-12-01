@@ -3,7 +3,7 @@ title: Understanding the architecture of this blog's architecture
 classification: RESTRICTED // SAP // ORCON
 abstract: This document explains the architecture of this blog such that it remains always free
 publishDate: 2025-12-01
-version: 1.7
+version: 1.8
 thumbnail: thumbnails/post-2025-12-01-github-pages-architecture.svg
 ---
 
@@ -236,38 +236,28 @@ thumbnail: thumbnails/2024-11-29-your-post-slug.jpg
 
 Here is the attached workflow for the blog post.
 
-<Mermaid caption="Fig 1.3: Workflow for the blog post">
-{`
+```mermaid
 flowchart TD
-    Start(["\`Workflow Triggered\`"]) --> Trigger{"\`Trigger Type\`"}
-    
+    Start(["`Workflow Triggered`"]) --> Trigger{"`Trigger Type`"}
     Trigger -->|Push to 'blog' branch with posts/** changes| Setup
     Trigger -->|Manual Dispatch| Setup
-    
-    Setup["\`Checkout blog branch\`"] --> Python["\`Set up Python 3.x\`"]
-    
-    Python --> Generate["\`Run generate_manifest.py\`"]
-    
-    Generate --> Config["\`Configure Git User GitHub Actions Bot\`"]
-    
-    Config --> Stage["\`Stage manifests/ directory\`"]
-    
-    Stage --> Check{"\`Changes Detected?\`"}
-    
-    Check -->|No changes| NoOp["\`Echo: No changes to commit\`"]
-    Check -->|Changes present| Commit["\`Commit with message: chore: update blog manifests\`"]
-    
-    NoOp --> End(["\`Workflow Complete\`"])
-    Commit --> Push["\`Push to origin\`"]
+    Setup["`Checkout blog branch`"] --> Python["`Set up Python 3.x`"]
+    Python --> Generate["`Run generate_manifest.py`"]
+    Generate --> Config["`Configure Git User GitHub Actions Bot`"]
+    Config --> Stage["`Stage manifests/ directory`"]
+    Stage --> Check{"`Changes Detected?`"}
+    Check -->|No changes| NoOp["`Echo: No changes to commit`"]
+    Check -->|Changes present| Commit["`Commit with message: chore: update blog manifests`"]
+    NoOp --> End(["`Workflow Complete`"])
+    Commit --> Push["`Push to origin`"]
     Push --> End
-    
+
     style Start fill:#e1f5e1
     style End fill:#ffe1e1
     style Check fill:#fff4e1
     style Commit fill:#e1f0ff
     style Push fill:#e1f0ff
-`}
-</Mermaid>
+```
 
 <SectionMarker number="4.0">Conclusion</SectionMarker>
 
