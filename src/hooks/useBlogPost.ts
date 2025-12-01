@@ -65,7 +65,8 @@ export function useBlogPost(slug: string | undefined) {
         const code = String(
           await compile(contentWithoutFrontmatter, {
             outputFormat: "function-body",
-            development: false,
+            development: false, // Disable dev mode to skip component validation
+            jsxImportSource: "react",
           }),
         );
 
@@ -85,7 +86,24 @@ export function useBlogPost(slug: string | undefined) {
       } catch (err: unknown) {
         if (!cancelled) {
           console.error("Error loading post:", err);
-          setError("Failed to load post");
+          
+          // Provide detailed error messages
+          let errorMessage = "Failed to load post";
+          if (err instanceof Error) {
+            if (err.message.includes("Could not parse")) {
+              errorMessage = `MDX Syntax Error:\n\n${err.message}\n\nTip: Check for emojis, special characters, or invalid syntax in template expressions.`;
+            } else if (err.message.includes("Unexpected character")) {
+              errorMessage = `MDX Parsing Error:\n\n${err.message}\n\nTip: Emojis and special characters must be wrapped in markdown text syntax ["\`...\`"] or removed from code blocks.`;
+            } else if (err.message.includes("Failed to fetch")) {
+              errorMessage = `Network Error: Could not fetch blog post content.`;
+            } else if (err.message.includes("Expected component")) {
+              errorMessage = `Component Error:\n\n${err.message}\n\nTip: Ensure all custom components are defined in BlogComponents.tsx`;
+            } else {
+              errorMessage = err.message;
+            }
+          }
+          
+          setError(errorMessage);
           setLoading(false);
         }
       }
