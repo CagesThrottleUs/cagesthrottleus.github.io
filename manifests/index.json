@@ -1,5 +1,5 @@
 {
-  "version": "2025-12-01T04:40:11.508924+00:00",
+  "version": "2025-12-01T04:43:28.969412+00:00",
   "totalPosts": 3,
   "totalPages": 1,
   "postsPerPage": 50,
@@ -10,7 +10,7 @@
       "classification": "RESTRICTED // SAP // ORCON",
       "abstract": "This document explains the architecture of this blog such that it remains always free",
       "publishDate": "2025-12-01",
-      "version": "1.7",
+      "version": "1.8",
       "thumbnail": "thumbnails/post-2025-12-01-github-pages-architecture.svg"
     },
     {
