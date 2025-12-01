@@ -3,7 +3,7 @@ title: Understanding the architecture of this blog's architecture
 classification: RESTRICTED // SAP // ORCON
 abstract: This document explains the architecture of this blog such that it remains always free
 publishDate: 2025-12-01
-version: 1.6
+version: 1.7
 thumbnail: thumbnails/post-2025-12-01-github-pages-architecture.svg
 ---
 
@@ -131,7 +131,7 @@ So question becomes: <Highlight>How can we have dynamic blog contents in a stati
 
 ## 3.1 Proposed solution
 
-Let us first talk the features that will be present when someone goes to the path `/blog`. They should be able to search for blog post on titles with a contains logic. They can also filter posts based on start and end date range.
+Let us first talk the features that will be present when someone goes to the path <code>/blog</code>. They should be able to search for blog post on titles with a contains logic. They can also filter posts based on start and end date range.
 
 That means that for each post we will create we need a manifests such that we can get paginated list of posts as well as an index manifest.
 
