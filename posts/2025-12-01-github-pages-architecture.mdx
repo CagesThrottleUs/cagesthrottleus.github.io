@@ -3,7 +3,7 @@ title: Understanding the architecture of this blog's architecture
 classification: RESTRICTED // SAP // ORCON
 abstract: This document explains the architecture of this blog such that it remains always free
 publishDate: 2025-12-01
-version: 1.4
+version: 1.5
 thumbnail: thumbnails/post-2025-12-01-github-pages-architecture.svg
 ---
 
@@ -51,49 +51,49 @@ Once the above process is successful, we then use the built code as an artifact 
 <Mermaid caption="Fig 1.1: Github Actions Workflow">
 {`
 flowchart TB
-    subgraph MAINFLOW["🔧 MAIN BRANCH WORKFLOW"]
+    subgraph MAINFLOW["\`MAIN BRANCH WORKFLOW\`"]
         direction TB
-        M1["` Developer Creates Feature`"]
-        M1 --> M2["`Feature Branch feat/* | fix/* | chore/*`"]
-        M2 --> M3["`Local Development`"]
-        M3 --> M4["`npm run dev – Vite Dev Server`"]
-        M4 --> M5["`npm test – Vitest + Coverage`"]
-        M5 --> M6["`npm run lint – ESLint`"]
-        M6 --> M7["`npm run format:check – Prettier`"]
-        M7 --> M8["`git push origin branch`"]
-        M8 --> M9["`Create Pull Request → main`"]
+        M1["\`Developer Creates Feature\`"]
+        M1 --> M2["\`Feature Branch feat/* | fix/* | chore/*\`"]
+        M2 --> M3["\`Local Development\`"]
+        M3 --> M4["\`npm run dev - Vite Dev Server\`"]
+        M4 --> M5["\`npm test - Vitest + Coverage\`"]
+        M5 --> M6["\`npm run lint - ESLint\`"]
+        M6 --> M7["\`npm run format:check - Prettier\`"]
+        M7 --> M8["\`git push origin branch\`"]
+        M8 --> M9["\`Create Pull Request → main\`"]
         
-        M9 --> M10["`🔍 PR VALIDATION PIPELINE`"]
-        M10 --> M11["`Checkout code`"]
-        M11 --> M12["`Setup Node.js LTS + cache`"]
-        M12 --> M13["`npm ci – clean install`"]
-        M13 --> M14["`Check formatting`"]
-        M14 --> M15["`Run lint`"]
-        M15 --> M16["`Run tests`"]
-        M16 --> M17["`Build project`"]
-        M17 --> M18{"`All checks passed?`"}
-        M18 -->| Fail| M19["`Fix required`"]
+        M9 --> M10["\`PR VALIDATION PIPELINE\`"]
+        M10 --> M11["\`Checkout code\`"]
+        M11 --> M12["\`Setup Node.js LTS + cache\`"]
+        M12 --> M13["\`npm ci - clean install\`"]
+        M13 --> M14["\`Check formatting\`"]
+        M14 --> M15["\`Run lint\`"]
+        M15 --> M16["\`Run tests\`"]
+        M16 --> M17["\`Build project\`"]
+        M17 --> M18{"\`All checks passed?\`"}
+        M18 -->|Fail| M19["\`Fix required\`"]
         M19 --> M3
-        M18 -->| Pass| M20["`Ready to merge`"]
+        M18 -->|Pass| M20["\`Ready to merge\`"]
         
-        M20 --> M21["`Merge to main`"]
-        M21 --> M22["`🚀 DEPLOY PIPELINE`"]
-        M22 --> M23["`Build Job: Checkout`"]
-        M23 --> M24["`Setup Node + npm cache`"]
-        M24 --> M25["`npm ci`"]
-        M25 --> M26["`Quality checks – format → lint → test`"]
-        M26 --> M27["`vite build – Production`"]
-        M27 --> M28["`Code Splitting`"]
-        M28 --> M29["`vendor.js – React, Router`"]
-        M28 --> M30["`ui.js – Adobe Spectrum`"]
-        M28 --> M31["`mermaid.js – Lazy loaded`"]
-        M28 --> M32["`app chunks – Components, Hooks`"]
-        M29 --> M33["`Upload dist/ artifact`"]
+        M20 --> M21["\`Merge to main\`"]
+        M21 --> M22["\`DEPLOY PIPELINE\`"]
+        M22 --> M23["\`Build Job: Checkout\`"]
+        M23 --> M24["\`Setup Node + npm cache\`"]
+        M24 --> M25["\`npm ci\`"]
+        M25 --> M26["\`Quality checks format → lint → test\`"]
+        M26 --> M27["\`vite build - Production\`"]
+        M27 --> M28["\`Code Splitting\`"]
+        M28 --> M29["\`vendor.js - React, Router\`"]
+        M28 --> M30["\`ui.js - Adobe Spectrum\`"]
+        M28 --> M31["\`mermaid.js - Lazy loaded\`"]
+        M28 --> M32["\`app chunks - Components, Hooks\`"]
+        M29 --> M33["\`Upload dist/ artifact\`"]
         M30 --> M33
         M31 --> M33
         M32 --> M33
-        M33 --> M34["`Deploy Job: Deploy to Pages`"]
-        M34 --> M35["` Live Site – cagesthrottleus.github.io`"]
+        M33 --> M34["\`Deploy Job: Deploy to Pages\`"]
+        M34 --> M35["\`Live Site cagesthrottleus.github.io\`"]
     end
     
     classDef devStyle fill:#e8f4f8,stroke:#1e5a8e,stroke-width:2px,color:#0d3b66
@@ -109,8 +109,7 @@ flowchart TB
     class M18 decisionStyle
     class M20,M35 successStyle
     class M19 errorStyle
-
-`}
+\`}
 </Mermaid>
 
 <CallOut type="warning">
@@ -147,58 +146,58 @@ Then assuming that the folder `posts` is located in the root folder then for eac
 <Mermaid caption="Fig 1.2: Generating Manifests">
 {`
 flowchart TB
-    Start(["`Start: generate_manifests`"]) --> Init["`Create manifests/ and metadata/ directories`"]
-    Init --> CheckPosts{"`Posts directory exists?`"}
+    Start(["\`Start: generate_manifests\`"]) --> Init["\`Create manifests/ and metadata/ directories\`"]
+    Init --> CheckPosts{"\`Posts directory exists?\`"}
     
-    CheckPosts -->|No| Error1["`ERROR: Posts directory not found`"]
-    CheckPosts -->|Yes| GetFiles["`Get all *.mdx files sorted newest first`"]
+    CheckPosts -->|No| Error1["\`ERROR: Posts directory not found\`"]
+    CheckPosts -->|Yes| GetFiles["\`Get all *.mdx files sorted newest first\`"]
     
-    GetFiles --> FileLoop{"`For each MDX file`"}
+    GetFiles --> FileLoop{"\`For each MDX file\`"}
     
-    FileLoop -->|Process| ExtractMeta["`Extract metadata get_post_metadata`"]
-    ExtractMeta --> ReadFile["`Read file content`"]
-    ReadFile --> ParseFront["`Extract frontmatter extract_frontmatter`"]
+    FileLoop -->|Process| ExtractMeta["\`Extract metadata get_post_metadata\`"]
+    ExtractMeta --> ReadFile["\`Read file content\`"]
+    ReadFile --> ParseFront["\`Extract frontmatter extract_frontmatter\`"]
     
-    ParseFront --> RegexMatch{"`Match ---...--- pattern?`"}
-    RegexMatch -->|No| ReturnEmpty["`Return empty dict`"]
-    RegexMatch -->|Yes| ParseLines["`Parse key:value pairs Remove quotes & whitespace`"]
+    ParseFront --> RegexMatch{"\`Match ---...--- pattern?\`"}
+    RegexMatch -->|No| ReturnEmpty["\`Return empty dict\`"]
+    RegexMatch -->|Yes| ParseLines["\`Parse key:value pairs Remove quotes & whitespace\`"]
     
-    ParseLines --> ExtractSlug["`Extract slug from filename`"]
-    ExtractSlug --> ParseDate{"`Date in slug YYYY-MM-DD?`"}
-    ParseDate -->|Yes| UseSlugDate["`Use slug date`"]
-    ParseDate -->|No| UseFrontDate["`Use frontmatter date`"]
+    ParseLines --> ExtractSlug["\`Extract slug from filename\`"]
+    ExtractSlug --> ParseDate{"\`Date in slug YYYY-MM-DD?\`"}
+    ParseDate -->|Yes| UseSlugDate["\`Use slug date\`"]
+    ParseDate -->|No| UseFrontDate["\`Use frontmatter date\`"]
     
     UseSlugDate --> ValidateTitle
-    UseFrontDate --> ValidateTitle{"`Has title?`"}
+    UseFrontDate --> ValidateTitle{"\`Has title?\`"}
     
-    ValidateTitle -->|No| WarnSkip["`WARN: Missing title Return None`"]
-    ValidateTitle -->|Yes| CreateMeta["`Create PostMetadata object - slug - title - classification - abstract - publishDate - version - thumbnail`"]
+    ValidateTitle -->|No| WarnSkip["\`WARN: Missing title Return None\`"]
+    ValidateTitle -->|Yes| CreateMeta["\`Create PostMetadata object - slug - title - classification - abstract - publishDate - version - thumbnail\`"]
     
-    CreateMeta --> SaveIndividual["`Save to metadata/slug.json`"]
-    SaveIndividual --> AddToList["`Add to all_posts list`"]
+    CreateMeta --> SaveIndividual["\`Save to metadata/slug.json\`"]
+    SaveIndividual --> AddToList["\`Add to all_posts list\`"]
     AddToList --> FileLoop
     
     WarnSkip --> FileLoop
     ReturnEmpty --> FileLoop
     
-    FileLoop -->|Done| CheckValid{"`Any valid posts?`"}
-    CheckValid -->|No| Warn["`WARN: No valid posts`"]
-    CheckValid -->|Yes| SortPosts["`Sort posts by publishDate newest first`"]
+    FileLoop -->|Done| CheckValid{"\`Any valid posts?\`"}
+    CheckValid -->|No| Warn["\`WARN: No valid posts\`"]
+    CheckValid -->|Yes| SortPosts["\`Sort posts by publishDate newest first\`"]
     
-    SortPosts --> CalcPages["`Calculate total pages ceil totalPosts / 50`"]
-    CalcPages --> PageLoop{"`For each page`"}
+    SortPosts --> CalcPages["\`Calculate total pages ceil totalPosts / 50\`"]
+    CalcPages --> PageLoop{"\`For each page\`"}
     
-    PageLoop --> SlicePosts["`Slice posts array start: page-1 × 50 end: min start+50, total`"]
-    SlicePosts --> CreatePage["`Create page manifest - page number - posts array`"]
-    CreatePage --> SavePage["`Save to manifests/page-N.json`"]
+    PageLoop --> SlicePosts["\`Slice posts array start: page-1 × 50 end: min start+50, total\`"]
+    SlicePosts --> CreatePage["\`Create page manifest - page number - posts array\`"]
+    CreatePage --> SavePage["\`Save to manifests/page-N.json\`"]
     SavePage --> PageLoop
     
-    PageLoop -->|All pages done| CreateIndex["`Create index manifest - version timestamp - totalPosts - totalPages - postsPerPage: 50 - latestPosts top 10 - pages map`"]
+    PageLoop -->|All pages done| CreateIndex["\`Create index manifest - version timestamp - totalPosts - totalPages - postsPerPage: 50 - latestPosts top 10 - pages map\`"]
     
-    CreateIndex --> SaveIndex["`Save to manifests/index.json`"]
-    SaveIndex --> Success(["`SUCCESS: Complete`"])
+    CreateIndex --> SaveIndex["\`Save to manifests/index.json\`"]
+    SaveIndex --> Success(["\`SUCCESS: Complete\`"])
     
-    Error1 --> End(["`End`"])
+    Error1 --> End(["\`End\`"])
     Warn --> End
     Success --> End
     
@@ -207,8 +206,7 @@ flowchart TB
     style Error1 fill:#ffe1e1
     style Warn fill:#fff4e1
     style End fill:#e1e1e1
-
-`}
+\`}
 </Mermaid>
 
 So this script allows us to have decoupling of the blog post contents from the main application. This saves bundling all posts together.
@@ -241,26 +239,26 @@ Here is the attached workflow for the blog post.
 <Mermaid caption="Fig 1.3: Workflow for the blog post">
 {`
 flowchart TD
-    Start(["`Workflow Triggered`"]) --> Trigger{"`Trigger Type`"}
+    Start(["\`Workflow Triggered\`"]) --> Trigger{"\`Trigger Type\`"}
     
     Trigger -->|Push to 'blog' branch with posts/** changes| Setup
     Trigger -->|Manual Dispatch| Setup
     
-    Setup["`Checkout blog branch`"] --> Python["`Set up Python 3.x`"]
+    Setup["\`Checkout blog branch\`"] --> Python["\`Set up Python 3.x\`"]
     
-    Python --> Generate["`Run generate_manifest.py`"]
+    Python --> Generate["\`Run generate_manifest.py\`"]
     
-    Generate --> Config["`Configure Git User GitHub Actions Bot`"]
+    Generate --> Config["\`Configure Git User GitHub Actions Bot\`"]
     
-    Config --> Stage["`Stage manifests/ directory`"]
+    Config --> Stage["\`Stage manifests/ directory\`"]
     
-    Stage --> Check{"`Changes Detected?`"}
+    Stage --> Check{"\`Changes Detected?\`"}
     
-    Check -->|No changes| NoOp["`Echo: No changes to commit`"]
-    Check -->|Changes present| Commit["`Commit with message: chore: update blog manifests`"]
+    Check -->|No changes| NoOp["\`Echo: No changes to commit\`"]
+    Check -->|Changes present| Commit["\`Commit with message: chore: update blog manifests\`"]
     
-    NoOp --> End(["`Workflow Complete`"])
-    Commit --> Push["`Push to origin`"]
+    NoOp --> End(["\`Workflow Complete\`"])
+    Commit --> Push["\`Push to origin\`"]
     Push --> End
     
     style Start fill:#e1f5e1
@@ -268,8 +266,7 @@ flowchart TD
     style Check fill:#fff4e1
     style Commit fill:#e1f0ff
     style Push fill:#e1f0ff
-
-`}
+\`}
 </Mermaid>
 
 <SectionMarker number="4.0">Conclusion</SectionMarker>
