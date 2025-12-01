@@ -5,8 +5,6 @@ import {
   fetchPage,
   fetchPostMetadata,
   fetchPostContent,
-  clearBlogCache,
-  getCacheStats,
 } from "../blogService";
 
 // Mock localStorage
@@ -61,7 +59,7 @@ describe("blogService", () => {
   });
 
   describe("fetchBlogIndex", () => {
-    it("should fetch and cache blog index", async () => {
+    it("should fetch blog index", async () => {
       const mockIndex = {
         version: "2025-11-29",
         totalPosts: 2,
@@ -81,37 +79,8 @@ describe("blogService", () => {
       expect(result).toEqual(mockIndex);
       expect(mockFetch).toHaveBeenCalledWith(
         expect.stringContaining("/manifests/index.json"),
-        { cache: "no-cache" },
+        { cache: "no-store" },
       );
-
-      // Verify caching
-      const cached = localStorageMock.getItem("blog-index-v1");
-      expect(cached).toBeTruthy();
-    });
-
-    it("should return cached data if available", async () => {
-      const mockIndex = {
-        version: "2025-11-29",
-        totalPosts: 2,
-        totalPages: 1,
-        postsPerPage: 50,
-        latestPosts: [],
-        pages: {},
-      };
-
-      // Set cache
-      localStorageMock.setItem(
-        "blog-index-v1",
-        JSON.stringify({
-          data: mockIndex,
-          timestamp: Date.now(),
-        }),
-      );
-
-      const result = await fetchBlogIndex();
-
-      expect(result).toEqual(mockIndex);
-      expect(mockFetch).not.toHaveBeenCalled();
     });
 
     it("should throw error on failed fetch", async () => {
@@ -127,7 +96,7 @@ describe("blogService", () => {
   });
 
   describe("fetchPage", () => {
-    it("should fetch and cache page data", async () => {
+    it("should fetch page data", async () => {
       const mockPage = {
         page: 1,
         posts: [],
@@ -143,33 +112,22 @@ describe("blogService", () => {
       expect(result).toEqual(mockPage);
       expect(mockFetch).toHaveBeenCalledWith(
         expect.stringContaining("/manifests/page-1.json"),
-        { cache: "no-cache" },
+        { cache: "no-store" },
       );
     });
 
-    it("should return cached page data", async () => {
-      const mockPage = {
-        page: 1,
-        posts: [],
-      };
+    it("should throw error on failed page fetch", async () => {
+      mockFetch.mockResolvedValueOnce({
+        ok: false,
+        statusText: "Not Found",
+      });
 
-      localStorageMock.setItem(
-        "blog-page-1-v1",
-        JSON.stringify({
-          data: mockPage,
-          timestamp: Date.now(),
-        }),
-      );
-
-      const result = await fetchPage(1);
-
-      expect(result).toEqual(mockPage);
-      expect(mockFetch).not.toHaveBeenCalled();
+      await expect(fetchPage(1)).rejects.toThrow("Failed to fetch page 1");
     });
   });
 
   describe("fetchPostMetadata", () => {
-    it("should fetch and cache post metadata", async () => {
+    it("should fetch post metadata", async () => {
       const mockMetadata = {
         slug: "test-post",
         title: "Test Post",
@@ -215,7 +173,7 @@ describe("blogService", () => {
   });
 
   describe("fetchPostContent", () => {
-    it("should fetch and cache post content", async () => {
+    it("should fetch post content", async () => {
       const mockContent = "# Test Post\n\nContent here";
 
       mockFetch.mockResolvedValueOnce({
@@ -237,135 +195,6 @@ describe("blogService", () => {
       await expect(fetchPostContent("nonexistent")).rejects.toThrow(
         "Failed to fetch post",
       );
-    });
-  });
-
-  describe("clearBlogCache", () => {
-    it("should remove all blog-related cache entries", () => {
-      localStorageMock.setItem("blog-index-v1", "test");
-      localStorageMock.setItem("blog-page-1-v1", "test");
-      localStorageMock.setItem("other-key", "test");
-
-      clearBlogCache();
-
-      expect(localStorageMock.getItem("blog-index-v1")).toBeNull();
-      expect(localStorageMock.getItem("blog-page-1-v1")).toBeNull();
-      expect(localStorageMock.getItem("other-key")).toBe("test");
-    });
-  });
-
-  describe("getCacheStats", () => {
-    it("should return cache statistics", () => {
-      localStorageMock.setItem("blog-index-v1", "test1");
-      localStorageMock.setItem("blog-page-1-v1", "test2");
-      localStorageMock.setItem("other-key", "test3");
-
-      const stats = getCacheStats();
-
-      expect(stats.totalEntries).toBe(2);
-      expect(stats.entries).toEqual(["blog-index-v1", "blog-page-1-v1"]);
-      expect(stats.totalSize).toBeGreaterThan(0);
-    });
-  });
-
-  describe("cache expiration", () => {
-    it("should ignore expired cache entries", async () => {
-      const mockIndex = {
-        version: "2025-11-29",
-        totalPosts: 2,
-        totalPages: 1,
-        postsPerPage: 50,
-        latestPosts: [],
-        pages: {},
-      };
-
-      // Set expired cache (6 minutes ago)
-      const sixMinutesAgo = Date.now() - 6 * 60 * 1000;
-      localStorageMock.setItem(
-        "blog-index-v1",
-        JSON.stringify({
-          data: mockIndex,
-          timestamp: sixMinutesAgo,
-        }),
-      );
-
-      mockFetch.mockResolvedValueOnce({
-        ok: true,
-        json: () => Promise.resolve(mockIndex),
-      });
-
-      await fetchBlogIndex();
-
-      // Should fetch fresh data
-      expect(mockFetch).toHaveBeenCalled();
-    });
-  });
-
-  describe("cache error handling", () => {
-    it("should handle corrupted cache data gracefully", async () => {
-      const consoleErrorSpy = vi
-        .spyOn(console, "error")
-        .mockImplementation(() => {});
-
-      // Set corrupted cache
-      localStorageMock.setItem("blog-index-v1", "invalid json{");
-
-      const mockIndex = {
-        version: "2025-11-29",
-        totalPosts: 2,
-        totalPages: 1,
-        postsPerPage: 50,
-        latestPosts: [],
-        pages: {},
-      };
-
-      mockFetch.mockResolvedValueOnce({
-        ok: true,
-        json: () => Promise.resolve(mockIndex),
-      });
-
-      const result = await fetchBlogIndex();
-
-      expect(result).toEqual(mockIndex);
-      expect(consoleErrorSpy).toHaveBeenCalled();
-
-      consoleErrorSpy.mockRestore();
-    });
-
-    it("should handle localStorage write errors gracefully", async () => {
-      const consoleErrorSpy = vi
-        .spyOn(console, "error")
-        .mockImplementation(() => {});
-
-      // Mock setItem to throw error
-      const originalSetItem = localStorageMock.setItem;
-      localStorageMock.setItem = () => {
-        throw new Error("QuotaExceededError");
-      };
-
-      const mockIndex = {
-        version: "2025-11-29",
-        totalPosts: 2,
-        totalPages: 1,
-        postsPerPage: 50,
-        latestPosts: [],
-        pages: {},
-      };
-
-      mockFetch.mockResolvedValueOnce({
-        ok: true,
-        json: () => Promise.resolve(mockIndex),
-      });
-
-      const result = await fetchBlogIndex();
-
-      // Should still return data even if caching fails
-      expect(result).toEqual(mockIndex);
-      expect(consoleErrorSpy).toHaveBeenCalled();
-
-      // Restore
-      localStorageMock.setItem = originalSetItem;
-      consoleErrorSpy.mockRestore();
     });
   });
 });

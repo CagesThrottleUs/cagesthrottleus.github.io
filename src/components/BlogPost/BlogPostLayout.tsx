@@ -2,10 +2,10 @@ import { ChevronLeft } from "lucide-react";
 import { useNavigate, useParams } from "react-router";
 
 import { blogComponents } from "./BlogComponents";
+import BlogPostErrorBoundary from "./BlogPostErrorBoundary";
 import { useBlogPost } from "../../hooks/useBlogPost";
 import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
 import NotFoundComponent from "../NotFound/NotFound";
-import BlogPostErrorBoundary from "./BlogPostErrorBoundary";
 
 import "./BlogPostLayout.css";
 import "./BlogPostErrorBoundary.css";
@@ -16,7 +16,7 @@ function BlogPostLayout() {
   const { MDXContent, metadata, loading, error } = useBlogPost(slug);
 
   if (loading) return <LoadingSpinner />;
-  
+
   // Show detailed error message for MDX syntax errors
   if (error) {
     return (
@@ -25,7 +25,7 @@ function BlogPostLayout() {
           <div className="document-header">
             <div className="classification-bar">ERROR</div>
           </div>
-          
+
           <div className="blog-post-error-detail">
             <div className="error-stamp">COMPILATION FAILED</div>
             <h1 className="document-title">Blog Post Error</h1>
@@ -33,7 +33,7 @@ function BlogPostLayout() {
               <h3>Details:</h3>
               <pre>{error}</pre>
             </div>
-            
+
             <div className="document-actions">
               <button
                 className="action-btn action-btn-secondary"
@@ -51,7 +51,7 @@ function BlogPostLayout() {
       </div>
     );
   }
-  
+
   if (!metadata || !MDXContent) return <NotFoundComponent />;
 
   return (

@@ -41,7 +41,9 @@ describe("BlogPostLayout", () => {
     expect(screen.getByText("CLASSIFIED TRANSMISSION")).toBeInTheDocument();
   });
 
-  it("should render not found component on error", () => {
+  it("should render error UI on error", async () => {
+    const user = userEvent.setup();
+
     vi.spyOn(useBlogPostHook, "useBlogPost").mockReturnValue({
       MDXContent: null,
       metadata: null,
@@ -55,7 +57,15 @@ describe("BlogPostLayout", () => {
       </BrowserRouter>,
     );
 
-    expect(screen.getByText("PAGE NOT FOUND")).toBeInTheDocument();
+    expect(screen.getByText("Blog Post Error")).toBeInTheDocument();
+    expect(screen.getByText("COMPILATION FAILED")).toBeInTheDocument();
+    expect(screen.getByText("Post not found")).toBeInTheDocument();
+
+    // Click return to archive button
+    const returnButton = screen.getByText("RETURN TO ARCHIVE");
+    await user.click(returnButton);
+
+    expect(mockNavigate).toHaveBeenCalledWith("/blog");
   });
 
   it("should render blog post with metadata", () => {
@@ -244,5 +254,48 @@ describe("BlogPostLayout", () => {
     expect(
       screen.getByText("UNAUTHORIZED DISCLOSURE SUBJECT TO CRIMINAL SANCTIONS"),
     ).toBeInTheDocument();
+  });
+
+  it("should render not found when metadata is missing but no error", () => {
+    vi.spyOn(useBlogPostHook, "useBlogPost").mockReturnValue({
+      MDXContent: null,
+      metadata: null,
+      loading: false,
+      error: null,
+    });
+
+    render(
+      <BrowserRouter>
+        <BlogPostLayout />
+      </BrowserRouter>,
+    );
+
+    expect(screen.getByText("PAGE NOT FOUND")).toBeInTheDocument();
+  });
+
+  it("should render not found when MDXContent is missing but no error", () => {
+    const mockMetadata = {
+      slug: "test-post",
+      title: "Test Post",
+      classification: "UNCLASSIFIED",
+      abstract: "Test abstract",
+      publishDate: "2025-11-29",
+      version: "1.0",
+    };
+
+    vi.spyOn(useBlogPostHook, "useBlogPost").mockReturnValue({
+      MDXContent: null,
+      metadata: mockMetadata,
+      loading: false,
+      error: null,
+    });
+
+    render(
+      <BrowserRouter>
+        <BlogPostLayout />
+      </BrowserRouter>,
+    );
+
+    expect(screen.getByText("PAGE NOT FOUND")).toBeInTheDocument();
   });
 });

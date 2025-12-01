@@ -86,7 +86,7 @@ export function useBlogPost(slug: string | undefined) {
       } catch (err: unknown) {
         if (!cancelled) {
           console.error("Error loading post:", err);
-          
+
           // Provide detailed error messages
           let errorMessage = "Failed to load post";
           if (err instanceof Error) {
@@ -102,7 +102,7 @@ export function useBlogPost(slug: string | undefined) {
               errorMessage = err.message;
             }
           }
-          
+
           setError(errorMessage);
           setLoading(false);
         }

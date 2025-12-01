@@ -1,4 +1,4 @@
-import { Component, ReactNode } from "react";
+import { Component, type ReactNode } from "react";
 
 interface Props {
   children: ReactNode;
@@ -32,8 +32,8 @@ class BlogPostErrorBoundary extends Component<Props, State> {
             <div className="error-stamp">ERROR</div>
             <h2>Document Rendering Failed</h2>
             <p>
-              An error occurred while rendering this classified document.
-              The content may contain incompatible components.
+              An error occurred while rendering this classified document. The
+              content may contain incompatible components.
             </p>
             <details>
               <summary>Technical Details</summary>
@@ -49,4 +49,3 @@ class BlogPostErrorBoundary extends Component<Props, State> {
 }
 
 export default BlogPostErrorBoundary;
-
