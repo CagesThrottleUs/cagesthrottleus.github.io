@@ -53,7 +53,7 @@ Once the above process is successful, we then use the built code as an artifact 
 flowchart TB
     subgraph MAINFLOW["🔧 MAIN BRANCH WORKFLOW"]
         direction TB
-        M1["`👨‍💻 Developer Creates Feature`"]
+        M1["` Developer Creates Feature`"]
         M1 --> M2["`Feature Branch feat/* | fix/* | chore/*`"]
         M2 --> M3["`Local Development`"]
         M3 --> M4["`npm run dev – Vite Dev Server`"]
@@ -72,9 +72,9 @@ flowchart TB
         M15 --> M16["`Run tests`"]
         M16 --> M17["`Build project`"]
         M17 --> M18{"`All checks passed?`"}
-        M18 -->|❌ Fail| M19["`Fix required`"]
+        M18 -->| Fail| M19["`Fix required`"]
         M19 --> M3
-        M18 -->|✅ Pass| M20["`Ready to merge`"]
+        M18 -->| Pass| M20["`Ready to merge`"]
         
         M20 --> M21["`Merge to main`"]
         M21 --> M22["`🚀 DEPLOY PIPELINE`"]
@@ -93,7 +93,7 @@ flowchart TB
         M31 --> M33
         M32 --> M33
         M33 --> M34["`Deploy Job: Deploy to Pages`"]
-        M34 --> M35["`✅ Live Site – cagesthrottleus.github.io`"]
+        M34 --> M35["` Live Site – cagesthrottleus.github.io`"]
     end
     
     classDef devStyle fill:#e8f4f8,stroke:#1e5a8e,stroke-width:2px,color:#0d3b66
