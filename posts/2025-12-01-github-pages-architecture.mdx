@@ -3,7 +3,7 @@ title: Understanding the architecture of this blog's architecture
 classification: RESTRICTED // SAP // ORCON
 abstract: This document explains the architecture of this blog such that it remains always free
 publishDate: 2025-12-01
-version: 1.8
+version: 1.10
 thumbnail: thumbnails/post-2025-12-01-github-pages-architecture.svg
 ---
 
@@ -238,7 +238,7 @@ thumbnail: thumbnails/2024-11-29-your-post-slug.jpg
 
 Here is the attached workflow for the blog post.
 
-const diagram_3_2 = `
+<Mermaid text={`
 flowchart TD
     Start(["\`Workflow Triggered\`"]) --> Trigger{"\`Trigger Type\`"}
     Trigger -->|Push to 'blog' branch with posts/** changes| Setup
@@ -259,9 +259,7 @@ flowchart TD
     style Check fill:#fff4e1
     style Commit fill:#e1f0ff
     style Push fill:#e1f0ff
-`;
-
-<Mermaid text={diagram_3_2} caption="Fig 1.3: Workflow for the blog post" />
+`} caption="Fig 1.3: Workflow for the blog post" />
 
 <SectionMarker number="4.0">Conclusion</SectionMarker>
 
