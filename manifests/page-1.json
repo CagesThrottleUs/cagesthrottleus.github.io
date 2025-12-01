@@ -2,6 +2,15 @@
   "page": 1,
   "posts": [
     {
+      "slug": "2025-12-01-github-pages-architecture",
+      "title": "Understanding the architecture of this blog's architecture",
+      "classification": "RESTRICTED // SAP // ORCON",
+      "abstract": "",
+      "publishDate": "2025-12-01",
+      "version": "1.0",
+      "thumbnail": "thumbnails/post-2025-12-01-github-pages-architecture.svg"
+    },
+    {
       "slug": "2025-11-30-component-showcase",
       "title": "OPERATION COMPONENT SHOWCASE: MDX CAPABILITIES DEMONSTRATION",
       "classification": "CONFIDENTIAL // INTERNAL USE ONLY",
