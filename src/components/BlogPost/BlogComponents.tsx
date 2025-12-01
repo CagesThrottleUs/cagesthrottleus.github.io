@@ -6,9 +6,7 @@
  * blog authors to know CSS class names.
  */
 
-import { useEffect, useRef, useState } from "react";
-
-import { MERMAID_CONFIG } from "../../utils/constants";
+import { ExternalLink } from "lucide-react";
 
 import type { ReactNode } from "react";
 
@@ -138,125 +136,71 @@ export function Table({ headers, rows }: TableProps) {
 }
 
 interface MermaidProps {
-  children: string;
+  text: string;
   caption?: string;
 }
 
-// Track mermaid initialization globally
-let mermaidInitialized = false;
-
 /**
- * Mermaid diagram component with classified document styling
- * Renders diagrams using Cold War intelligence color palette
- * Uses safe ref-based rendering (no dangerouslySetInnerHTML)
- * Lazy loads Mermaid library only when component is used
+ * Mermaid diagram component
+ * Links to mermaid.live with pre-populated diagram text
  *
  * Usage:
- * <Mermaid caption="Fig 1.1: System Architecture">
- * {`
- * graph TD
- *   A[Client] --> B[Server]
- *   B --> C[Database]
- * `}
- * </Mermaid>
+ * <Mermaid
+ *   text={`
+ *     flowchart TD
+ *       Start --> End
+ *   `}
+ *   caption="Fig 1.1: System Architecture"
+ * />
  */
-export function Mermaid({ children, caption }: MermaidProps) {
-  const diagramRef = useRef<HTMLDivElement>(null);
-  const [error, setError] = useState<string>("");
-  const [isRendered, setIsRendered] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
+export function Mermaid({ text, caption }: MermaidProps) {
+  // Encode diagram text for URL using base64 format
+  const jsonString = JSON.stringify({
+    code: text.trim(),
+    mermaid: { theme: "default" },
+    autoSync: true,
+    updateDiagram: true,
+  });
 
-  useEffect(() => {
-    const currentRef = diagramRef.current;
-    let cancelled = false;
-
-    const loadAndRenderDiagram = async () => {
-      if (!currentRef) return;
-
-      try {
-        setIsLoading(true);
-
-        // Lazy load mermaid library (only when Mermaid component is used)
-        const mermaidModule = await import("mermaid");
-        const mermaid = mermaidModule.default;
-
-        // Check if cancelled after async import
-        if (cancelled) return;
-
-        // Initialize mermaid once with Cold War classified theme
-        if (!mermaidInitialized) {
-          mermaid.initialize(MERMAID_CONFIG);
-          mermaidInitialized = true;
-        }
-
-        // Clear previous content safely (use innerHTML to avoid DOM removal errors)
-        currentRef.innerHTML = "";
-        currentRef.removeAttribute("data-processed");
-
-        // Create a temporary div for mermaid to process
-        const tempDiv = document.createElement("div");
-        tempDiv.className = "mermaid";
-        tempDiv.textContent = children.trim();
-        currentRef.appendChild(tempDiv);
-
-        // Render the diagram directly into the DOM (safe approach)
-        await mermaid.run({
-          nodes: [tempDiv],
-        });
-
-        // Prevent state updates after unmount (cleanup can set cancelled during async)
-        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-        if (cancelled) return;
-        setError("");
-        setIsRendered(true);
-      } catch (err) {
-        if (cancelled) return;
-        setError(
-          err instanceof Error ? err.message : "Failed to render diagram",
-        );
-        setIsRendered(false);
-      } finally {
-        if (cancelled) return;
-        setIsLoading(false);
-      }
-    };
-
-    void loadAndRenderDiagram();
-
-    return () => {
-      cancelled = true;
-    };
-  }, [children]);
-
-  if (error) {
-    return (
-      <div className="blog-mermaid-error">
-        <CallOut type="error">
-          <strong>Diagram Rendering Error:</strong>
-          <pre>{error}</pre>
-        </CallOut>
-      </div>
-    );
-  }
+  // Convert UTF-8 string to base64 safely using TextEncoder
+  const bytes = new TextEncoder().encode(jsonString);
+  const binString = Array.from(bytes, (byte) =>
+    String.fromCodePoint(byte),
+  ).join("");
+  const encodedDiagram = btoa(binString);
+  const mermaidUrl = `https://mermaid.live/edit#base64:${encodedDiagram}`;
 
   return (
     <figure className="blog-mermaid">
       <div
-        ref={diagramRef}
-        className="blog-mermaid-diagram"
         style={{
-          opacity: isRendered ? 1 : 0,
-          transition: "opacity 0.3s",
-          minHeight: isLoading ? "200px" : undefined,
+          padding: "2rem",
+          border: "1px solid rgba(34, 197, 94, 0.3)",
+          borderRadius: "4px",
+          textAlign: "center",
+          background: "rgba(34, 197, 94, 0.05)",
         }}
       >
-        {isLoading && (
-          <div
-            style={{ textAlign: "center", padding: "3rem", color: "#22c55e" }}
-          >
-            Loading diagram renderer...
-          </div>
-        )}
+        <a
+          href={mermaidUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{
+            display: "inline-flex",
+            alignItems: "center",
+            gap: "0.5rem",
+            padding: "0.75rem 1.5rem",
+            background: "#22c55e",
+            color: "#0a0a0a",
+            textDecoration: "none",
+            borderRadius: "4px",
+            fontWeight: "bold",
+            transition: "background 0.2s",
+          }}
+        >
+          View Diagram on Mermaid.live
+          <ExternalLink size={16} />
+        </a>
       </div>
       {caption && <figcaption className="blog-caption">{caption}</figcaption>}
     </figure>
@@ -271,6 +215,7 @@ export function Mermaid({ children, caption }: MermaidProps) {
 export const blogComponents = {
   Redacted,
   CallOut,
+  // Callout: CallOut, // Alias - MDX may normalize component names
   SectionMarker,
   ImageWithCaption,
   Highlight,

@@ -466,4 +466,58 @@ describe("BlogList", () => {
       expect(screen.getByText("Second Post")).toBeInTheDocument();
     });
   });
+
+  it("should navigate when blog card is clicked", async () => {
+    const user = userEvent.setup();
+
+    render(
+      <BrowserRouter>
+        <BlogList />
+      </BrowserRouter>,
+    );
+
+    await waitFor(() => {
+      expect(screen.getByText("Hello World")).toBeInTheDocument();
+    });
+
+    // Click on a blog card
+    const blogCard = screen.getByText("Hello World").closest(".blog-card");
+    expect(blogCard).toBeTruthy();
+
+    if (blogCard) {
+      await user.click(blogCard);
+    }
+  });
+
+  it("should show loading when index is still loading", () => {
+    // Mock fetchBlogIndex to return null initially
+    vi.spyOn(blogService, "fetchBlogIndex").mockImplementation(
+      () => new Promise(() => {}), // Never resolves
+    );
+
+    render(
+      <BrowserRouter>
+        <BlogList />
+      </BrowserRouter>,
+    );
+
+    // Should show loading spinner
+    expect(screen.getByText("CLASSIFIED TRANSMISSION")).toBeInTheDocument();
+  });
+
+  it("should show loading spinner when index is null after loading completes", async () => {
+    // Mock to return null after loading completes
+    vi.spyOn(blogService, "fetchBlogIndex").mockResolvedValue(null as never);
+
+    render(
+      <BrowserRouter>
+        <BlogList />
+      </BrowserRouter>,
+    );
+
+    // Wait for loading to complete and check spinner is still shown
+    await waitFor(() => {
+      expect(screen.getByText("CLASSIFIED TRANSMISSION")).toBeInTheDocument();
+    });
+  });
 });

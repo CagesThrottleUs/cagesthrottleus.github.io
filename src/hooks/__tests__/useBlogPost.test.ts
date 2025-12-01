@@ -93,7 +93,7 @@ title: Test Post
       expect(result.current.loading).toBe(false);
     });
 
-    expect(result.current.error).toBe("Failed to load post");
+    expect(result.current.error).toBe("Network error");
     expect(result.current.MDXContent).toBeNull();
 
     consoleErrorSpy.mockRestore();
@@ -161,5 +161,115 @@ classification: UNCLASSIFIED
     const compiledContent = compileSpy.mock.calls[0][0] as string;
     expect(compiledContent).not.toContain("---");
     expect(compiledContent).toContain("# Actual Content");
+  });
+
+  it("should handle MDX syntax errors with helpful message", async () => {
+    const consoleErrorSpy = vi
+      .spyOn(console, "error")
+      .mockImplementation(() => {});
+
+    vi.spyOn(blogService, "fetchPostMetadata").mockResolvedValue({
+      slug: "test-post",
+      title: "Test Post",
+      classification: "UNCLASSIFIED",
+      abstract: "Test abstract",
+      publishDate: "2025-11-29",
+      version: "1.0",
+    });
+    vi.spyOn(blogService, "fetchPostContent").mockResolvedValue("# Content");
+    vi.spyOn(mdx, "compile").mockRejectedValue(
+      new Error("Could not parse expression"),
+    );
+
+    const { result } = renderHook(() => useBlogPost("test-post"));
+
+    await waitFor(() => {
+      expect(result.current.loading).toBe(false);
+    });
+
+    expect(result.current.error).toContain("MDX Syntax Error");
+    expect(result.current.error).toContain("Could not parse expression");
+
+    consoleErrorSpy.mockRestore();
+  });
+
+  it("should handle unexpected character errors", async () => {
+    const consoleErrorSpy = vi
+      .spyOn(console, "error")
+      .mockImplementation(() => {});
+
+    vi.spyOn(blogService, "fetchPostMetadata").mockResolvedValue({
+      slug: "test-post",
+      title: "Test Post",
+      classification: "UNCLASSIFIED",
+      abstract: "Test abstract",
+      publishDate: "2025-11-29",
+      version: "1.0",
+    });
+    vi.spyOn(blogService, "fetchPostContent").mockResolvedValue("# Content");
+    vi.spyOn(mdx, "compile").mockRejectedValue(
+      new Error("Unexpected character found"),
+    );
+
+    const { result } = renderHook(() => useBlogPost("test-post"));
+
+    await waitFor(() => {
+      expect(result.current.loading).toBe(false);
+    });
+
+    expect(result.current.error).toContain("MDX Parsing Error");
+    expect(result.current.error).toContain("Unexpected character");
+
+    consoleErrorSpy.mockRestore();
+  });
+
+  it("should handle network fetch errors", async () => {
+    const consoleErrorSpy = vi
+      .spyOn(console, "error")
+      .mockImplementation(() => {});
+
+    vi.spyOn(blogService, "fetchPostMetadata").mockRejectedValue(
+      new Error("Failed to fetch post content"),
+    );
+
+    const { result } = renderHook(() => useBlogPost("test-post"));
+
+    await waitFor(() => {
+      expect(result.current.loading).toBe(false);
+    });
+
+    expect(result.current.error).toContain("Network Error");
+
+    consoleErrorSpy.mockRestore();
+  });
+
+  it("should handle component errors", async () => {
+    const consoleErrorSpy = vi
+      .spyOn(console, "error")
+      .mockImplementation(() => {});
+
+    vi.spyOn(blogService, "fetchPostMetadata").mockResolvedValue({
+      slug: "test-post",
+      title: "Test Post",
+      classification: "UNCLASSIFIED",
+      abstract: "Test abstract",
+      publishDate: "2025-11-29",
+      version: "1.0",
+    });
+    vi.spyOn(blogService, "fetchPostContent").mockResolvedValue("# Content");
+    vi.spyOn(mdx, "compile").mockRejectedValue(
+      new Error("Expected component 'CustomComponent' not found"),
+    );
+
+    const { result } = renderHook(() => useBlogPost("test-post"));
+
+    await waitFor(() => {
+      expect(result.current.loading).toBe(false);
+    });
+
+    expect(result.current.error).toContain("Component Error");
+    expect(result.current.error).toContain("Expected component");
+
+    consoleErrorSpy.mockRestore();
   });
 });

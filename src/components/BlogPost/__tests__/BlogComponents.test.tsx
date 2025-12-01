@@ -1,4 +1,4 @@
-import { render, screen, waitFor } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import { describe, it, expect, vi } from "vitest";
 
 import {
@@ -195,46 +195,50 @@ describe("BlogComponents", () => {
   });
 
   describe("Mermaid", () => {
-    it("should render mermaid diagram", async () => {
+    it("should render mermaid link", () => {
       const diagramCode = `
         graph TD
           A[Start] --> B[End]
       `;
 
-      const { container } = render(<Mermaid>{diagramCode}</Mermaid>);
+      render(<Mermaid text={diagramCode} />);
 
-      await waitFor(() => {
-        const mermaidDiv = container.querySelector(".blog-mermaid-diagram");
-        expect(mermaidDiv).toBeInTheDocument();
-      });
+      expect(
+        screen.getByText("View Diagram on Mermaid.live"),
+      ).toBeInTheDocument();
     });
 
-    it("should render caption when provided", async () => {
-      const diagramCode = "graph TD\nA--&gt;B";
+    it("should render caption when provided", () => {
+      const diagramCode = "graph TD\nA-->B";
 
-      render(<Mermaid caption="Fig 1.1: System Flow">{diagramCode}</Mermaid>);
+      render(<Mermaid text={diagramCode} caption="Fig 1.1: System Flow" />);
 
-      await waitFor(() => {
-        expect(screen.getByText("Fig 1.1: System Flow")).toBeInTheDocument();
-      });
+      expect(screen.getByText("Fig 1.1: System Flow")).toBeInTheDocument();
     });
 
-    it("should apply blog-mermaid class", async () => {
-      const { container } = render(<Mermaid>{"graph TD\nA--&gt;B"}</Mermaid>);
+    it("should apply blog-mermaid class", () => {
+      const { container } = render(<Mermaid text="graph TD\nA-->B" />);
 
-      await waitFor(() => {
-        const figure = container.querySelector(".blog-mermaid");
-        expect(figure).toBeInTheDocument();
-      });
+      const figure = container.querySelector(".blog-mermaid");
+      expect(figure).toBeInTheDocument();
     });
 
-    it("should render without caption", async () => {
-      const { container } = render(<Mermaid>{"graph TD\nA--&gt;B"}</Mermaid>);
+    it("should render without caption", () => {
+      const { container } = render(<Mermaid text="graph TD\nA-->B" />);
 
-      await waitFor(() => {
-        const caption = container.querySelector(".blog-caption");
-        expect(caption).not.toBeInTheDocument();
-      });
+      const caption = container.querySelector(".blog-caption");
+      expect(caption).not.toBeInTheDocument();
+    });
+
+    it("should render link with correct href", () => {
+      const diagramCode = "graph TD\nA-->B";
+
+      render(<Mermaid text={diagramCode} />);
+
+      const link = screen.getByText("View Diagram on Mermaid.live");
+      expect(link).toHaveAttribute("href");
+      expect(link).toHaveAttribute("target", "_blank");
+      expect(link).toHaveAttribute("rel", "noopener noreferrer");
     });
   });
 });
