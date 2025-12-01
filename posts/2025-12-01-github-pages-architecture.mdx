@@ -1,0 +1,288 @@
+---
+title: Understanding the architecture of this blog's architecture
+classification: RESTRICTED // SAP // ORCON
+abstract:
+  This document explains the architecture of this blog such that it remains
+  always free
+publishDate: 2025-12-01
+version: 1.0
+thumbnail: thumbnails/post-2025-12-01-github-pages-architecture.svg
+---
+
+<SectionMarker number="1.0">Introduction</SectionMarker>
+
+From the beginning, I wanted to create a blog that was free from the constraints of a traditional blog platform. I wanted to be able to write blog posts in a way that was easy for me to write and easy for you to read. 
+Along this I wanted to ensure that the blog contents can be hosted freely.
+
+This blog hosted right now is actually the reality of the implementation of the above goals.
+
+<SectionMarker number="2.0">Start Point</SectionMarker>
+
+The first point to host own website and blog is to use a platform that allows you to host your website for free. In my current work (<Highlight>Adobe Systems India</Highlight>), I had learned and worked on lot of UI code to create a portal for our team and customers.
+
+Thus I know that I can create a react application using React Spectrum package along with Vite. Having a UI only application meant that all code that was written can be built and deployed as a static website on Github pages.
+
+## 2.1 Full Static Website Implementation
+
+A static website has content fixed for every user that visits the website. This means that just having to work on the content along with Client Side Rendering (CSR) was enough to create a blog that was free from the constraints of a traditional blog platform.
+
+So that's what I did. Using Vite, I created a react application that was able to render the blog posts as static pages. Though that statement is not entirely true.
+
+Here Github Pages actually just provides the `index.html` file to the user along with a minified JavaScript file. This means that the actual application (React) code is still running on the client side.
+
+So how does this work? How are we generating our `index` HTML, CSS and JavaScript file? Answer is Vite, which is responsible for bundling Single Page Applications (SPA) into a single `index.html` file.
+
+The JavaScript file provides the minified code for React which takes over in your browser to render the application.
+
+## 2.2 Workflows on Single Page Application
+
+As we already have an idea on how can we provide a static website, we can use a branch `gh-pages` to deploy our application where I can just upload the built files to the branch and Github Pages will deploy the application.
+
+But this process is error prone and not scalable. Thus we need to automate the process of building and deploying the application.
+
+<Callout type="info">
+  Focus on automation over manual process. I use Github Actions to have stateful build and deployment process.
+</Callout>
+
+If we are automating the deployment process, we can add guard policies to <Highlight>ensure that only "working" code is deployed</Highlight>.
+
+This is where the <Highlight>Github Actions</Highlight> comes into play. Here the code is first validated from format, linting, testing and then building the application.
+
+Once the above process is successful, we then use the built code as an artifact and deploy it to the `gh-pages` branch. This then updates the website with the latest changes.
+
+<Mermaid caption="Fig 1.1: Github Actions Workflow">
+{`
+flowchart TB
+    subgraph MAINFLOW["🔧 MAIN BRANCH WORKFLOW"]
+        direction TB
+        M1["👨‍💻 Developer Creates Feature"]
+        M1 --> M2["Feature Branch<br/>feat/* | fix/* | chore/*"]
+        M2 --> M3["Local Development"]
+        M3 --> M4["npm run dev<br/>Vite Dev Server"]
+        M4 --> M5["npm test<br/>Vitest + Coverage"]
+        M5 --> M6["npm run lint<br/>ESLint"]
+        M6 --> M7["npm run format:check<br/>Prettier"]
+        M7 --> M8["git push origin branch"]
+        M8 --> M9["Create Pull Request → main"]
+        
+        M9 --> M10["🔍 PR VALIDATION PIPELINE"]
+        M10 --> M11["Checkout code"]
+        M11 --> M12["Setup Node.js LTS + cache"]
+        M12 --> M13["npm ci - clean install"]
+        M13 --> M14["Check formatting"]
+        M14 --> M15["Run lint"]
+        M15 --> M16["Run tests"]
+        M16 --> M17["Build project"]
+        M17 --> M18{All checks<br/>passed?}
+        M18 -->|❌ Fail| M19["Fix required"]
+        M19 --> M3
+        M18 -->|✅ Pass| M20["Ready to merge"]
+        
+        M20 --> M21["Merge to main"]
+        M21 --> M22["🚀 DEPLOY PIPELINE"]
+        M22 --> M23["Build Job: Checkout"]
+        M23 --> M24["Setup Node + npm cache"]
+        M24 --> M25["npm ci"]
+        M25 --> M26["Quality checks<br/>format → lint → test"]
+        M26 --> M27["vite build - Production"]
+        M27 --> M28["Code Splitting"]
+        M28 --> M29["vendor.js<br/>React, Router"]
+        M28 --> M30["ui.js<br/>Adobe Spectrum"]
+        M28 --> M31["mermaid.js<br/>Lazy loaded"]
+        M28 --> M32["app chunks<br/>Components, Hooks"]
+        M29 --> M33["Upload dist/ artifact"]
+        M30 --> M33
+        M31 --> M33
+        M32 --> M33
+        M33 --> M34["Deploy Job: Deploy to Pages"]
+        M34 --> M35["✅ Live Site<br/>cagesthrottleus.github.io"]
+    end
+    
+    classDef devStyle fill:#e8f4f8,stroke:#1e5a8e,stroke-width:2px,color:#0d3b66
+    classDef ciStyle fill:#d4f4dd,stroke:#2d6a3e,stroke-width:2px,color:#1b4d28
+    classDef deployStyle fill:#fff4cc,stroke:#b8860b,stroke-width:2px,color:#8b6914
+    classDef decisionStyle fill:#ffe6cc,stroke:#d97706,stroke-width:2px,color:#92400e
+    classDef successStyle fill:#d4f4dd,stroke:#16a34a,stroke-width:3px,color:#15803d
+    classDef errorStyle fill:#ffe6e6,stroke:#c41e3a,stroke-width:2px,color:#8b0000
+    
+    class M1,M2,M3,M4,M5,M6,M7,M8,M9 devStyle
+    class M10,M11,M12,M13,M14,M15,M16,M17 ciStyle
+    class M22,M23,M24,M25,M26,M27,M28,M29,M30,M31,M32,M33,M34 deployStyle
+    class M18 decisionStyle
+    class M20,M35 successStyle
+    class M19 errorStyle
+`}
+</Mermaid>
+
+<Callout type="warning">
+Always ensure that the important branches are protected in the sense that only authorized personnel can merge the code into the branch.
+</Callout>
+
+<SectionMarker number="3.0">How are we fetching the blog posts?</SectionMarker>
+
+Now wait, we want to have dynamic blog contents, that is, we want to be able to have all the blog posts available to be seen on the website. How do we do that?
+
+Well one way would be to directly put blogs as their own React Components and then import them into the main application for each blog post.
+
+But this way will have the <Highlight>following issues</Highlight>:
+- Maintain manual imports for each blog post.
+- As number of blog posts increase, the main application will become bloated with the code for each blog post.
+- Bundle size will increase as we are bundling the code for each blog post.
+
+So question becomes: <Highlight>How can we have dynamic blog contents in a static website?</Highlight>. If we want to do things for free, then we can't use DB and storage solutions.
+
+## 3.1 Proposed solution
+
+Let us first talk the features that will be present when someone goes to the path `/blog`. They should be able to search for blog post on titles with a contains logic. They can also filter posts based on start and end date range.
+
+That means that for each post we will create we need a manifests such that we can get paginated list of posts as well as an index manifest.
+
+Now let us try to understand what will be inside each post itself. We want readers to be able to read blog post in their own URL, so we need to ensure that we have "slug" for each post.
+
+Thus we need a solution such that we will just have a blog post to be created and it will generate all the manifests accordingly.
+
+Without first diving into the blog post mechanics, let us assume that there is a post with a slug `2025-11-30-github-pages-architecture` and it is located in the `posts/2025-11-30-github-pages-architecture.mdx` file.
+
+Then assuming that the folder `posts` is located in the root folder then for each post that we make, we will use a python script to generate the manifests accordingly, which can be thought as a way to cache an API response directly on the git repository.
+
+<Mermaid caption="Fig 1.2: Generating Manifests">
+{`
+flowchart TB
+    Start([Start: generate_manifests]) --> Init[Create manifests/ and metadata/ directories]
+    Init --> CheckPosts{Posts directory exists?}
+    
+    CheckPosts -->|No| Error1[ERROR: Posts directory not found]
+    CheckPosts -->|Yes| GetFiles[Get all *.mdx files<br/>sorted newest first]
+    
+    GetFiles --> FileLoop{For each<br/>MDX file}
+    
+    FileLoop -->|Process| ExtractMeta[Extract metadata<br/>get_post_metadata]
+    ExtractMeta --> ReadFile[Read file content]
+    ReadFile --> ParseFront[Extract frontmatter<br/>extract_frontmatter]
+    
+    ParseFront --> RegexMatch{Match ---...--- pattern?}
+    RegexMatch -->|No| ReturnEmpty[Return empty dict]
+    RegexMatch -->|Yes| ParseLines[Parse key:value pairs<br/>Remove quotes & whitespace]
+    
+    ParseLines --> ExtractSlug[Extract slug from filename]
+    ExtractSlug --> ParseDate{Date in slug<br/>YYYY-MM-DD?}
+    ParseDate -->|Yes| UseSlugDate[Use slug date]
+    ParseDate -->|No| UseFrontDate[Use frontmatter date]
+    
+    UseSlugDate --> ValidateTitle
+    UseFrontDate --> ValidateTitle{Has title?}
+    
+    ValidateTitle -->|No| WarnSkip[WARN: Missing title<br/>Return None]
+    ValidateTitle -->|Yes| CreateMeta[Create PostMetadata object<br/>- slug<br/>- title<br/>- classification<br/>- abstract<br/>- publishDate<br/>- version<br/>- thumbnail]
+    
+    CreateMeta --> SaveIndividual[Save to metadata/slug.json]
+    SaveIndividual --> AddToList[Add to all_posts list]
+    AddToList --> FileLoop
+    
+    WarnSkip --> FileLoop
+    ReturnEmpty --> FileLoop
+    
+    FileLoop -->|Done| CheckValid{Any valid posts?}
+    CheckValid -->|No| Warn[WARN: No valid posts]
+    CheckValid -->|Yes| SortPosts[Sort posts by publishDate<br/>newest first]
+    
+    SortPosts --> CalcPages[Calculate total pages<br/>ceil totalPosts / 50]
+    CalcPages --> PageLoop{For each page}
+    
+    PageLoop --> SlicePosts[Slice posts array<br/>start: page-1 × 50<br/>end: min start+50, total]
+    SlicePosts --> CreatePage[Create page manifest<br/>- page number<br/>- posts array]
+    CreatePage --> SavePage[Save to manifests/page-N.json]
+    SavePage --> PageLoop
+    
+    PageLoop -->|All pages done| CreateIndex[Create index manifest<br/>- version timestamp<br/>- totalPosts<br/>- totalPages<br/>- postsPerPage: 50<br/>- latestPosts top 10<br/>- pages map]
+    
+    CreateIndex --> SaveIndex[Save to manifests/index.json]
+    SaveIndex --> Success([SUCCESS: Complete])
+    
+    Error1 --> End([End])
+    Warn --> End
+    Success --> End
+    
+    style Start fill:#e1f5e1
+    style Success fill:#e1f5e1
+    style Error1 fill:#ffe1e1
+    style Warn fill:#fff4e1
+    style End fill:#e1e1e1
+`}
+</Mermaid>
+
+So this script allows us to have decoupling of the blog post contents from the main application. This saves bundling all posts together.
+
+Essentially the above script would basically create schema that will hold the information like `slug`, `title`, `abstract`, `publishDate`, `version`, `thumbnail` for each post.
+
+### 3.1.1 Blog Post Mechanics
+
+The Blog post file is actually a `mdx` file. Which is a markdown file with JSX support. This means that we can have dynamic content in our blog posts.
+
+To handle manifests independently for each blog post, we add a frontmatter to the blog post file that allows us to manage the metadata for each post.
+
+```mdx
+---
+title: YOUR POST TITLE
+classification: TOP SECRET // NOFORN
+abstract: Brief description of the post (1-2 sentences)
+publishDate: 2024-11-29
+version: 1.0
+thumbnail: thumbnails/2024-11-29-your-post-slug.jpg
+---
+
+## Your content starts here...
+```
+
+## 3.2 Workflow for the blog post
+
+Here is the attached workflow for the blog post.
+
+<Mermaid caption="Fig 1.3: Workflow for the blog post">
+{`
+flowchart TD
+    Start([Workflow Triggered]) --> Trigger{Trigger Type}
+    
+    Trigger -->|Push to 'blog' branch<br/>with posts/** changes| Setup
+    Trigger -->|Manual Dispatch| Setup
+    
+    Setup[Checkout blog branch] --> Python[Set up Python 3.x]
+    
+    Python --> Generate[Run generate_manifest.py]
+    
+    Generate --> Config[Configure Git User<br/>GitHub Actions Bot]
+    
+    Config --> Stage[Stage manifests/ directory]
+    
+    Stage --> Check{Changes<br/>Detected?}
+    
+    Check -->|No changes| NoOp[Echo: No changes to commit]
+    Check -->|Changes present| Commit[Commit with message:<br/>chore: update blog manifests]
+    
+    NoOp --> End([Workflow Complete])
+    Commit --> Push[Push to origin]
+    Push --> End
+    
+    style Start fill:#e1f5e1
+    style End fill:#ffe1e1
+    style Check fill:#fff4e1
+    style Commit fill:#e1f0ff
+    style Push fill:#e1f0ff
+`}
+</Mermaid>
+
+<SectionMarker number="4.0">Conclusion</SectionMarker>
+
+Once the blog post is created, the workflow will automatically generate the mainfests.
+
+On the Web Application, we use an orphan branch `blog` to host the blog posts, the web application is aware of these <Highlight>settings</Highlight> and fetches the manifests from the `blog` branch via raw content API.
+
+It parses frontmatter and other components in the blog post file and renders the blog post accordingly.
+
+---
+
+**END OF BRIEFING**
+
+**CLASSIFICATION**: CONFIDENTIAL // INTERNAL USE ONLY  
+**DISTRIBUTION**: Authorized personnel only  
+**VALID UNTIL**: <Highlight>2026-11-30</Highlight>
