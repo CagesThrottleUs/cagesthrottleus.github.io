@@ -3,7 +3,7 @@ name: Deploy Blog to GitHub Pages
 on:
   push:
     branches:
-      - main  # Deploy only when pushing to the main branch
+      - main # Deploy only when pushing to the main branch
 
 jobs:
   build-and-deploy:
@@ -18,8 +18,8 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v6
         with:
-            node-version: 24
-            cache: 'npm'
+          node-version: 24
+          cache: 'npm'
 
       # Step 3: Install dependencies
       - name: Install Dependencies
