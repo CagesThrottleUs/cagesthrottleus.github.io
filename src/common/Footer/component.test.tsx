@@ -47,7 +47,7 @@ describe('Footer', () => {
       const copyright = screen.getByText(/all rights reserved/i);
       const username = screen.getByText('cagesthrottleus');
       expect(copyright.closest('div')).toBe(username.closest('div'));
-      expect(copyright).not.toContainElement(username as HTMLElement);
+      expect(copyright).not.toContainElement(username);
     });
   });
 });
