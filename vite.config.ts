@@ -19,6 +19,12 @@ export default defineConfig({
   test: {
     globals: true,
     environment: 'jsdom',
+    environmentOptions: {
+      jsdom: {
+        // jsdom requires an http origin to enable Web Storage.
+        url: 'http://localhost',
+      },
+    },
     setupFiles: ['src/test/setup.ts'],
     exclude: ['**/node_modules/**', '**/dist/**', '**/e2e/**'],
     coverage: {

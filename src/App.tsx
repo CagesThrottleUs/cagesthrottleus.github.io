@@ -4,6 +4,8 @@ import { Provider } from '@react-spectrum/s2';
 import { type NavigateOptions, useHref, useNavigate } from 'react-router';
 
 import AppRoutes from './routes';
+import { ThemeProvider } from './ThemeProvider/context';
+import { useTheme } from './ThemeProvider/hooks';
 
 declare module '@react-spectrum/s2' {
   interface RouterConfig {
@@ -13,6 +15,7 @@ declare module '@react-spectrum/s2' {
 
 function AppInner() {
   const navigate = useNavigate();
+  const { scheme } = useTheme();
 
   return (
     <Provider
@@ -23,6 +26,8 @@ function AppInner() {
         },
         useHref,
       }}
+      id="core-app-provider"
+      colorScheme={scheme}
     >
       <AppRoutes />
     </Provider>
@@ -30,5 +35,9 @@ function AppInner() {
 }
 
 export default function App() {
-  return <AppInner />;
+  return (
+    <ThemeProvider>
+      <AppInner />
+    </ThemeProvider>
+  );
 }
