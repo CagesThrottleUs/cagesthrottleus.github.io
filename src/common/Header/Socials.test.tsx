@@ -1,13 +1,13 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, type MockInstance,vi } from 'vitest';
 
 import { SOCIAL_LINKS } from './constants';
 import { Socials } from './Socials';
 
 describe('Socials', () => {
   describe('rendering', () => {
-    it(`renders exactly SOCIAL_LINKS.length (${SOCIAL_LINKS.length}) buttons`, () => {
+    it(`renders exactly SOCIAL_LINKS.length (${String(SOCIAL_LINKS.length)}) buttons`, () => {
       render(<Socials />);
       expect(screen.getAllByRole('button')).toHaveLength(SOCIAL_LINKS.length);
     });
@@ -31,7 +31,7 @@ describe('Socials', () => {
   });
 
   describe('click interactions', () => {
-    let openSpy: ReturnType<typeof vi.spyOn>;
+    let openSpy: MockInstance;
 
     beforeEach(() => {
       openSpy = vi.spyOn(window, 'open').mockReturnValue(null);

@@ -1,14 +1,12 @@
-import { Provider } from '@react-spectrum/s2';
 import {
   render,
   type RenderOptions,
   type RenderResult,
 } from '@testing-library/react';
-import { type ReactElement, type ReactNode } from 'react';
-import { MemoryRouter } from 'react-router';
+import { type ReactElement } from 'react';
 import { vi } from 'vitest';
 
-import { ThemeProvider } from '../ThemeProvider/context';
+import { AllProviders } from './wrapper';
 
 export function mockMatchMedia(prefersDark = false) {
   Object.defineProperty(window, 'matchMedia', {
@@ -24,16 +22,6 @@ export function mockMatchMedia(prefersDark = false) {
       dispatchEvent: vi.fn(),
     })),
   });
-}
-
-function AllProviders({ children }: Readonly<{ children: ReactNode }>) {
-  return (
-    <MemoryRouter>
-      <ThemeProvider>
-        <Provider background="base">{children}</Provider>
-      </ThemeProvider>
-    </MemoryRouter>
-  );
 }
 
 export function renderWithProviders(

@@ -1,5 +1,7 @@
 import '@testing-library/jest-dom';
 
+import { vi } from 'vitest';
+
 // Baseline matchMedia mock — jsdom doesn't implement it.
 // S2 components (and some older libs) call both the modern addEventListener API
 // and the deprecated addListener API. Both must be present to avoid runtime errors.
