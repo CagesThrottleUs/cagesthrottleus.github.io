@@ -27,7 +27,10 @@ function renderHeader() {
 describe('Header — unit (useTheme mocked)', () => {
   beforeEach(() => {
     mockToggleScheme.mockReset();
-    mockUseTheme.mockReturnValue({ scheme: 'light', toggleScheme: mockToggleScheme });
+    mockUseTheme.mockReturnValue({
+      scheme: 'light',
+      toggleScheme: mockToggleScheme,
+    });
   });
 
   describe('landmark and structure', () => {
@@ -61,19 +64,26 @@ describe('Header — unit (useTheme mocked)', () => {
 
     it('brand link href resolves to "/"', () => {
       renderHeader();
-      expect(screen.getByRole('link', { name: 'Go to home' })).toHaveAttribute('href', '/');
+      expect(screen.getByRole('link', { name: 'Go to home' })).toHaveAttribute(
+        'href',
+        '/',
+      );
     });
 
     it('brand link has aria-label "Go to home" for screen-reader users', () => {
       renderHeader();
-      expect(screen.getByRole('link', { name: 'Go to home' })).toBeInTheDocument();
+      expect(
+        screen.getByRole('link', { name: 'Go to home' }),
+      ).toBeInTheDocument();
     });
   });
 
   describe('theme toggle — light scheme', () => {
     it('toggle button exists in the document', () => {
       renderHeader();
-      expect(screen.getByRole('button', { name: /switch to/i })).toBeInTheDocument();
+      expect(
+        screen.getByRole('button', { name: /switch to/i }),
+      ).toBeInTheDocument();
     });
 
     it('aria-label says "Switch to dark theme" when current scheme is light', () => {
@@ -93,7 +103,10 @@ describe('Header — unit (useTheme mocked)', () => {
 
   describe('theme toggle — dark scheme', () => {
     beforeEach(() => {
-      mockUseTheme.mockReturnValue({ scheme: 'dark', toggleScheme: mockToggleScheme });
+      mockUseTheme.mockReturnValue({
+        scheme: 'dark',
+        toggleScheme: mockToggleScheme,
+      });
     });
 
     it('aria-label says "Switch to light theme" when current scheme is dark', () => {
@@ -111,4 +124,3 @@ describe('Header — unit (useTheme mocked)', () => {
     });
   });
 });
-

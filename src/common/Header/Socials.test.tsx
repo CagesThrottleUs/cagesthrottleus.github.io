@@ -47,7 +47,11 @@ describe('Socials', () => {
         const user = userEvent.setup();
         render(<Socials />);
         await user.click(screen.getByRole('button', { name: label }));
-        expect(openSpy).toHaveBeenCalledWith(href, '_blank', 'noopener,noreferrer');
+        expect(openSpy).toHaveBeenCalledWith(
+          href,
+          '_blank',
+          'noopener,noreferrer',
+        );
       },
     );
 
@@ -58,7 +62,11 @@ describe('Socials', () => {
         openSpy.mockClear();
         await user.click(screen.getByRole('button', { name: label }));
         expect(openSpy).toHaveBeenCalledTimes(1);
-        expect(openSpy).toHaveBeenCalledWith(href, '_blank', 'noopener,noreferrer');
+        expect(openSpy).toHaveBeenCalledWith(
+          href,
+          '_blank',
+          'noopener,noreferrer',
+        );
       }
     });
   });

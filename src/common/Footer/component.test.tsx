@@ -30,7 +30,9 @@ describe('Footer', () => {
 
     it('includes the phrase "All rights reserved"', () => {
       render(<Footer />);
-      expect(screen.getByRole('contentinfo')).toHaveTextContent(/all rights reserved/i);
+      expect(screen.getByRole('contentinfo')).toHaveTextContent(
+        /all rights reserved/i,
+      );
     });
   });
 

@@ -64,15 +64,21 @@ it('localStorage light wins over OS dark preference', () => {
 it('toggle updates rendered output from light to dark', () => {
   renderApp();
   expect(screen.getByTestId('scheme')).toHaveTextContent('light');
-  act(() => { screen.getByRole('button').click(); });
+  act(() => {
+    screen.getByRole('button').click();
+  });
   expect(screen.getByTestId('scheme')).toHaveTextContent('dark');
 });
 
 it('toggle is reversible: light → dark → light', () => {
   renderApp();
-  act(() => { screen.getByRole('button').click(); });
+  act(() => {
+    screen.getByRole('button').click();
+  });
   expect(screen.getByTestId('scheme')).toHaveTextContent('dark');
-  act(() => { screen.getByRole('button').click(); });
+  act(() => {
+    screen.getByRole('button').click();
+  });
   expect(screen.getByTestId('scheme')).toHaveTextContent('light');
 });
 
@@ -82,7 +88,9 @@ it('four sequential toggles stay consistent', () => {
   const label = screen.getByTestId('scheme');
   const expected = ['dark', 'light', 'dark', 'light'];
   for (const value of expected) {
-    act(() => { button.click(); });
+    act(() => {
+      button.click();
+    });
     expect(label).toHaveTextContent(value);
   }
 });
@@ -105,14 +113,18 @@ it('both consumers update together on toggle', () => {
       <Consumer id="b" />
     </ThemeProvider>,
   );
-  act(() => { screen.getAllByRole('button')[0].click(); });
+  act(() => {
+    screen.getAllByRole('button')[0].click();
+  });
   expect(screen.getByTestId('a')).toHaveTextContent('dark');
   expect(screen.getByTestId('b')).toHaveTextContent('dark');
 });
 
 it('localStorage key is exactly color-scheme', () => {
   renderApp();
-  act(() => { screen.getByRole('button').click(); });
+  act(() => {
+    screen.getByRole('button').click();
+  });
   expect(localStorage.getItem('color-scheme')).toBe('dark');
   expect(localStorage.getItem('colorScheme')).toBeNull();
   expect(localStorage.getItem('theme')).toBeNull();
@@ -120,7 +132,9 @@ it('localStorage key is exactly color-scheme', () => {
 
 it('remount after toggle reads persisted dark from localStorage', () => {
   const { unmount } = renderApp();
-  act(() => { screen.getByRole('button').click(); });
+  act(() => {
+    screen.getByRole('button').click();
+  });
   unmount();
 
   render(

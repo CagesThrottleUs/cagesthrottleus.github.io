@@ -45,8 +45,12 @@ describe('CommonStyler', () => {
         </CommonStyler>,
       );
       expect(screen.getByRole('main')).toHaveTextContent('unique-child-text');
-      expect(screen.getByRole('banner')).not.toHaveTextContent('unique-child-text');
-      expect(screen.getByRole('contentinfo')).not.toHaveTextContent('unique-child-text');
+      expect(screen.getByRole('banner')).not.toHaveTextContent(
+        'unique-child-text',
+      );
+      expect(screen.getByRole('contentinfo')).not.toHaveTextContent(
+        'unique-child-text',
+      );
     });
   });
 

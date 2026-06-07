@@ -10,12 +10,20 @@ test('brand logo is an <a> element with href="/"', async ({ page }) => {
   await expect(brand).toHaveAttribute('href', '#/');
 });
 
-test('"GitHub profile" social button is visible in the header', async ({ page }) => {
-  await expect(page.getByRole('button', { name: 'GitHub profile' })).toBeVisible();
+test('"GitHub profile" social button is visible in the header', async ({
+  page,
+}) => {
+  await expect(
+    page.getByRole('button', { name: 'GitHub profile' }),
+  ).toBeVisible();
 });
 
-test('"LinkedIn profile" social button is visible in the header', async ({ page }) => {
-  await expect(page.getByRole('button', { name: 'LinkedIn profile' })).toBeVisible();
+test('"LinkedIn profile" social button is visible in the header', async ({
+  page,
+}) => {
+  await expect(
+    page.getByRole('button', { name: 'LinkedIn profile' }),
+  ).toBeVisible();
 });
 
 test('footer shows the current year', async ({ page }) => {
@@ -28,5 +36,7 @@ test('footer shows "cagesthrottleus"', async ({ page }) => {
 });
 
 test('footer shows "All rights reserved"', async ({ page }) => {
-  await expect(page.getByRole('contentinfo')).toContainText('All rights reserved');
+  await expect(page.getByRole('contentinfo')).toContainText(
+    'All rights reserved',
+  );
 });

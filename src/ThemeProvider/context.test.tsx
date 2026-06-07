@@ -56,20 +56,26 @@ describe('initialization', () => {
 describe('toggleScheme', () => {
   it('flips from light to dark', () => {
     const { result } = renderHook(() => useTheme(), { wrapper: ThemeProvider });
-    act(() => { result.current.toggleScheme(); });
+    act(() => {
+      result.current.toggleScheme();
+    });
     expect(result.current.scheme).toBe('dark');
   });
 
   it('flips from dark to light', () => {
     localStorage.setItem(LOCAL_STORAGE_KEY, 'dark');
     const { result } = renderHook(() => useTheme(), { wrapper: ThemeProvider });
-    act(() => { result.current.toggleScheme(); });
+    act(() => {
+      result.current.toggleScheme();
+    });
     expect(result.current.scheme).toBe('light');
   });
 
   it('persists new scheme to localStorage', () => {
     const { result } = renderHook(() => useTheme(), { wrapper: ThemeProvider });
-    act(() => { result.current.toggleScheme(); });
+    act(() => {
+      result.current.toggleScheme();
+    });
     expect(localStorage.getItem(LOCAL_STORAGE_KEY)).toBe('dark');
   });
 

@@ -31,14 +31,9 @@ export function CommonStyler({ children }: Readonly<{ children: ReactNode }>) {
       id="common-style-div"
       aria-label="Page layout"
     >
-      <div
-        className={contentPadding}
-        id="global-padder"
-      >
+      <div className={contentPadding} id="global-padder">
         <Header />
-        <main className={mainStyle}>
-          {children}
-        </main>
+        <main className={mainStyle}>{children}</main>
         <Footer />
       </div>
     </div>

@@ -1,5 +1,9 @@
 import { Provider } from '@react-spectrum/s2';
-import { render, type RenderOptions, type RenderResult } from '@testing-library/react';
+import {
+  render,
+  type RenderOptions,
+  type RenderResult,
+} from '@testing-library/react';
 import { type ReactElement, type ReactNode } from 'react';
 import { MemoryRouter } from 'react-router';
 import { vi } from 'vitest';
@@ -26,9 +30,7 @@ function AllProviders({ children }: Readonly<{ children: ReactNode }>) {
   return (
     <MemoryRouter>
       <ThemeProvider>
-        <Provider background="base">
-          {children}
-        </Provider>
+        <Provider background="base">{children}</Provider>
       </ThemeProvider>
     </MemoryRouter>
   );

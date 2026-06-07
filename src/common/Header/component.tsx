@@ -46,7 +46,6 @@ const brandHoverStyle = css(`
   }
 `);
 
-
 const monogramStyle = style({
   size: 44,
   borderRadius: 'full',
@@ -95,18 +94,16 @@ export function Header() {
   const { scheme, toggleScheme } = useTheme();
 
   return (
-    <header
-      className={headerStyle}
-      id="blog-header"
-      aria-label="Site header"
-    >
+    <header className={headerStyle} id="blog-header" aria-label="Site header">
       <div className={topBarStyle}>
         <Link
           to="/"
           className={`${brandBaseStyle} ${brandHoverStyle}`}
           aria-label="Go to home"
         >
-          <div className={monogramStyle} aria-hidden="true">C</div>
+          <div className={monogramStyle} aria-hidden="true">
+            C
+          </div>
           <div className={titleGroupStyle}>
             <span className={siteNameStyle}>Cages&apos;</span>
             <span className={taglineStyle}>Research &amp; Technical Blog</span>
@@ -124,7 +121,9 @@ export function Header() {
           >
             <span
               className={iconWrapperStyle}
-              style={{ transform: scheme === 'dark' ? 'rotate(45deg)' : 'rotate(0deg)' }}
+              style={{
+                transform: scheme === 'dark' ? 'rotate(45deg)' : 'rotate(0deg)',
+              }}
             >
               {scheme === 'light' ? <Contrast /> : <Lighten />}
             </span>

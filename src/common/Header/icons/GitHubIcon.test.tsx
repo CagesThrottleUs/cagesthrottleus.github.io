@@ -11,7 +11,10 @@ describe('GitHubIcon', () => {
 
   it('SVG has the 20x20 viewBox required by the S2 icon sizing system', () => {
     const { container } = render(<GitHubIcon />);
-    expect(container.querySelector('svg')).toHaveAttribute('viewBox', '0 0 20 20');
+    expect(container.querySelector('svg')).toHaveAttribute(
+      'viewBox',
+      '0 0 20 20',
+    );
   });
 
   it('path fill references --iconPrimary so the icon responds to S2 theme context', () => {

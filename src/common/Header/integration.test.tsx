@@ -28,26 +28,39 @@ describe('Header — integration (real ThemeProvider)', () => {
   it('clicking toggle updates aria-label to "Switch to light theme"', async () => {
     renderWithProviders(<Header />);
     const user = userEvent.setup();
-    await user.click(screen.getByRole('button', { name: 'Switch to dark theme' }));
-    expect(screen.getByRole('button', { name: 'Switch to light theme' })).toBeInTheDocument();
+    await user.click(
+      screen.getByRole('button', { name: 'Switch to dark theme' }),
+    );
+    expect(
+      screen.getByRole('button', { name: 'Switch to light theme' }),
+    ).toBeInTheDocument();
   });
 
   it('clicking toggle a second time returns aria-pressed to "false"', async () => {
     renderWithProviders(<Header />);
     const user = userEvent.setup();
-    await user.click(screen.getByRole('button', { name: 'Switch to dark theme' }));
-    await user.click(screen.getByRole('button', { name: 'Switch to light theme' }));
-    expect(screen.getByRole('button', { name: 'Switch to dark theme' })).toHaveAttribute(
-      'aria-pressed',
-      'false',
+    await user.click(
+      screen.getByRole('button', { name: 'Switch to dark theme' }),
     );
+    await user.click(
+      screen.getByRole('button', { name: 'Switch to light theme' }),
+    );
+    expect(
+      screen.getByRole('button', { name: 'Switch to dark theme' }),
+    ).toHaveAttribute('aria-pressed', 'false');
   });
 
   it('clicking toggle a second time returns aria-label to "Switch to dark theme"', async () => {
     renderWithProviders(<Header />);
     const user = userEvent.setup();
-    await user.click(screen.getByRole('button', { name: 'Switch to dark theme' }));
-    await user.click(screen.getByRole('button', { name: 'Switch to light theme' }));
-    expect(screen.getByRole('button', { name: 'Switch to dark theme' })).toBeInTheDocument();
+    await user.click(
+      screen.getByRole('button', { name: 'Switch to dark theme' }),
+    );
+    await user.click(
+      screen.getByRole('button', { name: 'Switch to light theme' }),
+    );
+    expect(
+      screen.getByRole('button', { name: 'Switch to dark theme' }),
+    ).toBeInTheDocument();
   });
 });

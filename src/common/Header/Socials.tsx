@@ -18,7 +18,9 @@ export function Socials() {
           variant="secondary"
           size="M"
           aria-label={label}
-          onPress={() => { window.open(href, '_blank', 'noopener,noreferrer'); }}
+          onPress={() => {
+            window.open(href, '_blank', 'noopener,noreferrer');
+          }}
         >
           <Icon />
         </Button>
