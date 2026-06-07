@@ -8,7 +8,7 @@ import { Header } from './component';
 
 const mockToggleScheme = vi.fn();
 const mockUseTheme = vi.fn(() => ({
-  scheme: 'light' as const,
+  scheme: 'light' as 'light' | 'dark',
   toggleScheme: mockToggleScheme,
 }));
 
