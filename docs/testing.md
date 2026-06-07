@@ -14,7 +14,7 @@ This project uses a three-layer testing strategy: unit/component tests via Vites
 6. [E2E Tests](#6-e2e-tests)
 7. [Accessibility Tests](#7-accessibility-tests)
 8. [React Spectrum S2 Specifics](#8-react-spectrum-s2-specifics)
-9. [Test Behaviour Guidelines](#9-test-behaviour-guidelines)
+9. [Test Behavior Guidelines](#9-test-behavior-guidelines)
 10. [Coverage](#10-coverage)
 
 ---
@@ -86,7 +86,7 @@ import { describe, it, expect } from 'vitest';
 import { useTheme } from './theme';
 
 describe('useTheme', () => {
-  it('initialises to light', () => {
+  it('initializes to light', () => {
     const { result } = renderHook(() => useTheme());
     expect(result.current.colorScheme).toBe('light');
   });
@@ -181,7 +181,7 @@ describe('Layout', () => {
     expect(screen.getByRole('main')).toHaveTextContent('hello');
   });
 
-  it('toggles colour scheme on button click', async () => {
+  it('toggles color scheme on button click', async () => {
     const user = userEvent.setup();
     renderWithProviders(
       <Layout>
@@ -393,7 +393,7 @@ await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
 3. `getByText` — visible text
 4. `getByTestId` — last resort (`data-testid`)
 
-**Never** use CSS selectors or XPath in E2E tests. They are brittle and test implementation, not behaviour.
+**Never** use CSS selectors or XPath in E2E tests. They are brittle and test implementation, not behavior.
 
 ---
 
@@ -491,7 +491,7 @@ test('keyboard: can reach and activate theme toggle', async ({ page }) => {
 });
 ```
 
-### Colour contrast
+### Color contrast
 
 axe-core catches contrast failures at level AA (`color-contrast` rule). To also catch APCA (advanced perceptual contrast), run Lighthouse separately via `npx playwright-lighthouse`.
 
@@ -584,14 +584,14 @@ Use the `renderWithProviders` helper from `src/test/render.tsx` to avoid repeati
 
 ---
 
-## 9. Test Behaviour Guidelines
+## 9. Test Behavior Guidelines
 
 ### Arrange – Act – Assert
 
 Every test follows the AAA pattern:
 
 ```ts
-it('description of observable behaviour', async () => {
+it('description of observable behavior', async () => {
   // Arrange: set up the component and any prerequisites
   renderWithProviders(<Layout><p>content</p></Layout>);
 
@@ -619,7 +619,7 @@ it('description of observable behaviour', async () => {
 Use `it('verb + what the user observes')` format:
 
 ```ts
-// ✅ good — describes observable behaviour
+// ✅ good — describes observable behavior
 it('shows version badge in the footer');
 it('navigates to post page on title click');
 it('disables submit button while form is invalid');
@@ -630,12 +630,12 @@ it('sets isOpen to true');
 it('renders PostPage component');
 ```
 
-### One assertion per behaviour
+### One assertion per behavior
 
 Group related assertions in one test. Do not write one assertion per test — that produces noise, not signal:
 
 ```ts
-// ✅ one test, one behaviour (multiple assertions are fine)
+// ✅ one test, one behavior (multiple assertions are fine)
 it('renders footer with version and GitHub link', () => {
   renderWithProviders(<Layout><p /></Layout>);
   const footer = screen.getByRole('contentinfo');
@@ -646,7 +646,7 @@ it('renders footer with version and GitHub link', () => {
   );
 });
 
-// ❌ two tests for the same behaviour — over-isolated
+// ❌ two tests for the same behavior — over-isolated
 it('renders version') ...
 it('renders github link') ...
 ```
