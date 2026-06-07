@@ -25,6 +25,14 @@ export default defineConfig({
         url: 'http://localhost',
       },
     },
+    server: {
+      deps: {
+        // Process @react-spectrum packages through Vite so raw .css imports
+        // are handled by Vite's CSS pipeline instead of Node's native ESM
+        // (which rejects .css file extensions).
+        inline: [/@react-spectrum\//],
+      },
+    },
     setupFiles: ['src/test/setup.ts'],
     exclude: ['**/node_modules/**', '**/dist/**', '**/e2e/**'],
     coverage: {

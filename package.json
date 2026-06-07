@@ -16,6 +16,7 @@
     "test:ui": "NODE_OPTIONS=--no-webstorage vitest --ui",
     "test:e2e": "playwright test",
     "test:e2e:ui": "playwright test --ui",
+    "test:all": "npm run test:run && npm run test:e2e",
     "preview": "vite preview",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d dist",

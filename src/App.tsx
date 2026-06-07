@@ -1,6 +1,7 @@
 import '@react-spectrum/s2/page.css';
 
 import { Provider } from '@react-spectrum/s2';
+import { style } from '@react-spectrum/s2/style' with { type: 'macro' };
 import { type NavigateOptions, useHref, useNavigate } from 'react-router';
 
 import AppRoutes from './routes';
@@ -12,6 +13,13 @@ declare module '@react-spectrum/s2' {
     routerOptions: NavigateOptions;
   }
 }
+
+const fullBodyHeight = style({
+  minHeight: 'screen',
+  backgroundColor: 'gray-75',
+  display: 'flex',
+  flexDirection: 'column',
+});
 
 function AppInner() {
   const navigate = useNavigate();
@@ -28,6 +36,7 @@ function AppInner() {
       }}
       id="core-app-provider"
       colorScheme={scheme}
+      styles={fullBodyHeight}
     >
       <AppRoutes />
     </Provider>
