@@ -63,7 +63,7 @@ function PostCard({ post }: Readonly<{ post: PostDeclaration }>) {
           >
             <Copy />
             <Text slot="label">Copy</Text>
-            <Text slot="description">Copy the selected text</Text>
+            <Text slot="description">Copy link to share</Text>
             <Keyboard>⌘C</Keyboard>
           </MenuItem>
         </ActionMenu>
