@@ -17,12 +17,15 @@ import {
   IllustratedMessage,
 } from '@react-spectrum/s2/IllustratedMessage';
 import NoElements from '@react-spectrum/s2/illustrations/gradient/generic2/NoElements';
+import { Skeleton } from '@react-spectrum/s2/Skeleton';
 import { StatusLight } from '@react-spectrum/s2/StatusLight';
 import { style } from '@react-spectrum/s2/style' with { type: 'macro' };
 import { Suspense, use } from 'react';
 
 import { postsPromise } from '../../posts/promise';
 import type { PostDeclaration } from '../../posts/types';
+
+const PREVIEW_HEIGHT = 200;
 
 const emptyLayout = style({
   display: 'flex',
@@ -48,7 +51,7 @@ function PostCard({ post }: Readonly<{ post: PostDeclaration }>) {
         <Image
           alt={post.title}
           src={post.preview}
-          styles={style({ width: 'full', objectFit: 'cover' })}
+          styles={style({ width: 'full', height: PREVIEW_HEIGHT, objectFit: 'cover' })}
         />
       </CardPreview>
       <Content>
@@ -80,20 +83,26 @@ function PostCard({ post }: Readonly<{ post: PostDeclaration }>) {
 
 function PostCardSkeleton() {
   return (
-    <Card textValue="Loading" size="XL" variant="primary" density="spacious">
-      <CardPreview>
-        <Image alt="" src="" styles={style({ width: 'full', height: 200 })} />
-      </CardPreview>
-      <Content>
-        <Text slot="title">Loading post title</Text>
-        <Text slot="description">Loading post description...</Text>
-      </Content>
-      <Footer>
-        <StatusLight variant="positive" size="S">
-          Published
-        </StatusLight>
-      </Footer>
-    </Card>
+    <Skeleton isLoading>
+      <Card textValue="Loading" size="XL" variant="primary" density="spacious">
+        <CardPreview>
+          <Image
+            alt=""
+            src=""
+            styles={style({ width: 'full', height: PREVIEW_HEIGHT })}
+          />
+        </CardPreview>
+        <Content>
+          <Text slot="title">Loading post title</Text>
+          <Text slot="description">Loading post description...</Text>
+        </Content>
+        <Footer>
+          <StatusLight variant="positive" size="S">
+            Published
+          </StatusLight>
+        </Footer>
+      </Card>
+    </Skeleton>
   );
 }
 
