@@ -62,7 +62,9 @@ vi.mock('@react-spectrum/s2/CardView', () => ({
 
 // Never resolves — Suspense stays in fallback state for the entire test.
 vi.mock('../../posts/promise', () => ({
-  postsPromise: new Promise<never>((_resolve, _reject) => { /* intentionally never resolves */ }),
+  postsPromise: new Promise<never>((_resolve, _reject) => {
+    /* intentionally never resolves */
+  }),
 }));
 
 import HomePage from './component';
