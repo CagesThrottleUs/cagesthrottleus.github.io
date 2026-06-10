@@ -17,6 +17,7 @@ async function renderApp(path = '/') {
         <App />
       </MemoryRouter>,
     );
+    await Promise.resolve();
   });
 }
 
@@ -60,6 +61,7 @@ describe('App', () => {
           </MemoryRouter>,
         );
         rerenderFn = rerender;
+        await Promise.resolve();
       });
       await act(async () => {
         rerenderFn(
@@ -67,6 +69,7 @@ describe('App', () => {
             <App />
           </MemoryRouter>,
         );
+        await Promise.resolve();
       });
       expect(screen.getByRole('banner')).toBeInTheDocument();
     });

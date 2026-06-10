@@ -37,8 +37,8 @@ vi.mock('@react-spectrum/s2/CardView', () => ({
   }) => (
     <div role="grid" aria-label={label}>
       {Array.isArray(items)
-        ? items.map((item: any) => (
-            <div key={item.id ?? String(item)}>
+        ? items.map((item: { id?: string }, index: number) => (
+            <div key={item.id ?? String(index)}>
               {(children as (item: unknown) => React.ReactNode)(item)}
             </div>
           ))
@@ -52,7 +52,7 @@ vi.mock('@react-spectrum/s2/CardView', () => ({
     <footer>{children}</footer>
   ),
   Image: ({ alt, src }: { alt?: string; src?: string }) => (
-    <img alt={alt} src={src || undefined} />
+    <img alt={alt} src={src !== '' ? src : undefined} />
   ),
   SkeletonCollection: ({ children }: { children: () => React.ReactNode }) => (
     <>{children()}</>
@@ -88,6 +88,7 @@ async function renderHome() {
         <HomePage />
       </Suspense>,
     );
+    await Promise.resolve();
   });
 }
 
@@ -145,6 +146,7 @@ describe('HomePage', () => {
           </Suspense>,
         );
         rerenderFn = rerender;
+        await Promise.resolve();
       });
       // Same component, same resolved props → hits React Compiler's memoization else-branches
       await act(async () => {
@@ -153,6 +155,7 @@ describe('HomePage', () => {
             <HomePage />
           </Suspense>,
         );
+        await Promise.resolve();
       });
       expect(
         screen.getByRole('grid', { name: /blog posts$/i }),
@@ -164,7 +167,7 @@ describe('HomePage', () => {
     it('opening the ActionMenu and activating Copy calls clipboard.writeText', async () => {
       const toastSpy = vi
         .spyOn(ToastQueue, 'neutral')
-        .mockImplementation(() => {});
+        .mockImplementation(vi.fn());
       const user = userEvent.setup();
       // Spy AFTER userEvent.setup() so we intercept whatever clipboard it uses
       const clipboardSpy = vi

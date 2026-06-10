@@ -1,5 +1,6 @@
 import { act, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import type * as ReactRouter from 'react-router';
 import { MemoryRouter } from 'react-router';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
@@ -8,7 +9,7 @@ import { PostWrapper } from './component';
 const mockNavigate = vi.fn();
 
 vi.mock('react-router', async (importOriginal) => {
-  const actual = await importOriginal<typeof import('react-router')>();
+  const actual = await importOriginal<typeof ReactRouter>();
   return { ...actual, useNavigate: () => mockNavigate };
 });
 

@@ -3,8 +3,8 @@ import { act, render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
-import { ThemeProvider } from './ThemeProvider/context';
 import { mockMatchMedia } from './test/providers';
+import { ThemeProvider } from './ThemeProvider/context';
 
 const { mockPost } = vi.hoisted(() => ({
   mockPost: {
@@ -36,6 +36,7 @@ async function renderAtPath(path: string) {
         </ThemeProvider>
       </MemoryRouter>,
     );
+    await Promise.resolve();
   });
 }
 
@@ -89,6 +90,7 @@ describe('AppRoutes', () => {
             </ThemeProvider>
           </MemoryRouter>,
         );
+        await Promise.resolve();
       });
       expect(screen.getAllByRole('banner').length).toBeGreaterThan(0);
     });

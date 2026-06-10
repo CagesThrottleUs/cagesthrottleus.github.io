@@ -35,8 +35,8 @@ vi.mock('@react-spectrum/s2/CardView', () => ({
   }) => (
     <div role="grid" aria-label={label}>
       {Array.isArray(items)
-        ? items.map((item: any) => (
-            <div key={item.id ?? String(item)}>
+        ? items.map((item: { id?: string }, index: number) => (
+            <div key={item.id ?? String(index)}>
               {(children as (i: unknown) => React.ReactNode)(item)}
             </div>
           ))
@@ -50,7 +50,7 @@ vi.mock('@react-spectrum/s2/CardView', () => ({
     <footer>{children}</footer>
   ),
   Image: ({ alt, src }: { alt?: string; src?: string }) => (
-    <img alt={alt} src={src || undefined} />
+    <img alt={alt} src={src !== '' ? src : undefined} />
   ),
   SkeletonCollection: ({ children }: { children: () => React.ReactNode }) => (
     <>{children()}</>
@@ -86,6 +86,7 @@ async function renderApp(path = '/') {
         <App />
       </MemoryRouter>,
     );
+    await Promise.resolve();
   });
 }
 

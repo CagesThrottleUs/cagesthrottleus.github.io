@@ -35,8 +35,8 @@ vi.mock('@react-spectrum/s2/CardView', () => ({
   }) => (
     <div role="grid" aria-label={label}>
       {Array.isArray(items)
-        ? items.map((item: any) => (
-            <div key={item.id ?? String(item)}>
+        ? items.map((item: { id?: string }, index: number) => (
+            <div key={item.id ?? String(index)}>
               {(children as (item: unknown) => React.ReactNode)(item)}
             </div>
           ))
@@ -50,7 +50,7 @@ vi.mock('@react-spectrum/s2/CardView', () => ({
     <footer>{children}</footer>
   ),
   Image: ({ alt, src }: { alt?: string; src?: string }) => (
-    <img alt={alt} src={src || undefined} />
+    <img alt={alt} src={src !== '' ? src : undefined} />
   ),
   SkeletonCollection: ({ children }: { children: () => React.ReactNode }) => (
     <>{children()}</>
@@ -62,7 +62,7 @@ vi.mock('@react-spectrum/s2/CardView', () => ({
 
 // Never resolves — Suspense stays in fallback state for the entire test.
 vi.mock('../../posts/promise', () => ({
-  postsPromise: new Promise<never>(() => {}),
+  postsPromise: new Promise<never>((_resolve, _reject) => { /* intentionally never resolves */ }),
 }));
 
 import HomePage from './component';
@@ -83,6 +83,7 @@ describe('HomePage — loading (skeleton) state', () => {
           <HomePage />
         </Suspense>,
       );
+      await Promise.resolve();
     });
     expect(
       screen.getByRole('grid', { name: /loading blog posts/i }),
@@ -96,6 +97,7 @@ describe('HomePage — loading (skeleton) state', () => {
           <HomePage />
         </Suspense>,
       );
+      await Promise.resolve();
     });
     // The skeleton grid has aria-label="Loading blog posts"; the loaded grid
     // has aria-label="Blog posts". Exact match avoids matching the skeleton.
