@@ -10,7 +10,11 @@ export default defineConfig({
   plugins: [
     macros.vite(),
     react(),
-    babel({ presets: [reactCompilerPreset()] }),
+    // React Compiler adds memoization cache-check branches that V8 counts as
+    // untaken when a component only renders once (cache-hit side never fires).
+    // Disable during Vitest runs so branch coverage reflects application logic,
+    // not compiler output. Production builds still use the compiler.
+    ...(process.env.VITEST ? [] : [babel({ presets: [reactCompilerPreset()] })]),
     {
       ...optimizeLocales.vite({ locales: ['en-US'] }),
       enforce: 'pre' as const,
