@@ -68,8 +68,8 @@
     "vitest": "^4.1.8"
   },
   "allowScripts": {
-    "@swc/core@1.15.40": true,
     "fsevents@2.3.3": true,
-    "fsevents@2.3.2": true
+    "fsevents@2.3.2": true,
+    "@swc/core@1.15.41": true
   }
 }
