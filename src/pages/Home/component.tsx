@@ -51,7 +51,11 @@ function PostCard({ post }: Readonly<{ post: PostDeclaration }>) {
         <Image
           alt={post.title}
           src={post.preview}
-          styles={style({ width: 'full', height: PREVIEW_HEIGHT, objectFit: 'cover' })}
+          styles={style({
+            width: 'full',
+            height: PREVIEW_HEIGHT,
+            objectFit: 'cover',
+          })}
         />
       </CardPreview>
       <Content>

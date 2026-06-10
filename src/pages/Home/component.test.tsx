@@ -10,11 +10,27 @@ import { mockMatchMedia, renderWithProviders } from '../../test/providers';
 // WaterfallLayout computes column widths from CSS variables that resolve to 0
 // in jsdom, causing RangeError. Swap CardView for a simple accessible equivalent.
 vi.mock('@react-spectrum/s2/CardView', () => ({
-  Card: ({ children, id, textValue }: { children: React.ReactNode; id?: string; textValue?: string }) => (
-    <article id={id} aria-label={textValue}>{children}</article>
+  Card: ({
+    children,
+    id,
+    textValue,
+  }: {
+    children: React.ReactNode;
+    id?: string;
+    textValue?: string;
+  }) => (
+    <article id={id} aria-label={textValue}>
+      {children}
+    </article>
   ),
-  CardPreview: ({ children }: { children: React.ReactNode }) => <div>{children}</div>,
-  CardView: ({ 'aria-label': label, items, children }: {
+  CardPreview: ({ children }: { children: React.ReactNode }) => (
+    <div>{children}</div>
+  ),
+  CardView: ({
+    'aria-label': label,
+    items,
+    children,
+  }: {
     'aria-label'?: string;
     items?: unknown[];
     children: ((item: unknown) => React.ReactNode) | React.ReactNode;
@@ -29,11 +45,21 @@ vi.mock('@react-spectrum/s2/CardView', () => ({
         : children}
     </div>
   ),
-  Content: ({ children }: { children: React.ReactNode }) => <div>{children}</div>,
-  Footer: ({ children }: { children: React.ReactNode }) => <footer>{children}</footer>,
-  Image: ({ alt, src }: { alt?: string; src?: string }) => <img alt={alt} src={src || undefined} />,
-  SkeletonCollection: ({ children }: { children: () => React.ReactNode }) => <>{children()}</>,
-  Text: ({ children }: { children: React.ReactNode }) => <span>{children}</span>,
+  Content: ({ children }: { children: React.ReactNode }) => (
+    <div>{children}</div>
+  ),
+  Footer: ({ children }: { children: React.ReactNode }) => (
+    <footer>{children}</footer>
+  ),
+  Image: ({ alt, src }: { alt?: string; src?: string }) => (
+    <img alt={alt} src={src || undefined} />
+  ),
+  SkeletonCollection: ({ children }: { children: () => React.ReactNode }) => (
+    <>{children()}</>
+  ),
+  Text: ({ children }: { children: React.ReactNode }) => (
+    <span>{children}</span>
+  ),
 }));
 
 const { mockPost } = vi.hoisted(() => ({

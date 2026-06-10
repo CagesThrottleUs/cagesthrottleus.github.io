@@ -8,11 +8,27 @@ import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { mockMatchMedia } from './test/providers';
 
 vi.mock('@react-spectrum/s2/CardView', () => ({
-  Card: ({ children, id, textValue }: { children: React.ReactNode; id?: string; textValue?: string }) => (
-    <article id={id} aria-label={textValue}>{children}</article>
+  Card: ({
+    children,
+    id,
+    textValue,
+  }: {
+    children: React.ReactNode;
+    id?: string;
+    textValue?: string;
+  }) => (
+    <article id={id} aria-label={textValue}>
+      {children}
+    </article>
   ),
-  CardPreview: ({ children }: { children: React.ReactNode }) => <div>{children}</div>,
-  CardView: ({ 'aria-label': label, items, children }: {
+  CardPreview: ({ children }: { children: React.ReactNode }) => (
+    <div>{children}</div>
+  ),
+  CardView: ({
+    'aria-label': label,
+    items,
+    children,
+  }: {
     'aria-label'?: string;
     items?: unknown[];
     children: ((item: unknown) => React.ReactNode) | React.ReactNode;
@@ -27,11 +43,21 @@ vi.mock('@react-spectrum/s2/CardView', () => ({
         : children}
     </div>
   ),
-  Content: ({ children }: { children: React.ReactNode }) => <div>{children}</div>,
-  Footer: ({ children }: { children: React.ReactNode }) => <footer>{children}</footer>,
-  Image: ({ alt, src }: { alt?: string; src?: string }) => <img alt={alt} src={src || undefined} />,
-  SkeletonCollection: ({ children }: { children: () => React.ReactNode }) => <>{children()}</>,
-  Text: ({ children }: { children: React.ReactNode }) => <span>{children}</span>,
+  Content: ({ children }: { children: React.ReactNode }) => (
+    <div>{children}</div>
+  ),
+  Footer: ({ children }: { children: React.ReactNode }) => (
+    <footer>{children}</footer>
+  ),
+  Image: ({ alt, src }: { alt?: string; src?: string }) => (
+    <img alt={alt} src={src || undefined} />
+  ),
+  SkeletonCollection: ({ children }: { children: () => React.ReactNode }) => (
+    <>{children()}</>
+  ),
+  Text: ({ children }: { children: React.ReactNode }) => (
+    <span>{children}</span>
+  ),
 }));
 
 const { integrationPost } = vi.hoisted(() => ({
@@ -87,7 +113,9 @@ describe('App integration', () => {
     it('clicking toggle updates aria-pressed from false to true', async () => {
       const user = userEvent.setup();
       await renderApp('/');
-      const toggle = screen.getByRole('button', { name: 'Switch to dark theme' });
+      const toggle = screen.getByRole('button', {
+        name: 'Switch to dark theme',
+      });
       expect(toggle).toHaveAttribute('aria-pressed', 'false');
       await user.click(toggle);
       expect(toggle).toHaveAttribute('aria-pressed', 'true');
@@ -96,8 +124,12 @@ describe('App integration', () => {
     it('toggling twice returns aria-pressed to false', async () => {
       const user = userEvent.setup();
       await renderApp('/');
-      await user.click(screen.getByRole('button', { name: 'Switch to dark theme' }));
-      await user.click(screen.getByRole('button', { name: 'Switch to light theme' }));
+      await user.click(
+        screen.getByRole('button', { name: 'Switch to dark theme' }),
+      );
+      await user.click(
+        screen.getByRole('button', { name: 'Switch to light theme' }),
+      );
       expect(
         screen.getByRole('button', { name: 'Switch to dark theme' }),
       ).toHaveAttribute('aria-pressed', 'false');

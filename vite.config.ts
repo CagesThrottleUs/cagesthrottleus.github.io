@@ -14,7 +14,9 @@ export default defineConfig({
     // untaken when a component only renders once (cache-hit side never fires).
     // Disable during Vitest runs so branch coverage reflects application logic,
     // not compiler output. Production builds still use the compiler.
-    ...(process.env.VITEST ? [] : [babel({ presets: [reactCompilerPreset()] })]),
+    ...(process.env.VITEST
+      ? []
+      : [babel({ presets: [reactCompilerPreset()] })]),
     {
       ...optimizeLocales.vite({ locales: ['en-US'] }),
       enforce: 'pre' as const,
