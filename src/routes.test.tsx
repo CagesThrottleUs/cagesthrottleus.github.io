@@ -1,0 +1,112 @@
+import { Provider } from '@react-spectrum/s2';
+import { act, render, screen } from '@testing-library/react';
+import { MemoryRouter } from 'react-router';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
+
+import { mockMatchMedia } from './test/providers';
+import { ThemeProvider } from './ThemeProvider/context';
+
+const { mockPost } = vi.hoisted(() => ({
+  mockPost: {
+    id: '2026-06-08-hello-world',
+    title: 'Hello World',
+    abstract: 'An introduction to this blog',
+    preview: 'https://example.com/preview.jpg',
+    createdAt: '2026-06-08',
+    Component: function MockPost() {
+      return null;
+    },
+  },
+}));
+
+vi.mock('./posts/promise', () => ({
+  postsPromise: Promise.resolve([mockPost]),
+}));
+
+import AppRoutes from './routes';
+
+async function renderAtPath(path: string) {
+  await act(async () => {
+    render(
+      <MemoryRouter initialEntries={[path]}>
+        <ThemeProvider>
+          <Provider background="base">
+            <AppRoutes />
+          </Provider>
+        </ThemeProvider>
+      </MemoryRouter>,
+    );
+    await Promise.resolve();
+  });
+}
+
+describe('AppRoutes', () => {
+  beforeEach(() => {
+    localStorage.clear();
+    mockMatchMedia(false);
+  });
+
+  describe('home route (/)', () => {
+    it('renders the site header', async () => {
+      await renderAtPath('/');
+      expect(screen.getByRole('banner')).toBeInTheDocument();
+    });
+
+    it('renders the main landmark', async () => {
+      await renderAtPath('/');
+      expect(screen.getByRole('main')).toBeInTheDocument();
+    });
+
+    it('renders the site footer', async () => {
+      await renderAtPath('/');
+      expect(screen.getByRole('contentinfo')).toBeInTheDocument();
+    });
+  });
+
+  describe('post route — found (/posts/:slug)', () => {
+    it('renders "Back To Home" when the slug matches a known post', async () => {
+      await renderAtPath('/posts/2026-06-08-hello-world');
+      expect(
+        screen.getByRole('button', { name: /back to home/i }),
+      ).toBeInTheDocument();
+    });
+
+    it('does not show "Post not found" for a valid slug', async () => {
+      await renderAtPath('/posts/2026-06-08-hello-world');
+      expect(screen.queryByText('Post not found')).not.toBeInTheDocument();
+    });
+  });
+
+  describe('re-render stability', () => {
+    it('re-renders at home route without regression (React Compiler cache-hit branches)', async () => {
+      await renderAtPath('/');
+      await act(async () => {
+        render(
+          <MemoryRouter initialEntries={['/']}>
+            <ThemeProvider>
+              <Provider background="base">
+                <AppRoutes />
+              </Provider>
+            </ThemeProvider>
+          </MemoryRouter>,
+        );
+        await Promise.resolve();
+      });
+      expect(screen.getAllByRole('banner').length).toBeGreaterThan(0);
+    });
+  });
+
+  describe('post route — not found', () => {
+    it('shows "Post not found" heading for an unknown slug', async () => {
+      await renderAtPath('/posts/does-not-exist');
+      expect(screen.getByText('Post not found')).toBeInTheDocument();
+    });
+
+    it('includes the unknown slug in the not-found message', async () => {
+      await renderAtPath('/posts/mystery-post');
+      expect(
+        screen.getByText(/no post exists with the slug "mystery-post"/i),
+      ).toBeInTheDocument();
+    });
+  });
+});
