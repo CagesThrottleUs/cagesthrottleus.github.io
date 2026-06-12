@@ -42,8 +42,6 @@ describe('AppRoutes — PostNotFound with undefined slug', () => {
       await Promise.resolve();
     });
 
-    expect(
-      screen.getByText('This post does not exist.'),
-    ).toBeInTheDocument();
+    expect(screen.getByText('This post does not exist.')).toBeInTheDocument();
   });
 });
