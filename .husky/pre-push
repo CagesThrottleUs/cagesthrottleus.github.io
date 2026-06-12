@@ -6,16 +6,16 @@ echo ""
 echo "=== Pre-push gate ==="
 echo ""
 
-echo "[1/5] Checking formatting..."
+echo ""
+echo "[1/5] Type checking..."
+npm run type:check
+
+echo "[2/5] Checking formatting..."
 npm run format:check
 
 echo ""
-echo "[2/5] Running linter..."
+echo "[3/5] Running linter..."
 npm run lint
-
-echo ""
-echo "[3/5] Type checking..."
-npm run type:check
 
 echo ""
 echo "[4/5] Running unit + integration tests..."
