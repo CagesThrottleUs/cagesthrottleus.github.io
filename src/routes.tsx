@@ -15,6 +15,7 @@ import { PostWrapper } from './pages/Post/component';
 import { postsPromise } from './posts/promise';
 
 const HomePage = lazy(() => import('./pages/Home/component'));
+const TimelinePage = lazy(() => import('./pages/Timeline/component'));
 
 const notFoundLayout = style({
   display: 'flex',
@@ -103,6 +104,14 @@ export default function AppRoutes() {
             element={
               <Suspense fallback={loadingFallback}>
                 <PostPage />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/timeline"
+            element={
+              <Suspense fallback={loadingFallback}>
+                <TimelinePage />
               </Suspense>
             }
           />

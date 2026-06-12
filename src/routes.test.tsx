@@ -1,7 +1,7 @@
 import { Provider } from '@react-spectrum/s2';
 import { act, render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router';
-import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { mockMatchMedia } from './test/providers';
 import { ThemeProvider } from './ThemeProvider/context';
@@ -21,6 +21,18 @@ const { mockPost } = vi.hoisted(() => ({
 
 vi.mock('./posts/promise', () => ({
   postsPromise: Promise.resolve([mockPost]),
+}));
+
+vi.mock('./cv/index', () => ({
+  monthEntries: [
+    {
+      year: 2026,
+      month: 6,
+      id: '2026-06',
+      label: 'June 2026',
+      factory: () => Promise.resolve({ default: () => null }),
+    },
+  ],
 }));
 
 import AppRoutes from './routes';
@@ -44,7 +56,13 @@ describe('AppRoutes', () => {
   beforeEach(() => {
     localStorage.clear();
     mockMatchMedia(false);
+    vi.stubGlobal('IntersectionObserver', class {
+      observe = vi.fn();
+      disconnect = vi.fn();
+    });
   });
+
+  afterEach(() => vi.unstubAllGlobals());
 
   describe('home route (/)', () => {
     it('renders the site header', async () => {
@@ -93,6 +111,23 @@ describe('AppRoutes', () => {
         await Promise.resolve();
       });
       expect(screen.getAllByRole('banner').length).toBeGreaterThan(0);
+    });
+  });
+
+  describe('timeline route (/timeline)', () => {
+    it('renders the timeline sidebar navigation', async () => {
+      await renderAtPath('/timeline');
+      // TimelinePage is lazy — findByRole waits for the import to resolve.
+      await expect(
+        screen.findByRole('navigation', { name: 'Timeline navigation' }),
+      ).resolves.toBeInTheDocument();
+    });
+  });
+
+  describe('wildcard route (*)', () => {
+    it('shows "Page not found" for an unrecognised path', async () => {
+      await renderAtPath('/this/does/not/exist');
+      expect(screen.getByText('Page not found')).toBeInTheDocument();
     });
   });
 

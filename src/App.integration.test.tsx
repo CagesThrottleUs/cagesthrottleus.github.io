@@ -3,9 +3,21 @@ import { act, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import type React from 'react';
 import { MemoryRouter } from 'react-router';
-import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { mockMatchMedia } from './test/providers';
+
+vi.mock('./cv/index', () => ({
+  monthEntries: [
+    {
+      year: 2026,
+      month: 6,
+      id: '2026-06',
+      label: 'June 2026',
+      factory: () => Promise.resolve({ default: () => null }),
+    },
+  ],
+}));
 
 vi.mock('@react-spectrum/s2/CardView', () => ({
   Card: ({
@@ -94,7 +106,13 @@ describe('App integration', () => {
   beforeEach(() => {
     localStorage.clear();
     mockMatchMedia(false);
+    vi.stubGlobal('IntersectionObserver', class {
+      observe = vi.fn();
+      disconnect = vi.fn();
+    });
   });
+
+  afterEach(() => vi.unstubAllGlobals());
 
   describe('layout on every route', () => {
     it('header and footer are visible on the home route', async () => {
@@ -180,9 +198,12 @@ describe('App integration', () => {
   });
 
   describe('timeline route', () => {
-    it('navigating to /timeline shows "Page not found"', async () => {
+    it('navigating to /timeline renders the timeline navigation', async () => {
       await renderApp('/timeline');
-      expect(screen.getByText('Page not found')).toBeInTheDocument();
+      // TimelinePage is lazy — findByRole waits for the import to resolve.
+      await expect(
+        screen.findByRole('navigation', { name: 'Timeline navigation' }),
+      ).resolves.toBeInTheDocument();
     });
   });
 });
