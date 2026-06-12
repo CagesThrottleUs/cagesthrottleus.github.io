@@ -49,9 +49,26 @@ describe('Header — unit (useTheme mocked)', () => {
       expect(screen.getByText("Cages'")).toBeInTheDocument();
     });
 
-    it('tagline "Research & Technical Blog" is present', () => {
+  });
+
+  describe('navigation', () => {
+    it('renders a navigation landmark', () => {
       renderHeader();
-      expect(screen.getByText('Research & Technical Blog')).toBeInTheDocument();
+      expect(screen.getByRole('navigation', { name: 'Main navigation' })).toBeInTheDocument();
+    });
+
+    it('Posts link is present and links to "/"', () => {
+      renderHeader();
+      const link = screen.getByRole('link', { name: 'Posts' });
+      expect(link).toBeInTheDocument();
+      expect(link).toHaveAttribute('href', '/');
+    });
+
+    it('Timeline link is present and links to "/timeline"', () => {
+      renderHeader();
+      const link = screen.getByRole('link', { name: 'Timeline' });
+      expect(link).toBeInTheDocument();
+      expect(link).toHaveAttribute('href', '/timeline');
     });
   });
 
