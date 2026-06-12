@@ -35,8 +35,8 @@ vi.mock('@react-spectrum/s2/CardView', () => ({
   }) => (
     <div role="grid" aria-label={label}>
       {Array.isArray(items)
-        ? items.map((item: unknown, index: number) => (
-            <div key={(item as { id?: string }).id ?? String(index)}>
+        ? items.map((item: unknown) => (
+            <div key={(item as { id: string }).id}>
               {(children as (i: unknown) => React.ReactNode)(item)}
             </div>
           ))

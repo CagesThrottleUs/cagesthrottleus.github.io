@@ -1,5 +1,6 @@
 import { Provider } from '@react-spectrum/s2';
 import { act, render, screen } from '@testing-library/react';
+import type * as ReactRouter from 'react-router';
 import { MemoryRouter } from 'react-router';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
@@ -13,7 +14,7 @@ vi.mock('./posts/promise', () => ({
 // Make useParams return undefined for slug so PostNotFound receives slug=undefined,
 // covering the 'This post does not exist.' branch that is otherwise unreachable via routing.
 vi.mock('react-router', async (importOriginal) => {
-  const actual = await importOriginal<typeof import('react-router')>();
+  const actual = await importOriginal<typeof ReactRouter>();
   return {
     ...actual,
     useParams: (): { slug: string | undefined } => ({ slug: undefined }),
