@@ -23,17 +23,15 @@ vi.mock('./posts/promise', () => ({
   postsPromise: Promise.resolve([mockPost]),
 }));
 
-vi.mock('./cv/index', () => ({
-  monthEntries: [
-    {
-      year: 2026,
-      month: 6,
-      id: '2026-06',
-      label: 'June 2026',
-      factory: () => Promise.resolve({ default: () => null }),
-    },
-  ],
-}));
+vi.mock('./cv/index', async () => {
+  const { lazy } = await import('react');
+  const factory = () => Promise.resolve({ default: () => null });
+  return {
+    monthEntries: [
+      { year: 2026, month: 6, id: '2026-06', label: 'June 2026', factory, Component: lazy(factory) },
+    ],
+  };
+});
 
 import AppRoutes from './routes';
 

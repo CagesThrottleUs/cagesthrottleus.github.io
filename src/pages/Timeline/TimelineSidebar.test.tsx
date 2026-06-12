@@ -1,5 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { lazy } from 'react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 import type { MonthEntry } from '../../cv/types';
@@ -8,6 +9,7 @@ import { TimelineSidebar } from './TimelineSidebar';
 function makeEntries(...ids: string[]): MonthEntry[] {
   return ids.map((id) => {
     const [year, month] = id.split('-').map(Number);
+    const factory = () => Promise.resolve({ default: () => null });
     return {
       year,
       month,
@@ -16,7 +18,8 @@ function makeEntries(...ids: string[]): MonthEntry[] {
         month: 'long',
         year: 'numeric',
       }),
-      factory: () => Promise.resolve({ default: () => null }),
+      factory,
+      Component: lazy(factory),
     };
   });
 }
@@ -24,7 +27,6 @@ function makeEntries(...ids: string[]): MonthEntry[] {
 class MockIO {
   observe = vi.fn();
   disconnect = vi.fn();
-  constructor() {}
 }
 
 beforeEach(() => vi.stubGlobal('IntersectionObserver', MockIO));

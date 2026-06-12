@@ -1,13 +1,7 @@
-import { describe, expect, it, vi } from 'vitest';
-
-// Mock import.meta.glob before importing the module under test.
-vi.mock('../cv/index', async () => {
-  const { monthEntries: real } =
-    await vi.importActual<typeof import('../cv/index')>('../cv/index');
-  return { monthEntries: real };
-});
+import { describe, expect, it } from 'vitest';
 
 // Directly test the shaping logic by constructing entries from a fake glob.
+// The real cv/index uses import.meta.glob; tests bypass it via buildEntries below.
 const fakeModules: Record<string, () => Promise<{ default: () => null }>> = {
   './entries/2026/06.tsx': () => Promise.resolve({ default: () => null }),
   './entries/2025/12.tsx': () => Promise.resolve({ default: () => null }),

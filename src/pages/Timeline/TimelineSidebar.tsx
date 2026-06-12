@@ -127,10 +127,12 @@ export function TimelineSidebar({ entries }: Readonly<Props>) {
     return () => { observer.disconnect(); };
   }, [entries]);
 
-  const byYear = entries.reduce<Record<number, MonthEntry[]>>((acc, e) => {
-    (acc[e.year] ??= []).push(e);
-    return acc;
-  }, {});
+  const byYear = new Map<number, MonthEntry[]>();
+  for (const e of entries) {
+    const group = byYear.get(e.year) ?? [];
+    group.push(e);
+    byYear.set(e.year, group);
+  }
 
   function jumpTo(id: string) {
     document
@@ -144,8 +146,8 @@ export function TimelineSidebar({ entries }: Readonly<Props>) {
         <div className={progressFillStyle} />
       </div>
 
-      {Object.entries(byYear)
-        .sort(([a], [b]) => Number(b) - Number(a))
+      {[...byYear.entries()]
+        .sort(([a], [b]) => b - a)
         .map(([year, months]) => (
           <div key={year}>
             <div className={yearLabelStyle} aria-hidden="true">

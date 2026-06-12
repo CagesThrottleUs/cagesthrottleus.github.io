@@ -1,4 +1,4 @@
-import type { ComponentType } from 'react';
+import type { ComponentType, LazyExoticComponent } from 'react';
 
 export interface CVEntry {
   text: string;
@@ -11,4 +11,5 @@ export interface MonthEntry {
   id: string;
   label: string;
   factory: () => Promise<{ default: ComponentType }>;
+  Component: LazyExoticComponent<ComponentType>;
 }

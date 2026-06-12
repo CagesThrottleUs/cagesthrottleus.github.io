@@ -1,21 +1,24 @@
 import { act, render, screen } from '@testing-library/react';
+import { lazy } from 'react';
 import { describe, expect, it } from 'vitest';
 
 import type { MonthEntry } from '../../cv/types';
 import { MonthSection } from './MonthSection';
 
 function makeEntry(overrides?: Partial<MonthEntry>): MonthEntry {
+  const defaultFactory = () =>
+    Promise.resolve({
+      default: function Content() {
+        return <li>Test entry</li>;
+      },
+    });
   return {
     year: 2026,
     month: 6,
     id: '2026-06',
     label: 'June 2026',
-    factory: () =>
-      Promise.resolve({
-        default: function Content() {
-          return <li>Test entry</li>;
-        },
-      }),
+    factory: defaultFactory,
+    Component: lazy(defaultFactory),
     ...overrides,
   };
 }
@@ -24,25 +27,24 @@ describe('MonthSection', () => {
   it('renders the month label as a heading', async () => {
     await act(async () => {
       render(<MonthSection entry={makeEntry()} />);
+      await Promise.resolve();
     });
-    expect(
-      screen.getByRole('heading', { name: 'June 2026' }),
-    ).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'June 2026' })).toBeInTheDocument();
   });
 
   it('renders a region landmark with the month label', async () => {
     await act(async () => {
       render(<MonthSection entry={makeEntry()} />);
+      await Promise.resolve();
     });
-    expect(
-      screen.getByRole('region', { name: 'June 2026' }),
-    ).toBeInTheDocument();
+    expect(screen.getByRole('region', { name: 'June 2026' })).toBeInTheDocument();
   });
 
   it('sets id="month-{entry.id}" for anchor navigation', async () => {
     let container!: HTMLElement;
     await act(async () => {
       ({ container } = render(<MonthSection entry={makeEntry()} />));
+      await Promise.resolve();
     });
     expect(container.querySelector('#month-2026-06')).toBeInTheDocument();
   });
@@ -51,6 +53,7 @@ describe('MonthSection', () => {
     let container!: HTMLElement;
     await act(async () => {
       ({ container } = render(<MonthSection entry={makeEntry()} />));
+      await Promise.resolve();
     });
     const section = container.querySelector('[data-month-section]');
     expect(section).toBeInTheDocument();
@@ -61,18 +64,24 @@ describe('MonthSection', () => {
     let resolve!: () => void;
     const factory = () =>
       new Promise<{ default: () => null }>((res) => {
-        resolve = () => { res({ default: () => null }); };
+        resolve = () => {
+          res({ default: () => null });
+        };
       });
-    render(<MonthSection entry={makeEntry({ factory })} />);
+    render(<MonthSection entry={makeEntry({ factory, Component: lazy(factory) })} />);
     expect(
       screen.getByRole('progressbar', { name: 'Loading June 2026' }),
     ).toBeInTheDocument();
-    await act(async () => { resolve(); });
+    await act(async () => {
+      resolve();
+      await Promise.resolve();
+    });
   });
 
   it('renders lazy content after the factory resolves', async () => {
     await act(async () => {
       render(<MonthSection entry={makeEntry()} />);
+      await Promise.resolve();
     });
     expect(screen.getByText('Test entry')).toBeInTheDocument();
   });

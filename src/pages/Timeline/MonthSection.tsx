@@ -1,6 +1,6 @@
 import { ProgressBar } from '@react-spectrum/s2';
 import { css } from '@react-spectrum/s2/style' with { type: 'macro' };
-import { lazy, Suspense, useMemo } from 'react';
+import { Suspense } from 'react';
 
 import type { MonthEntry } from '../../cv/types';
 
@@ -34,7 +34,7 @@ interface Props {
 }
 
 export function MonthSection({ entry }: Readonly<Props>) {
-  const LazyContent = useMemo(() => lazy(entry.factory), [entry.factory]);
+  const { Component } = entry;
 
   return (
     <section
@@ -57,7 +57,7 @@ export function MonthSection({ entry }: Readonly<Props>) {
         }
       >
         <ul className={listStyle}>
-          <LazyContent />
+          <Component />
         </ul>
       </Suspense>
     </section>

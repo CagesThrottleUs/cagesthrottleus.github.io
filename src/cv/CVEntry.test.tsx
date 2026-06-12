@@ -13,7 +13,7 @@ describe('CVEntry', () => {
     const { container } = render(<CVEntry>text</CVEntry>);
     const bullet = container.querySelector('[aria-hidden="true"]');
     expect(bullet).toBeInTheDocument();
-    expect(bullet?.textContent?.trim()).toBe('–');
+    expect(bullet!.textContent.trim()).toBe('–');
   });
 
   it('renders tooltip text when tooltip prop is provided', () => {
