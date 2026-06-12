@@ -2,7 +2,7 @@ import { Button, Divider } from '@react-spectrum/s2';
 import Contrast from '@react-spectrum/s2/icons/Contrast';
 import Lighten from '@react-spectrum/s2/icons/Lighten';
 import { css, style } from '@react-spectrum/s2/style' with { type: 'macro' };
-import { Link } from 'react-router';
+import { Link, NavLink } from 'react-router';
 
 import { useTheme } from '../../ThemeProvider/hooks';
 import { Socials } from './Socials';
@@ -21,12 +21,13 @@ const topBarStyle = style({
   alignItems: 'center',
   justifyContent: 'space-between',
   marginBottom: 16,
+  gap: 16,
 });
 
-const brandBaseStyle = style({
+const brandLinkStyle = style({
   display: 'flex',
   alignItems: 'center',
-  gap: 16,
+  gap: 12,
   borderRadius: 'lg',
   textDecoration: 'none',
   paddingX: 8,
@@ -47,9 +48,8 @@ const brandHoverStyle = css(`
 `);
 
 const monogramStyle = style({
-  size: 44,
+  size: 40,
   borderRadius: 'full',
-  backgroundColor: 'accent',
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
@@ -60,22 +60,47 @@ const monogramStyle = style({
   userSelect: 'none',
 });
 
-const titleGroupStyle = style({
-  display: 'flex',
-  flexDirection: 'column',
-  gap: 2,
-});
+const monogramAccent = css(`
+  background-color: light-dark(#b45309, #d97706);
+`);
 
 const siteNameStyle = style({
   font: 'heading-lg',
   color: 'heading',
   textTransform: 'uppercase',
+  letterSpacing: 'wider',
 });
 
-const taglineStyle = style({
-  font: 'detail',
-  color: 'neutral-subdued',
-});
+const navStyle = css(`
+  display: flex;
+  gap: 4px;
+  align-items: center;
+
+  @media (max-width: 640px) {
+    display: none;
+  }
+`);
+
+const navLinkBase = css(`
+  font-size: 14px;
+  font-weight: 500;
+  color: light-dark(#78716c, #a8a29e);
+  text-decoration: none;
+  letter-spacing: -0.01em;
+  padding: 6px 12px;
+  border-radius: 6px;
+  transition: color 150ms ease, background-color 150ms ease;
+
+  &:hover {
+    color: light-dark(#1c1917, #fafaf9);
+    background-color: light-dark(rgba(0, 0, 0, 0.05), rgba(255, 255, 255, 0.07));
+  }
+
+  &[aria-current="page"] {
+    color: light-dark(#1c1917, #fafaf9);
+    font-weight: 600;
+  }
+`);
 
 const actionsStyle = style({
   display: 'flex',
@@ -90,6 +115,9 @@ const iconWrapperStyle = style({
   transitionTimingFunction: 'in-out',
 });
 
+const iconRotated = css(`transform: rotate(45deg);`);
+const iconDefault = css(`transform: rotate(0deg);`);
+
 export function Header() {
   const { scheme, toggleScheme } = useTheme();
 
@@ -98,17 +126,27 @@ export function Header() {
       <div className={topBarStyle}>
         <Link
           to="/"
-          className={`${brandBaseStyle} ${brandHoverStyle}`}
+          className={`${brandLinkStyle} ${brandHoverStyle}`}
           aria-label="Go to home"
         >
-          <div className={monogramStyle} aria-hidden="true">
+          <div
+            className={`${monogramStyle} ${monogramAccent}`}
+            aria-hidden="true"
+          >
             C
           </div>
-          <div className={titleGroupStyle}>
-            <span className={siteNameStyle}>Cages&apos;</span>
-            <span className={taglineStyle}>Research &amp; Technical Blog</span>
-          </div>
+          <span className={siteNameStyle}>Cages&apos;</span>
         </Link>
+
+        <nav className={navStyle} aria-label="Main navigation">
+          <NavLink to="/" end className={navLinkBase}>
+            Posts
+          </NavLink>
+          <NavLink to="/timeline" className={navLinkBase}>
+            Timeline
+          </NavLink>
+        </nav>
+
         <div className={actionsStyle}>
           <Socials />
           <Button
@@ -120,10 +158,7 @@ export function Header() {
             aria-pressed={scheme === 'dark'}
           >
             <span
-              className={iconWrapperStyle}
-              style={{
-                transform: scheme === 'dark' ? 'rotate(45deg)' : 'rotate(0deg)',
-              }}
+              className={`${iconWrapperStyle} ${scheme === 'dark' ? iconRotated : iconDefault}`}
             >
               {scheme === 'light' ? <Contrast /> : <Lighten />}
             </span>
