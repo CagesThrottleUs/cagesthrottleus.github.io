@@ -74,14 +74,20 @@ test('Timeline nav link visibility matches viewport width', async ({ page }) => 
   }
 });
 
-test('navigating to /timeline shows page not found', async ({ page }) => {
+test('navigating to /timeline shows the timeline page', async ({ page }) => {
   // On desktop: click the visible nav link. On mobile: navigate directly.
   const vp = page.viewportSize();
   const isMobile = !!vp && vp.width <= 640;
   if (isMobile) {
     await page.goto('/#/timeline');
+    // Sidebar is hidden on mobile — verify the batch control is present instead.
+    await expect(
+      page.getByRole('button', { name: 'Load 3 months at a time' }),
+    ).toBeVisible({ timeout: 10_000 });
   } else {
     await page.getByRole('link', { name: 'Timeline' }).click();
+    await expect(
+      page.getByRole('navigation', { name: 'Timeline navigation' }),
+    ).toBeVisible({ timeout: 10_000 });
   }
-  await expect(page.getByText('Page not found')).toBeVisible({ timeout: 10_000 });
 });
