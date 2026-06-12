@@ -29,14 +29,14 @@ jobs:
       - name: Install Playwright browsers
         run: npx playwright install --with-deps chromium firefox webkit
 
+      - name: Type check
+        run: npm run type:check
+
       - name: Check formatting
         run: npm run format:check
 
       - name: Lint
         run: npm run lint
-
-      - name: Type check
-        run: npm run type:check
 
       - name: Run tests
         run: npm run test:all

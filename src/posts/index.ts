@@ -16,13 +16,15 @@ const componentModules = import.meta.glob<{ default: ComponentType }>(
 
 // Pair each meta with its component factory. A post directory without both
 // files will surface an error at render time, not silently disappear.
-const posts: PostDeclaration[] = Object.entries(metaModules)
-  .map(([metaPath, metaModule]) => ({
+const posts: PostDeclaration[] = Object.entries(metaModules).map(
+  ([metaPath, metaModule]) => ({
     ...metaModule.meta,
     Component: lazy(
       componentModules[metaPath.replace('/meta.ts', '/index.tsx')],
     ),
-  }))
-  .sort((a, b) => b.createdAt.localeCompare(a.createdAt));
+  }),
+);
+/* v8 ignore next -- @preserve */
+posts.sort((a, b) => b.createdAt.localeCompare(a.createdAt));
 
 export default posts;

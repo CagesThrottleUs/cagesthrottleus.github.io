@@ -5,6 +5,7 @@ import {
   IllustratedMessage,
 } from '@react-spectrum/s2/IllustratedMessage';
 import NoElements from '@react-spectrum/s2/illustrations/gradient/generic2/NoElements';
+import BrowserError from '@react-spectrum/s2/illustrations/linear/BrowserError';
 import { style } from '@react-spectrum/s2/style' with { type: 'macro' };
 import { lazy, Suspense, use } from 'react';
 import { Route, Routes, useParams } from 'react-router';
@@ -29,6 +30,20 @@ const loadingLayout = style({
   paddingTop: 64,
   paddingX: 32,
 });
+
+function PageNotFound() {
+  return (
+    <div className={notFoundLayout}>
+      <IllustratedMessage>
+        <BrowserError />
+        <Heading>Page not found</Heading>
+        <Content>
+          This page doesn&apos;t exist. Check the URL or head back home.
+        </Content>
+      </IllustratedMessage>
+    </div>
+  );
+}
 
 function PostNotFound({ slug }: Readonly<{ slug: string | undefined }>) {
   return (
@@ -91,6 +106,7 @@ export default function AppRoutes() {
               </Suspense>
             }
           />
+          <Route path="*" element={<PageNotFound />} />
         </Routes>
       </Suspense>
     </CommonStyler>
