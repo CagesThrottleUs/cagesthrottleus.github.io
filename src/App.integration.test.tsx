@@ -150,4 +150,39 @@ describe('App integration', () => {
       expect(screen.getByText('Post not found')).toBeInTheDocument();
     });
   });
+
+  describe('nav links', () => {
+    it('Posts link is present on the home route', async () => {
+      await renderApp('/');
+      expect(screen.getByRole('link', { name: 'Posts' })).toBeInTheDocument();
+    });
+
+    it('Timeline link is present on the home route', async () => {
+      await renderApp('/');
+      expect(screen.getByRole('link', { name: 'Timeline' })).toBeInTheDocument();
+    });
+
+    it('Posts link href resolves to "/"', async () => {
+      await renderApp('/');
+      expect(screen.getByRole('link', { name: 'Posts' })).toHaveAttribute('href', '/');
+    });
+
+    it('Timeline link href resolves to "/timeline"', async () => {
+      await renderApp('/');
+      expect(screen.getByRole('link', { name: 'Timeline' })).toHaveAttribute('href', '/timeline');
+    });
+
+    it('nav links persist on a post route', async () => {
+      await renderApp('/posts/2026-06-08-hello-world');
+      expect(screen.getByRole('link', { name: 'Posts' })).toBeInTheDocument();
+      expect(screen.getByRole('link', { name: 'Timeline' })).toBeInTheDocument();
+    });
+  });
+
+  describe('timeline route', () => {
+    it('navigating to /timeline shows "Page not found"', async () => {
+      await renderApp('/timeline');
+      expect(screen.getByText('Page not found')).toBeInTheDocument();
+    });
+  });
 });
