@@ -50,6 +50,7 @@ export default defineConfig({
         'src/test/**',
         'src/main.tsx', // entry point — no business logic
         'src/**/*.d.ts',
+        'src/**/types.ts', // pure type declarations — no executable code
         '**/*.config.*',
         '**/node_modules/**',
       ],
