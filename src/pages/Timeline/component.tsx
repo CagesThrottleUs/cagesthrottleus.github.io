@@ -66,11 +66,7 @@ export default function TimelinePage() {
         ))}
 
         {hasMore ? (
-          <div
-            ref={sentinelRef}
-            className={sentinelStyle}
-            aria-hidden="true"
-          />
+          <div ref={sentinelRef} className={sentinelStyle} aria-hidden="true" />
         ) : (
           <p className={endNoteStyle}>All entries loaded.</p>
         )}

@@ -48,13 +48,14 @@ describe('Header — unit (useTheme mocked)', () => {
       renderHeader();
       expect(screen.getByText("Cages'")).toBeInTheDocument();
     });
-
   });
 
   describe('navigation', () => {
     it('renders a navigation landmark', () => {
       renderHeader();
-      expect(screen.getByRole('navigation', { name: 'Main navigation' })).toBeInTheDocument();
+      expect(
+        screen.getByRole('navigation', { name: 'Main navigation' }),
+      ).toBeInTheDocument();
     });
 
     it('Posts link is present and links to "/"', () => {

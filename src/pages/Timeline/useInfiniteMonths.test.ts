@@ -98,7 +98,9 @@ describe('useInfiniteMonths', () => {
   });
 
   it('disconnects observer on unmount', () => {
-    const { result, unmount } = renderHook(() => useInfiniteMonths(makeEntries(10)));
+    const { result, unmount } = renderHook(() =>
+      useInfiniteMonths(makeEntries(10)),
+    );
     act(() => result.current.sentinelRef(document.createElement('div')));
     expect(lastInstance).not.toBeNull();
     unmount();

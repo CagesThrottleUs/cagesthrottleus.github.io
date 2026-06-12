@@ -106,10 +106,13 @@ describe('App integration', () => {
   beforeEach(() => {
     localStorage.clear();
     mockMatchMedia(false);
-    vi.stubGlobal('IntersectionObserver', class {
-      observe = vi.fn();
-      disconnect = vi.fn();
-    });
+    vi.stubGlobal(
+      'IntersectionObserver',
+      class {
+        observe = vi.fn();
+        disconnect = vi.fn();
+      },
+    );
   });
 
   afterEach(() => vi.unstubAllGlobals());
@@ -177,23 +180,33 @@ describe('App integration', () => {
 
     it('Timeline link is present on the home route', async () => {
       await renderApp('/');
-      expect(screen.getByRole('link', { name: 'Timeline' })).toBeInTheDocument();
+      expect(
+        screen.getByRole('link', { name: 'Timeline' }),
+      ).toBeInTheDocument();
     });
 
     it('Posts link href resolves to "/"', async () => {
       await renderApp('/');
-      expect(screen.getByRole('link', { name: 'Posts' })).toHaveAttribute('href', '/');
+      expect(screen.getByRole('link', { name: 'Posts' })).toHaveAttribute(
+        'href',
+        '/',
+      );
     });
 
     it('Timeline link href resolves to "/timeline"', async () => {
       await renderApp('/');
-      expect(screen.getByRole('link', { name: 'Timeline' })).toHaveAttribute('href', '/timeline');
+      expect(screen.getByRole('link', { name: 'Timeline' })).toHaveAttribute(
+        'href',
+        '/timeline',
+      );
     });
 
     it('nav links persist on a post route', async () => {
       await renderApp('/posts/2026-06-08-hello-world');
       expect(screen.getByRole('link', { name: 'Posts' })).toBeInTheDocument();
-      expect(screen.getByRole('link', { name: 'Timeline' })).toBeInTheDocument();
+      expect(
+        screen.getByRole('link', { name: 'Timeline' }),
+      ).toBeInTheDocument();
     });
   });
 

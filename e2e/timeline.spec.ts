@@ -42,9 +42,7 @@ test.describe('timeline page', () => {
   });
 
   test('clicking batch size 6 marks it active', async ({ page }) => {
-    await page
-      .getByRole('button', { name: 'Load 6 months at a time' })
-      .click();
+    await page.getByRole('button', { name: 'Load 6 months at a time' }).click();
     await expect(
       page.getByRole('button', { name: 'Load 6 months at a time' }),
     ).toHaveAttribute('aria-pressed', 'true');

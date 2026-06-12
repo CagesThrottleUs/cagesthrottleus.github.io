@@ -31,5 +31,11 @@ export function useInfiniteMonths(all: MonthEntry[]) {
     return () => observer.disconnect();
   }, [hasMore, batchSize, all.length, sentinel]);
 
-  return { loadedMonths, hasMore, sentinelRef: setSentinel, batchSize, setBatchSize };
+  return {
+    loadedMonths,
+    hasMore,
+    sentinelRef: setSentinel,
+    batchSize,
+    setBatchSize,
+  };
 }

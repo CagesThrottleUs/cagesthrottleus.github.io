@@ -4,8 +4,18 @@ import { useEffect, useRef, useState } from 'react';
 import type { MonthEntry } from '../../cv/types';
 
 const MONTH_ABBR = [
-  'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-  'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec',
+  'Jan',
+  'Feb',
+  'Mar',
+  'Apr',
+  'May',
+  'Jun',
+  'Jul',
+  'Aug',
+  'Sep',
+  'Oct',
+  'Nov',
+  'Dec',
 ];
 
 const sidebarStyle = css(`
@@ -123,7 +133,9 @@ export function TimelineSidebar({ entries }: Readonly<Props>) {
   }, {});
 
   function jumpTo(id: string) {
-    document.getElementById(`month-${id}`)?.scrollIntoView({ behavior: 'smooth' });
+    document
+      .getElementById(`month-${id}`)
+      ?.scrollIntoView({ behavior: 'smooth' });
   }
 
   return (

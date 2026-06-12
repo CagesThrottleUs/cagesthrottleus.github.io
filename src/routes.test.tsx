@@ -56,10 +56,13 @@ describe('AppRoutes', () => {
   beforeEach(() => {
     localStorage.clear();
     mockMatchMedia(false);
-    vi.stubGlobal('IntersectionObserver', class {
-      observe = vi.fn();
-      disconnect = vi.fn();
-    });
+    vi.stubGlobal(
+      'IntersectionObserver',
+      class {
+        observe = vi.fn();
+        disconnect = vi.fn();
+      },
+    );
   });
 
   afterEach(() => vi.unstubAllGlobals());

@@ -47,7 +47,9 @@ test('Posts nav link is in the DOM pointing to home', async ({ page }) => {
   await expect(page.locator('nav a[href="#/"]')).toBeAttached();
 });
 
-test('Timeline nav link is in the DOM pointing to /timeline', async ({ page }) => {
+test('Timeline nav link is in the DOM pointing to /timeline', async ({
+  page,
+}) => {
   await expect(page.locator('nav a[href="#/timeline"]')).toBeAttached();
 });
 
@@ -64,7 +66,9 @@ test('Posts nav link visibility matches viewport width', async ({ page }) => {
   }
 });
 
-test('Timeline nav link visibility matches viewport width', async ({ page }) => {
+test('Timeline nav link visibility matches viewport width', async ({
+  page,
+}) => {
   const vp = page.viewportSize();
   const isMobile = !!vp && vp.width <= 640;
   if (isMobile) {

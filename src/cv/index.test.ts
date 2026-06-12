@@ -2,7 +2,8 @@ import { describe, expect, it, vi } from 'vitest';
 
 // Mock import.meta.glob before importing the module under test.
 vi.mock('../cv/index', async () => {
-  const { monthEntries: real } = await vi.importActual<typeof import('../cv/index')>('../cv/index');
+  const { monthEntries: real } =
+    await vi.importActual<typeof import('../cv/index')>('../cv/index');
   return { monthEntries: real };
 });
 
@@ -60,7 +61,9 @@ describe('cv registry', () => {
 
   it('throws on malformed path', () => {
     expect(() =>
-      buildEntries({ './entries/bad.tsx': () => Promise.resolve({ default: () => null }) }),
+      buildEntries({
+        './entries/bad.tsx': () => Promise.resolve({ default: () => null }),
+      }),
     ).toThrow('Bad path');
   });
 });

@@ -11,7 +11,9 @@ async function computedStyle(
   return page.evaluate(
     ({ sel, prop }: { sel: string; prop: string }) => {
       const el = document.querySelector(sel);
-      return el ? window.getComputedStyle(el).getPropertyValue(prop).trim() : null;
+      return el
+        ? window.getComputedStyle(el).getPropertyValue(prop).trim()
+        : null;
     },
     { sel: selector, prop: property },
   );
@@ -42,7 +44,11 @@ test.describe('post content — theme color compliance', () => {
   });
 
   test('page shell background is light in light mode', async ({ page }) => {
-    const bg = await computedStyle(page, '#common-style-div', 'background-color');
+    const bg = await computedStyle(
+      page,
+      '#common-style-div',
+      'background-color',
+    );
     // #f8f8f7 = rgb(248, 248, 247)
     expect(bg).toBe('rgb(248, 248, 247)');
   });
@@ -76,7 +82,11 @@ test.describe('post content — theme color compliance', () => {
       'aria-pressed',
       'true',
     );
-    const bg = await computedStyle(page, '#common-style-div', 'background-color');
+    const bg = await computedStyle(
+      page,
+      '#common-style-div',
+      'background-color',
+    );
     // #111110 = rgb(17, 17, 16)
     expect(bg).toBe('rgb(17, 17, 16)');
   });
