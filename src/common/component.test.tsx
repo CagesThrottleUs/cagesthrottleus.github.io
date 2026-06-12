@@ -63,4 +63,33 @@ describe('CommonStyler', () => {
       expect(all[2].tagName).toBe('FOOTER');
     });
   });
+
+  describe('nav links', () => {
+    it('Posts nav link is present in the layout', () => {
+      renderWithProviders(<CommonStyler>x</CommonStyler>);
+      expect(screen.getByRole('link', { name: 'Posts' })).toBeInTheDocument();
+    });
+
+    it('Timeline nav link is present in the layout', () => {
+      renderWithProviders(<CommonStyler>x</CommonStyler>);
+      expect(screen.getByRole('link', { name: 'Timeline' })).toBeInTheDocument();
+    });
+
+    it('Posts nav link href resolves to "/"', () => {
+      renderWithProviders(<CommonStyler>x</CommonStyler>);
+      expect(screen.getByRole('link', { name: 'Posts' })).toHaveAttribute('href', '/');
+    });
+
+    it('Timeline nav link href resolves to "/timeline"', () => {
+      renderWithProviders(<CommonStyler>x</CommonStyler>);
+      expect(screen.getByRole('link', { name: 'Timeline' })).toHaveAttribute('href', '/timeline');
+    });
+
+    it('nav landmark wraps both links', () => {
+      renderWithProviders(<CommonStyler>x</CommonStyler>);
+      const nav = screen.getByRole('navigation', { name: 'Main navigation' });
+      expect(nav).toContainElement(screen.getByRole('link', { name: 'Posts' }));
+      expect(nav).toContainElement(screen.getByRole('link', { name: 'Timeline' }));
+    });
+  });
 });
