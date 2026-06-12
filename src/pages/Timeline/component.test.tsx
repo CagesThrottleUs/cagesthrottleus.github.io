@@ -85,14 +85,10 @@ describe('TimelinePage', () => {
     expect(sentinel).toBeInTheDocument();
   });
 
-  it('shows "All entries loaded" when registry has fewer entries than batch size', async () => {
-    const { mockEntries: twoEntries } = vi.hoisted(() => ({
-      mockEntries: mockEntries.slice(0, 2),
-    }));
-    vi.doMock('../../cv/index', () => ({ monthEntries: twoEntries }));
-    const { default: Page } = await import('./component?two');
-    await act(async () => { render(<Page />); });
-    expect(screen.getByText('All entries loaded.')).toBeInTheDocument();
-    vi.doUnmock('../../cv/index');
+  it('does not show "All entries loaded" when more entries remain', async () => {
+    // 4 mock entries, batch 3 → hasMore=true → end-note absent, sentinel present.
+    // The hasMore=false → "All entries loaded." path is covered by useInfiniteMonths tests.
+    await act(async () => { render(<TimelinePage />); });
+    expect(screen.queryByText('All entries loaded.')).not.toBeInTheDocument();
   });
 });
