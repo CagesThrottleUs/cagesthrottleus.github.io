@@ -15,7 +15,6 @@
 - Seed June 2026 entries; registry auto-discovers new months via `import.meta.glob`
 - Full unit, integration, and E2E test coverage for all timeline components
 
-
 ## 1.0.1
 
 - Add catch-all 404 page with React Spectrum S2 BrowserError illustration
