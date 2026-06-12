@@ -66,7 +66,7 @@ Unit tests cover pure logic: hooks, utilities, and context values — no DOM ren
 
 **File location:** co-locate with the source file.
 
-```
+```text
 src/context/theme.tsx
 src/context/theme.test.ts   ← lives next to the source
 ```
@@ -77,7 +77,7 @@ src/context/theme.test.ts   ← lives next to the source
 - Pure utility functions (formatters, validators, parsers)
 - Context initial values and reducer logic
 
-### Template
+### Template for Unit tests
 
 ```ts
 // src/context/theme.test.ts
@@ -118,7 +118,7 @@ Component tests render a single component and assert on what a user sees and can
 
 **File location:** co-located with the component.
 
-```
+```text
 src/components/Layout.tsx
 src/components/Layout.test.tsx
 ```
