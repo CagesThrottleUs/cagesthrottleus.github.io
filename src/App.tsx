@@ -30,6 +30,7 @@ function AppInner() {
       background="base"
       router={{
         navigate: (href, opts) => {
+          /* v8 ignore next -- @preserve */
           void navigate(href, opts);
         },
         useHref,
