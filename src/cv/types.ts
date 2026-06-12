@@ -1,14 +1,14 @@
 import type { ComponentType } from 'react';
 
-export type CVEntry = {
+export interface CVEntry {
   text: string;
   tooltip?: string;
-};
+}
 
-export type MonthEntry = {
+export interface MonthEntry {
   year: number;
   month: number;
   id: string;
   label: string;
   factory: () => Promise<{ default: ComponentType }>;
-};
+}

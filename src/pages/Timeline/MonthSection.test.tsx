@@ -61,13 +61,13 @@ describe('MonthSection', () => {
     let resolve!: () => void;
     const factory = () =>
       new Promise<{ default: () => null }>((res) => {
-        resolve = () => res({ default: () => null });
+        resolve = () => { res({ default: () => null }); };
       });
     render(<MonthSection entry={makeEntry({ factory })} />);
     expect(
       screen.getByRole('progressbar', { name: 'Loading June 2026' }),
     ).toBeInTheDocument();
-    await act(async () => resolve());
+    await act(async () => { resolve(); });
   });
 
   it('renders lazy content after the factory resolves', async () => {

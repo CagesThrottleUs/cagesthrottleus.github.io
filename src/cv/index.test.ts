@@ -17,7 +17,7 @@ const fakeModules: Record<string, () => Promise<{ default: () => null }>> = {
 function buildEntries(modules: typeof fakeModules) {
   return Object.entries(modules)
     .map(([path, factory]) => {
-      const m = path.match(/\.\/entries\/(\d{4})\/(\d{2})\.tsx$/);
+      const m = /\.\/entries\/(\d{4})\/(\d{2})\.tsx$/.exec(path);
       if (!m) throw new Error(`Bad path: ${path}`);
       const year = Number(m[1]);
       const month = Number(m[2]);

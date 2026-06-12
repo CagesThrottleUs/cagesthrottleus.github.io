@@ -122,9 +122,9 @@ export function TimelineSidebar({ entries }: Readonly<Props>) {
 
     document
       .querySelectorAll('[data-month-section]')
-      .forEach((el) => observer.observe(el));
+      .forEach((el) => { observer.observe(el); });
 
-    return () => observer.disconnect();
+    return () => { observer.disconnect(); };
   }, [entries]);
 
   const byYear = entries.reduce<Record<number, MonthEntry[]>>((acc, e) => {
@@ -156,7 +156,7 @@ export function TimelineSidebar({ entries }: Readonly<Props>) {
                 key={entry.id}
                 type="button"
                 className={`${monthBtnStyle} ${activeId === entry.id ? monthBtnActiveStyle : ''}`}
-                onClick={() => jumpTo(entry.id)}
+                onClick={() => { jumpTo(entry.id); }}
                 aria-current={activeId === entry.id ? 'location' : undefined}
                 aria-label={entry.label}
               >

@@ -16,7 +16,7 @@ function toLabel(year: number, month: number): string {
 
 export const monthEntries: MonthEntry[] = Object.entries(modules)
   .map(([path, factory]) => {
-    const m = path.match(/\.\/entries\/(\d{4})\/(\d{2})\.tsx$/);
+    const m = /\.\/entries\/(\d{4})\/(\d{2})\.tsx$/.exec(path);
     if (!m) throw new Error(`Unexpected cv entry path: ${path}`);
     const year = Number(m[1]);
     const month = Number(m[2]);
