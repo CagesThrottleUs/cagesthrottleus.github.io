@@ -1,4 +1,4 @@
-import { style } from '@react-spectrum/s2/style' with { type: 'macro' };
+import { css, style } from '@react-spectrum/s2/style' with { type: 'macro' };
 import { type ReactNode } from 'react';
 
 import { Footer } from './Footer/component';
@@ -6,12 +6,16 @@ import { Header } from './Header/component';
 
 const commonSizePattern = style({
   paddingX: '12.5vw',
-  backgroundColor: 'gray-75',
   minHeight: 'screen',
   display: 'flex',
   flexDirection: 'column',
   flexGrow: 1,
 });
+
+const editorialBg = css(`
+  background-color: light-dark(#f8f8f7, #111110);
+  color: light-dark(#1c1917, #e7e5e4);
+`);
 
 const contentPadding = style({
   padding: '0.6125%',
@@ -27,7 +31,7 @@ const mainStyle = style({
 export function CommonStyler({ children }: Readonly<{ children: ReactNode }>) {
   return (
     <div
-      className={commonSizePattern}
+      className={`${commonSizePattern} ${editorialBg}`}
       id="common-style-div"
       aria-label="Page layout"
     >
