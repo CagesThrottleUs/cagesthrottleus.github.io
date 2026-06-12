@@ -31,7 +31,9 @@ class MockIO {
 
   constructor(cb: IOCallback) {
     const { disconnect } = this;
-    lastTrigger = (v: boolean) => { cb([{ isIntersecting: v }]); };
+    lastTrigger = (v: boolean) => {
+      cb([{ isIntersecting: v }]);
+    };
     lastDisconnect = disconnect;
   }
 }
@@ -71,32 +73,50 @@ describe('useInfiniteMonths', () => {
 
   it('loads next batch when sentinel is intersected', () => {
     const { result } = renderHook(() => useInfiniteMonths(makeEntries(10)));
-    act(() => { result.current.sentinelRef(document.createElement('div')); });
+    act(() => {
+      result.current.sentinelRef(document.createElement('div'));
+    });
     expect(lastTrigger).not.toBeNull();
-    act(() => { lastTrigger!(true); });
+    act(() => {
+      lastTrigger!(true);
+    });
     expect(result.current.loadedMonths).toHaveLength(6);
   });
 
   it('does not load past total entries', () => {
     const { result } = renderHook(() => useInfiniteMonths(makeEntries(4)));
-    act(() => { result.current.sentinelRef(document.createElement('div')); });
-    act(() => { lastTrigger!(true); });
+    act(() => {
+      result.current.sentinelRef(document.createElement('div'));
+    });
+    act(() => {
+      lastTrigger!(true);
+    });
     expect(result.current.loadedMonths).toHaveLength(4);
     expect(result.current.hasMore).toBe(false);
   });
 
   it('setBatchSize changes next load increment', () => {
     const { result } = renderHook(() => useInfiniteMonths(makeEntries(20)));
-    act(() => { result.current.sentinelRef(document.createElement('div')); });
-    act(() => { result.current.setBatchSize(6); });
-    act(() => { lastTrigger!(true); });
+    act(() => {
+      result.current.sentinelRef(document.createElement('div'));
+    });
+    act(() => {
+      result.current.setBatchSize(6);
+    });
+    act(() => {
+      lastTrigger!(true);
+    });
     expect(result.current.loadedMonths).toHaveLength(9); // 3 initial + 6
   });
 
   it('does not load when intersection is false', () => {
     const { result } = renderHook(() => useInfiniteMonths(makeEntries(10)));
-    act(() => { result.current.sentinelRef(document.createElement('div')); });
-    act(() => { lastTrigger!(false); });
+    act(() => {
+      result.current.sentinelRef(document.createElement('div'));
+    });
+    act(() => {
+      lastTrigger!(false);
+    });
     expect(result.current.loadedMonths).toHaveLength(3);
   });
 
@@ -104,7 +124,9 @@ describe('useInfiniteMonths', () => {
     const { result, unmount } = renderHook(() =>
       useInfiniteMonths(makeEntries(10)),
     );
-    act(() => { result.current.sentinelRef(document.createElement('div')); });
+    act(() => {
+      result.current.sentinelRef(document.createElement('div'));
+    });
     expect(lastDisconnect).not.toBeNull();
     unmount();
     expect(lastDisconnect).toHaveBeenCalled();

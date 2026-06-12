@@ -12,7 +12,14 @@ vi.mock('./cv/index', async () => {
   const factory = () => Promise.resolve({ default: () => null });
   return {
     monthEntries: [
-      { year: 2026, month: 6, id: '2026-06', label: 'June 2026', factory, Component: lazy(factory) },
+      {
+        year: 2026,
+        month: 6,
+        id: '2026-06',
+        label: 'June 2026',
+        factory,
+        Component: lazy(factory),
+      },
     ],
   };
 });

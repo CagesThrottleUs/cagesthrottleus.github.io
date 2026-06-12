@@ -61,7 +61,9 @@ export function BatchControl({ value, onChange }: Readonly<Props>) {
         <button
           key={n}
           className={`${btnStyle} ${value === n ? btnActiveStyle : ''}`}
-          onClick={() => { onChange(n); }}
+          onClick={() => {
+            onChange(n);
+          }}
           aria-pressed={value === n}
           aria-label={`Load ${String(n)} months at a time`}
           type="button"

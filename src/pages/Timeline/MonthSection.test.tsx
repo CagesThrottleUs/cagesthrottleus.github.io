@@ -29,7 +29,9 @@ describe('MonthSection', () => {
       render(<MonthSection entry={makeEntry()} />);
       await Promise.resolve();
     });
-    expect(screen.getByRole('heading', { name: 'June 2026' })).toBeInTheDocument();
+    expect(
+      screen.getByRole('heading', { name: 'June 2026' }),
+    ).toBeInTheDocument();
   });
 
   it('renders a region landmark with the month label', async () => {
@@ -37,7 +39,9 @@ describe('MonthSection', () => {
       render(<MonthSection entry={makeEntry()} />);
       await Promise.resolve();
     });
-    expect(screen.getByRole('region', { name: 'June 2026' })).toBeInTheDocument();
+    expect(
+      screen.getByRole('region', { name: 'June 2026' }),
+    ).toBeInTheDocument();
   });
 
   it('sets id="month-{entry.id}" for anchor navigation', async () => {
@@ -68,7 +72,9 @@ describe('MonthSection', () => {
           res({ default: () => null });
         };
       });
-    render(<MonthSection entry={makeEntry({ factory, Component: lazy(factory) })} />);
+    render(
+      <MonthSection entry={makeEntry({ factory, Component: lazy(factory) })} />,
+    );
     expect(
       screen.getByRole('progressbar', { name: 'Loading June 2026' }),
     ).toBeInTheDocument();

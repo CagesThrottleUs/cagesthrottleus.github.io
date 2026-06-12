@@ -61,9 +61,15 @@ describe('TimelinePage', () => {
       render(<TimelinePage />);
       await Promise.resolve();
     });
-    expect(screen.getByRole('region', { name: 'June 2026' })).toBeInTheDocument();
-    expect(screen.getByRole('region', { name: 'May 2026' })).toBeInTheDocument();
-    expect(screen.getByRole('region', { name: 'April 2026' })).toBeInTheDocument();
+    expect(
+      screen.getByRole('region', { name: 'June 2026' }),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole('region', { name: 'May 2026' }),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole('region', { name: 'April 2026' }),
+    ).toBeInTheDocument();
     expect(
       screen.queryByRole('region', { name: 'March 2026' }),
     ).not.toBeInTheDocument();

@@ -28,7 +28,9 @@ export function useInfiniteMonths(all: MonthEntry[]) {
       { threshold: 0.1 },
     );
     observer.observe(sentinel);
-    return () => { observer.disconnect(); };
+    return () => {
+      observer.disconnect();
+    };
   }, [hasMore, batchSize, all.length, sentinel]);
 
   return {
