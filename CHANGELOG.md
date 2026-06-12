@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## 1.2.0
+
+- Add `/timeline` engineering activity log page with reverse-chronological month sections
+- Lazy-load each month component on demand; IntersectionObserver sentinel triggers next batch
+- Configurable batch size (3/6/9) via amber pill-group control
+- Sticky editorial sidebar with year/month scrubber and CSS scroll-driven reading progress bar
+- `CVEntry` bullet component with amber dash accent and dark frosted hover tooltip
+- Seed June 2026 entries; registry auto-discovers new months via `import.meta.glob`
+- Full unit, integration, and E2E test coverage for all timeline components
+
 ## 1.1.0
 
 - Redesign site visual identity: Geist Variable font, warm editorial background (`#f8f8f7` light / `#111110` dark), amber monogram accent
