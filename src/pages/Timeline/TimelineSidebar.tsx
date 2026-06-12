@@ -52,11 +52,6 @@ const progressFillStyle = css(`
   @supports (animation-timeline: scroll()) {
     animation: cv-read-progress linear both;
     animation-timeline: scroll(root);
-
-    @keyframes cv-read-progress {
-      from { transform: scaleX(0); }
-      to   { transform: scaleX(1); }
-    }
   }
 `);
 
