@@ -1,7 +1,7 @@
 {
   "name": "cagesthrottleus-blog",
   "private": true,
-  "version": "1.0.1",
+  "version": "1.1.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -25,7 +25,7 @@
   "dependencies": {
     "@react-aria/optimize-locales-plugin": "^1.2.1",
     "@react-spectrum/s2": "^1.4.0",
-    "lucide-react": "^1.17.0",
+    "lucide-react": "^1.18.0",
     "react": "^19.2.7",
     "react-dom": "^19.2.7",
     "react-router": "^7.17.0",
