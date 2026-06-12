@@ -40,3 +40,48 @@ test('footer shows "All rights reserved"', async ({ page }) => {
     'All rights reserved',
   );
 });
+
+// href attribute tests use CSS locators — work regardless of display state.
+
+test('Posts nav link is in the DOM pointing to home', async ({ page }) => {
+  await expect(page.locator('nav a[href="#/"]')).toBeAttached();
+});
+
+test('Timeline nav link is in the DOM pointing to /timeline', async ({ page }) => {
+  await expect(page.locator('nav a[href="#/timeline"]')).toBeAttached();
+});
+
+// On desktop the nav is visible; on mobile it is intentionally hidden (display:none).
+// Both outcomes are explicitly asserted so no tests are skipped.
+
+test('Posts nav link visibility matches viewport width', async ({ page }) => {
+  const vp = page.viewportSize();
+  const isMobile = !!vp && vp.width <= 640;
+  if (isMobile) {
+    await expect(page.locator('nav a[href="#/"]')).not.toBeVisible();
+  } else {
+    await expect(page.getByRole('link', { name: 'Posts' })).toBeVisible();
+  }
+});
+
+test('Timeline nav link visibility matches viewport width', async ({ page }) => {
+  const vp = page.viewportSize();
+  const isMobile = !!vp && vp.width <= 640;
+  if (isMobile) {
+    await expect(page.locator('nav a[href="#/timeline"]')).not.toBeVisible();
+  } else {
+    await expect(page.getByRole('link', { name: 'Timeline' })).toBeVisible();
+  }
+});
+
+test('navigating to /timeline shows page not found', async ({ page }) => {
+  // On desktop: click the visible nav link. On mobile: navigate directly.
+  const vp = page.viewportSize();
+  const isMobile = !!vp && vp.width <= 640;
+  if (isMobile) {
+    await page.goto('/#/timeline');
+  } else {
+    await page.getByRole('link', { name: 'Timeline' }).click();
+  }
+  await expect(page.getByText('Page not found')).toBeVisible({ timeout: 10_000 });
+});
