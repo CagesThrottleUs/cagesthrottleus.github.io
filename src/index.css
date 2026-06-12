@@ -1,5 +1,10 @@
+@import '@fontsource-variable/geist';
+
 /* S2 uses CSS Cascade Layers — global resets outside @layer override S2 styles.
    Page background and color scheme are handled by @react-spectrum/s2/page.css (imported in App.tsx). */
 body {
   margin: 0;
+  font-family: 'Geist Variable', 'Geist', system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
