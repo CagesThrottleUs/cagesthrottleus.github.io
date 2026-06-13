@@ -7,7 +7,8 @@ export default function March2024() {
         Received top performance rating (A) and bonus for the year
       </CVEntry>
       <CVEntry>
-        Developed complete understanding of UPI end-to-end architecture as a solution
+        Developed complete understanding of UPI end-to-end architecture as a
+        solution
       </CVEntry>
     </>
   );

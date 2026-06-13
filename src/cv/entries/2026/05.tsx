@@ -8,7 +8,8 @@ export default function May2026() {
       </CVEntry>
       <CVEntry>Continued work on Operational Dashboard Automation</CVEntry>
       <CVEntry tooltip="Passes full GNU coreutils test suite for all spec-matching tests; created entirely with AI to benchmark private harness quality">
-        Completed John Crickett cut tool challenge — passes GNU coreutils test suite
+        Completed John Crickett cut tool challenge — passes GNU coreutils test
+        suite
       </CVEntry>
     </>
   );
