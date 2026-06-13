@@ -7,60 +7,7 @@ on:
 
 jobs:
   quality-gate:
-    name: Quality Gate
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v6
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v6
-        with:
-          node-version: 26
-          cache: npm
-
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Install Playwright browsers
-        run: npx playwright install --with-deps chromium firefox webkit
-
-      - name: Type check
-        run: npm run type:check
-
-      - name: Check formatting
-        run: npm run format:check
-
-      - name: Lint
-        run: npm run lint
-
-      - name: Run tests
-        run: npm run test:all
-
-      - name: Build
-        run: npm run build
-
-      - name: Locate Playwright Chromium for Lighthouse
-        run: |
-          CHROME=$(find ~/.cache/ms-playwright -name 'chrome' -executable -type f 2>/dev/null | head -1)
-          if [ -z "$CHROME" ]; then
-            echo "ERROR: Chromium not found. Ensure 'Install Playwright browsers' ran first." >&2
-            exit 1
-          fi
-          echo "CHROME_PATH=$CHROME" >> "$GITHUB_ENV"
-          echo "Chromium found at: $CHROME"
-
-      - name: Lighthouse audit
-        run: npm run lighthouse:ci
-
-      - name: Upload Lighthouse reports
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: lighthouse-reports
-          path: lighthouse-reports/
-          retention-days: 30
+    uses: ./.github/workflows/quality-gate.yml
 
   deploy:
     name: Deploy
