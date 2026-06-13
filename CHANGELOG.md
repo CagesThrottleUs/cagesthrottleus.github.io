@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 1.2.0
+
+- Add mobile hamburger navigation drawer — nav links hidden on mobile now accessible via slide-in panel triggered by header button
+- Drawer closes on backdrop click, Escape key, or nav link click; body scroll locked while open
+- Responsive side padding: `12.5vw` on desktop steps down to `6vw` on tablet and `16px` on mobile (was flat `12.5vw` at all widths)
+
 ## 1.1.0
 
 - Redesign site visual identity: Geist Variable font, warm editorial background (`#f8f8f7` light / `#111110` dark), amber monogram accent
