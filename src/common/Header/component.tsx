@@ -1,10 +1,14 @@
 import { Button, Divider } from '@react-spectrum/s2';
+import Close from '@react-spectrum/s2/icons/Close';
 import Contrast from '@react-spectrum/s2/icons/Contrast';
 import Lighten from '@react-spectrum/s2/icons/Lighten';
+import MenuHamburger from '@react-spectrum/s2/icons/MenuHamburger';
 import { css, style } from '@react-spectrum/s2/style' with { type: 'macro' };
+import { useState } from 'react';
 import { Link, NavLink } from 'react-router';
 
 import { useTheme } from '../../ThemeProvider/hooks';
+import { MobileNav } from './MobileNav';
 
 const headerStyle = style({
   display: 'flex',
@@ -129,57 +133,94 @@ const navSeparatorStyle = css(`
   }
 `);
 
+const hamburgerWrapperStyle = css(`
+  display: none;
+
+  @media (max-width: 640px) {
+    display: flex;
+    align-items: center;
+  }
+`);
+
 export function Header() {
   const { scheme, toggleScheme } = useTheme();
+  const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
 
   return (
-    <header className={headerStyle} id="blog-header" aria-label="Site header">
-      <div className={topBarStyle}>
-        <Link
-          to="/"
-          className={`${brandLinkStyle} ${brandHoverStyle}`}
-          aria-label="Go to home"
-        >
-          <div
-            className={`${monogramStyle} ${monogramAccent}`}
-            aria-hidden="true"
+    <>
+      <header className={headerStyle} id="blog-header" aria-label="Site header">
+        <div className={topBarStyle}>
+          <Link
+            to="/"
+            className={`${brandLinkStyle} ${brandHoverStyle}`}
+            aria-label="Go to home"
           >
-            C
-          </div>
-          <span className={siteNameStyle}>Cages&apos;</span>
-        </Link>
-
-        <div className={actionsStyle}>
-          <nav className={navStyle} aria-label="Main navigation">
-            <NavLink to="/" end className={navLinkBase}>
-              Posts
-            </NavLink>
-            <NavLink to="/timeline" className={navLinkBase}>
-              Timeline
-            </NavLink>
-          </nav>
-          <div
-            className={navSeparatorStyle}
-            role="separator"
-            aria-orientation="vertical"
-          />
-          <Button
-            variant="secondary"
-            size="M"
-            onPress={toggleScheme}
-            id="theme-toggle-button"
-            aria-label={`Switch to ${scheme === 'light' ? 'dark' : 'light'} theme`}
-            aria-pressed={scheme === 'dark'}
-          >
-            <span
-              className={`${iconWrapperStyle} ${scheme === 'dark' ? iconRotated : iconDefault}`}
+            <div
+              className={`${monogramStyle} ${monogramAccent}`}
+              aria-hidden="true"
             >
-              {scheme === 'light' ? <Contrast /> : <Lighten />}
-            </span>
-          </Button>
+              C
+            </div>
+            <span className={siteNameStyle}>Cages&apos;</span>
+          </Link>
+
+          <div className={actionsStyle}>
+            <nav className={navStyle} aria-label="Main navigation">
+              <NavLink to="/" end className={navLinkBase}>
+                Posts
+              </NavLink>
+              <NavLink to="/timeline" className={navLinkBase}>
+                Timeline
+              </NavLink>
+            </nav>
+            <div
+              className={navSeparatorStyle}
+              role="separator"
+              aria-orientation="vertical"
+            />
+            <Button
+              variant="secondary"
+              size="M"
+              onPress={toggleScheme}
+              id="theme-toggle-button"
+              aria-label={`Switch to ${scheme === 'light' ? 'dark' : 'light'} theme`}
+              aria-pressed={scheme === 'dark'}
+            >
+              <span
+                className={`${iconWrapperStyle} ${scheme === 'dark' ? iconRotated : iconDefault}`}
+              >
+                {scheme === 'light' ? <Contrast /> : <Lighten />}
+              </span>
+            </Button>
+            <div className={hamburgerWrapperStyle}>
+              <Button
+                variant="secondary"
+                size="M"
+                onPress={() => {
+                  setIsMobileNavOpen((prev) => !prev);
+                }}
+                id="mobile-menu-button"
+                aria-label={
+                  isMobileNavOpen
+                    ? 'Close navigation menu'
+                    : 'Open navigation menu'
+                }
+                aria-expanded={isMobileNavOpen}
+                aria-controls="mobile-nav"
+              >
+                {isMobileNavOpen ? <Close /> : <MenuHamburger />}
+              </Button>
+            </div>
+          </div>
         </div>
-      </div>
-      <Divider size="S" />
-    </header>
+        <Divider size="S" />
+      </header>
+      <MobileNav
+        isOpen={isMobileNavOpen}
+        onClose={() => {
+          setIsMobileNavOpen(false);
+        }}
+      />
+    </>
   );
 }

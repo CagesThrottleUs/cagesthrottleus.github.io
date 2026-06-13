@@ -1,4 +1,5 @@
 import type { PostMeta } from '../types';
+import preview from './preview.jpg';
 
 export const meta: PostMeta = {
   id: '2026-06-08-hello-world',
@@ -6,6 +7,8 @@ export const meta: PostMeta = {
   createdAt: '2026-06-08',
   abstract:
     'An introduction to this blog — what to expect, how it is built, and where it is going.',
-  preview:
-    'https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?w=600&auto=format&fit=crop&q=80',
+  // Bundled locally rather than hot-linked: a remote image was the page's
+  // largest-contentful-paint element and the sole source of Lighthouse perf
+  // variance. A build-time asset loads from the same origin and is hashed.
+  preview,
 };

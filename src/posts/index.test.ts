@@ -30,3 +30,30 @@ describe('posts collector', () => {
     expect(new Set(ids).size).toBe(ids.length);
   });
 });
+
+// Mirrors the id-vs-directory guard in index.ts. The real registry resolves
+// paths via import.meta.glob; this reimplements just the check so the failure
+// mode is covered without a real mismatched fixture on disk.
+function assertIdMatchesDir(metaPath: string, id: string) {
+  const dir = metaPath.replace(/^\.\//, '').replace(/\/meta\.ts$/, '');
+  if (id !== dir) {
+    throw new Error(`Post id "${id}" must equal its directory "${dir}"`);
+  }
+}
+
+describe('post id / directory guard', () => {
+  it('passes when id matches the directory name', () => {
+    expect(() => {
+      assertIdMatchesDir(
+        './2026-06-08-hello-world/meta.ts',
+        '2026-06-08-hello-world',
+      );
+    }).not.toThrow();
+  });
+
+  it('throws when id drifts from the directory name', () => {
+    expect(() => {
+      assertIdMatchesDir('./2026-06-08-hello-world/meta.ts', 'wrong-slug');
+    }).toThrow('must equal its directory');
+  });
+});

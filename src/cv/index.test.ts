@@ -1,3 +1,4 @@
+import { lazy } from 'react';
 import { describe, expect, it } from 'vitest';
 
 // Directly test the shaping logic by constructing entries from a fake glob.
@@ -23,7 +24,7 @@ function buildEntries(modules: typeof fakeModules) {
           month: 'long',
           year: 'numeric',
         }),
-        factory,
+        Component: lazy(factory),
       };
     })
     .sort((a, b) => b.year - a.year || b.month - a.month);
@@ -47,9 +48,9 @@ describe('cv registry', () => {
     expect(june?.label).toBe('June 2026');
   });
 
-  it('each entry has a callable factory', () => {
+  it('each entry exposes a lazy Component', () => {
     for (const e of entries) {
-      expect(typeof e.factory).toBe('function');
+      expect(typeof e.Component).toBe('object'); // lazy() returns an object
     }
   });
 

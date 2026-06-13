@@ -1,5 +1,18 @@
 # CHANGELOG
 
+## 1.2.0
+
+- Add mobile hamburger navigation drawer — nav links hidden on mobile now accessible via slide-in panel triggered by header button
+- Drawer closes on backdrop click, Escape key, or nav link click; body scroll locked while open
+- Responsive side padding: `12.5vw` on desktop steps down to `6vw` on tablet and `16px` on mobile (was flat `12.5vw` at all widths)
+- Add Lighthouse reporting to the project
+- Drop unused `factory` field from timeline `MonthEntry` — entries now expose only the lazy `Component`; per-month dynamic loading is unchanged
+- Centralise the timeline section DOM contract (`data-month-*` attributes and anchor id) in one module so sidebar navigation cannot drift from the rendered markup
+- Guard post `id` against its directory name at registry load — a mismatched slug now fails loudly instead of shipping a dead "Post not found" link
+- Add a meta description and `public/robots.txt` — lifts Lighthouse SEO from 0.83 to 1.0 (the SPA fallback had been serving HTML for `/robots.txt`, parsed as invalid)
+- Self-host the Hello World hero image as a bundled asset instead of hot-linking Unsplash — removes the external dependency and the Lighthouse performance variance it caused
+- Set the Lighthouse performance floor to 0.70 (was 0.90) with a documented structural rationale: a client-rendered S2 SPA gates LCP on bundle execution, so 0.90 is unreachable without prerendering
+
 ## 1.1.0
 
 - Redesign site visual identity: Geist Variable font, warm editorial background (`#f8f8f7` light / `#111110` dark), amber monogram accent

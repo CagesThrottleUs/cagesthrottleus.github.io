@@ -17,12 +17,23 @@ const componentModules = import.meta.glob<{ default: ComponentType }>(
 // Pair each meta with its component factory. A post directory without both
 // files will surface an error at render time, not silently disappear.
 const posts: PostDeclaration[] = Object.entries(metaModules).map(
-  ([metaPath, metaModule]) => ({
-    ...metaModule.meta,
-    Component: lazy(
-      componentModules[metaPath.replace('/meta.ts', '/index.tsx')],
-    ),
-  }),
+  ([metaPath, metaModule]) => {
+    // id is the URL slug; the route looks posts up by it. If it drifts from
+    // the directory name, the home card links to a slug no route can resolve.
+    // Fail loud at build/load rather than ship a dead "Post not found" link.
+    const dir = metaPath.replace(/^\.\//, '').replace(/\/meta\.ts$/, '');
+    if (metaModule.meta.id !== dir) {
+      throw new Error(
+        `Post id "${metaModule.meta.id}" must equal its directory "${dir}" (${metaPath})`,
+      );
+    }
+    return {
+      ...metaModule.meta,
+      Component: lazy(
+        componentModules[metaPath.replace('/meta.ts', '/index.tsx')],
+      ),
+    };
+  },
 );
 /* v8 ignore next -- @preserve */
 posts.sort((a, b) => b.createdAt.localeCompare(a.createdAt));

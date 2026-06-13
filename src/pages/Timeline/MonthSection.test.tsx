@@ -17,7 +17,6 @@ function makeEntry(overrides?: Partial<MonthEntry>): MonthEntry {
     month: 6,
     id: '2026-06',
     label: 'June 2026',
-    factory: defaultFactory,
     Component: lazy(defaultFactory),
     ...overrides,
   };
@@ -72,9 +71,7 @@ describe('MonthSection', () => {
           res({ default: () => null });
         };
       });
-    render(
-      <MonthSection entry={makeEntry({ factory, Component: lazy(factory) })} />,
-    );
+    render(<MonthSection entry={makeEntry({ Component: lazy(factory) })} />);
     expect(
       screen.getByRole('progressbar', { name: 'Loading June 2026' }),
     ).toBeInTheDocument();

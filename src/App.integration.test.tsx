@@ -140,6 +140,13 @@ describe('App integration', () => {
       expect(screen.getByRole('banner')).toBeInTheDocument();
       expect(screen.getByRole('contentinfo')).toBeInTheDocument();
     });
+
+    it('hamburger button is present on every route', async () => {
+      await renderApp('/');
+      expect(
+        screen.getByRole('button', { name: 'Open navigation menu' }),
+      ).toBeInTheDocument();
+    });
   });
 
   describe('theme toggle state', () => {

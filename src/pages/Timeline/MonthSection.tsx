@@ -3,6 +3,7 @@ import { css } from '@react-spectrum/s2/style' with { type: 'macro' };
 import { Suspense } from 'react';
 
 import type { MonthEntry } from '../../cv/types';
+import { monthSectionProps } from './monthSectionDom';
 
 const sectionStyle = css(`
   padding: 32px 0 48px;
@@ -38,9 +39,7 @@ export function MonthSection({ entry }: Readonly<Props>) {
 
   return (
     <section
-      id={`month-${entry.id}`}
-      data-month-section
-      data-month-id={entry.id}
+      {...monthSectionProps(entry.id)}
       className={sectionStyle}
       aria-label={entry.label}
     >

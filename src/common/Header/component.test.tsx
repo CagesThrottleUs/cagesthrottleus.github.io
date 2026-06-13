@@ -50,6 +50,29 @@ describe('Header — unit (useTheme mocked)', () => {
     });
   });
 
+  describe('mobile hamburger button', () => {
+    it('hamburger button is present in the document', () => {
+      renderHeader();
+      expect(
+        screen.getByRole('button', { name: 'Open navigation menu' }),
+      ).toBeInTheDocument();
+    });
+
+    it('hamburger button has aria-expanded="false" initially', () => {
+      renderHeader();
+      expect(
+        screen.getByRole('button', { name: 'Open navigation menu' }),
+      ).toHaveAttribute('aria-expanded', 'false');
+    });
+
+    it('hamburger button has aria-controls="mobile-nav"', () => {
+      renderHeader();
+      expect(
+        screen.getByRole('button', { name: 'Open navigation menu' }),
+      ).toHaveAttribute('aria-controls', 'mobile-nav');
+    });
+  });
+
   describe('navigation', () => {
     it('renders a navigation landmark', () => {
       renderHeader();

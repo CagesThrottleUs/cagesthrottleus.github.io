@@ -4,13 +4,24 @@ import { type ReactNode } from 'react';
 import { Footer } from './Footer/component';
 import { Header } from './Header/component';
 
-const commonSizePattern = style({
-  paddingX: '12.5vw',
-  minHeight: 'screen',
-  display: 'flex',
-  flexDirection: 'column',
-  flexGrow: 1,
-});
+const commonSizePattern = css(`
+  padding-left: 12.5vw;
+  padding-right: 12.5vw;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+
+  @media (max-width: 1023px) {
+    padding-left: 6vw;
+    padding-right: 6vw;
+  }
+
+  @media (max-width: 640px) {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+`);
 
 const editorialBg = css(`
   background-color: light-dark(#f8f8f7, #111110);
