@@ -41,17 +41,18 @@ test('footer shows "All rights reserved"', async ({ page }) => {
   );
 });
 
-// href attribute tests scoped to the main desktop nav.
+// href attribute tests — use CSS locator so display:none on mobile doesn't hide the element
+// from the query (getByRole uses the a11y tree; locator uses the DOM directly).
 
 test('Posts nav link is in the DOM pointing to home', async ({ page }) => {
-  const mainNav = page.getByRole('navigation', { name: 'Main navigation' });
+  const mainNav = page.locator('[aria-label="Main navigation"]');
   await expect(mainNav.locator('a[href="#/"]')).toBeAttached();
 });
 
 test('Timeline nav link is in the DOM pointing to /timeline', async ({
   page,
 }) => {
-  const mainNav = page.getByRole('navigation', { name: 'Main navigation' });
+  const mainNav = page.locator('[aria-label="Main navigation"]');
   await expect(mainNav.locator('a[href="#/timeline"]')).toBeAttached();
 });
 
@@ -61,11 +62,15 @@ test('Timeline nav link is in the DOM pointing to /timeline', async ({
 test('Posts nav link visibility matches viewport width', async ({ page }) => {
   const vp = page.viewportSize();
   const isMobile = !!vp && vp.width <= 640;
-  const mainNav = page.getByRole('navigation', { name: 'Main navigation' });
   if (isMobile) {
-    await expect(mainNav.locator('a[href="#/"]')).not.toBeVisible();
+    // CSS locator: finds the element regardless of display state
+    await expect(
+      page.locator('[aria-label="Main navigation"] a[href="#/"]'),
+    ).not.toBeVisible();
   } else {
-    await expect(mainNav.getByRole('link', { name: 'Posts' })).toBeVisible();
+    await expect(
+      page.getByRole('navigation', { name: 'Main navigation' }).getByRole('link', { name: 'Posts' }),
+    ).toBeVisible();
   }
 });
 
@@ -74,12 +79,15 @@ test('Timeline nav link visibility matches viewport width', async ({
 }) => {
   const vp = page.viewportSize();
   const isMobile = !!vp && vp.width <= 640;
-  const mainNav = page.getByRole('navigation', { name: 'Main navigation' });
   if (isMobile) {
-    await expect(mainNav.locator('a[href="#/timeline"]')).not.toBeVisible();
+    await expect(
+      page.locator('[aria-label="Main navigation"] a[href="#/timeline"]'),
+    ).not.toBeVisible();
   } else {
     await expect(
-      mainNav.getByRole('link', { name: 'Timeline' }),
+      page
+        .getByRole('navigation', { name: 'Main navigation' })
+        .getByRole('link', { name: 'Timeline' }),
     ).toBeVisible();
   }
 });
