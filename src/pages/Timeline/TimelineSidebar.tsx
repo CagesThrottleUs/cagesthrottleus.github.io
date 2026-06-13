@@ -2,6 +2,11 @@ import { css } from '@react-spectrum/s2/style' with { type: 'macro' };
 import { useEffect, useRef, useState } from 'react';
 
 import type { MonthEntry } from '../../cv/types';
+import {
+  MONTH_ID_ATTR,
+  MONTH_SECTION_ATTR,
+  monthSectionElementId,
+} from './monthSectionDom';
 
 const MONTH_ABBR = [
   'Jan',
@@ -106,7 +111,7 @@ export function TimelineSidebar({ entries }: Readonly<Props>) {
       (observed) => {
         for (const entry of observed) {
           if (entry.isIntersecting) {
-            setActiveId(entry.target.getAttribute('data-month-id'));
+            setActiveId(entry.target.getAttribute(MONTH_ID_ATTR));
             break;
           }
         }
@@ -115,7 +120,7 @@ export function TimelineSidebar({ entries }: Readonly<Props>) {
     );
     observerRef.current = observer;
 
-    document.querySelectorAll('[data-month-section]').forEach((el) => {
+    document.querySelectorAll(`[${MONTH_SECTION_ATTR}]`).forEach((el) => {
       observer.observe(el);
     });
 
@@ -133,7 +138,7 @@ export function TimelineSidebar({ entries }: Readonly<Props>) {
 
   function jumpTo(id: string) {
     document
-      .getElementById(`month-${id}`)
+      .getElementById(monthSectionElementId(id))
       ?.scrollIntoView({ behavior: 'smooth' });
   }
 
