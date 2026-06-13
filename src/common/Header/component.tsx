@@ -158,7 +158,11 @@ export function Header() {
               Timeline
             </NavLink>
           </nav>
-          <div className={navSeparatorStyle} role="separator" aria-orientation="vertical" />
+          <div
+            className={navSeparatorStyle}
+            role="separator"
+            aria-orientation="vertical"
+          />
           <Button
             variant="secondary"
             size="M"
