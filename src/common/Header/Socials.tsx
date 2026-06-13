@@ -9,14 +9,18 @@ const containerStyle = style({
   alignItems: 'center',
 });
 
-export function Socials() {
+interface SocialsProps {
+  readonly size?: 'S' | 'M' | 'L';
+}
+
+export function Socials({ size = 'M' }: SocialsProps) {
   return (
     <div className={containerStyle} aria-label="Social links">
       {SOCIAL_LINKS.map(({ href, label, Icon }) => (
         <Button
           key={href}
           variant="secondary"
-          size="M"
+          size={size}
           aria-label={label}
           onPress={() => {
             window.open(href, '_blank', 'noopener,noreferrer');

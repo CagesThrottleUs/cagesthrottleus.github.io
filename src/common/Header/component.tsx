@@ -117,6 +117,18 @@ const iconWrapperStyle = style({
 const iconRotated = css(`transform: rotate(45deg);`);
 const iconDefault = css(`transform: rotate(0deg);`);
 
+const navSeparatorStyle = css(`
+  width: 1px;
+  align-self: stretch;
+  margin: 4px 0;
+  flex-shrink: 0;
+  background-color: light-dark(rgba(0, 0, 0, 0.10), rgba(255, 255, 255, 0.10));
+
+  @media (max-width: 640px) {
+    display: none;
+  }
+`);
+
 export function Header() {
   const { scheme, toggleScheme } = useTheme();
 
@@ -146,6 +158,7 @@ export function Header() {
               Timeline
             </NavLink>
           </nav>
+          <div className={navSeparatorStyle} role="separator" aria-orientation="vertical" />
           <Button
             variant="secondary"
             size="M"

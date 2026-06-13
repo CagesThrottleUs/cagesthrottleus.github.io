@@ -31,7 +31,7 @@ export function Footer() {
         <span className={textStyle}>
           &copy; {CURRENT_YEAR} Cages&apos;. All rights reserved.
         </span>
-        <Socials />
+        <Socials size="S" />
         <span className={textStyle}>cagesthrottleus</span>
       </div>
     </footer>
