@@ -10,7 +10,6 @@ const pageStyle = css(`
   display: flex;
   gap: 40px;
   padding: 40px 0 80px;
-  min-height: 100dvh;
 `);
 
 const contentStyle = css(`

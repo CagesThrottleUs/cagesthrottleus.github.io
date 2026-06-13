@@ -134,6 +134,12 @@ describe('App integration', () => {
       expect(screen.getByRole('banner')).toBeInTheDocument();
       expect(screen.getByRole('contentinfo')).toBeInTheDocument();
     });
+
+    it('header and footer are visible on the timeline route', async () => {
+      await renderApp('/timeline');
+      expect(screen.getByRole('banner')).toBeInTheDocument();
+      expect(screen.getByRole('contentinfo')).toBeInTheDocument();
+    });
   });
 
   describe('theme toggle state', () => {

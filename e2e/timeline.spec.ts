@@ -71,6 +71,10 @@ test.describe('timeline page', () => {
     await expect(page.getByRole('banner')).toBeVisible();
   });
 
+  test('footer is visible on the timeline page', async ({ page }) => {
+    await expect(page.getByRole('contentinfo')).toBeVisible({ timeout: 10_000 });
+  });
+
   test('timeline is reachable from the header nav link', async ({ page }) => {
     await page.goto('/');
     const vp = page.viewportSize();
