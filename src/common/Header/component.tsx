@@ -196,7 +196,9 @@ export function Header() {
               <Button
                 variant="secondary"
                 size="M"
-                onPress={() => { setIsMobileNavOpen((prev) => !prev); }}
+                onPress={() => {
+                  setIsMobileNavOpen((prev) => !prev);
+                }}
                 id="mobile-menu-button"
                 aria-label={
                   isMobileNavOpen
@@ -215,7 +217,9 @@ export function Header() {
       </header>
       <MobileNav
         isOpen={isMobileNavOpen}
-        onClose={() => { setIsMobileNavOpen(false); }}
+        onClose={() => {
+          setIsMobileNavOpen(false);
+        }}
       />
     </>
   );
