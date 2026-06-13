@@ -1,5 +1,5 @@
 import { Button } from '@react-spectrum/s2';
-import { style } from '@react-spectrum/s2/style' with { type: 'macro' };
+import { css, style } from '@react-spectrum/s2/style' with { type: 'macro' };
 
 import { SOCIAL_LINKS } from './constants';
 
@@ -9,9 +9,15 @@ const containerStyle = style({
   alignItems: 'center',
 });
 
+const mobileHide = css(`
+  @media (max-width: 640px) {
+    display: none;
+  }
+`);
+
 export function Socials() {
   return (
-    <div className={containerStyle} aria-label="Social links">
+    <div className={`${containerStyle} ${mobileHide}`} aria-label="Social links">
       {SOCIAL_LINKS.map(({ href, label, Icon }) => (
         <Button
           key={href}
