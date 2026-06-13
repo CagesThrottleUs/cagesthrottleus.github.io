@@ -41,28 +41,31 @@ test('footer shows "All rights reserved"', async ({ page }) => {
   );
 });
 
-// href attribute tests use CSS locators — work regardless of display state.
+// href attribute tests scoped to the main desktop nav.
 
 test('Posts nav link is in the DOM pointing to home', async ({ page }) => {
-  await expect(page.locator('nav a[href="#/"]')).toBeAttached();
+  const mainNav = page.getByRole('navigation', { name: 'Main navigation' });
+  await expect(mainNav.locator('a[href="#/"]')).toBeAttached();
 });
 
 test('Timeline nav link is in the DOM pointing to /timeline', async ({
   page,
 }) => {
-  await expect(page.locator('nav a[href="#/timeline"]')).toBeAttached();
+  const mainNav = page.getByRole('navigation', { name: 'Main navigation' });
+  await expect(mainNav.locator('a[href="#/timeline"]')).toBeAttached();
 });
 
-// On desktop the nav is visible; on mobile it is intentionally hidden (display:none).
+// On desktop the main nav is visible; on mobile it is intentionally hidden (display:none).
 // Both outcomes are explicitly asserted so no tests are skipped.
 
 test('Posts nav link visibility matches viewport width', async ({ page }) => {
   const vp = page.viewportSize();
   const isMobile = !!vp && vp.width <= 640;
+  const mainNav = page.getByRole('navigation', { name: 'Main navigation' });
   if (isMobile) {
-    await expect(page.locator('nav a[href="#/"]')).not.toBeVisible();
+    await expect(mainNav.locator('a[href="#/"]')).not.toBeVisible();
   } else {
-    await expect(page.getByRole('link', { name: 'Posts' })).toBeVisible();
+    await expect(mainNav.getByRole('link', { name: 'Posts' })).toBeVisible();
   }
 });
 
@@ -71,10 +74,13 @@ test('Timeline nav link visibility matches viewport width', async ({
 }) => {
   const vp = page.viewportSize();
   const isMobile = !!vp && vp.width <= 640;
+  const mainNav = page.getByRole('navigation', { name: 'Main navigation' });
   if (isMobile) {
-    await expect(page.locator('nav a[href="#/timeline"]')).not.toBeVisible();
+    await expect(mainNav.locator('a[href="#/timeline"]')).not.toBeVisible();
   } else {
-    await expect(page.getByRole('link', { name: 'Timeline' })).toBeVisible();
+    await expect(
+      mainNav.getByRole('link', { name: 'Timeline' }),
+    ).toBeVisible();
   }
 });
 

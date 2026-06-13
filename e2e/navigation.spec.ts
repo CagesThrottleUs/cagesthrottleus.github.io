@@ -120,3 +120,80 @@ test.describe('home to post navigation via card', () => {
     ).toBeVisible({ timeout: 10_000 });
   });
 });
+
+test.describe('mobile hamburger navigation', () => {
+  test.use({ viewport: { width: 390, height: 844 } });
+
+  test.beforeEach(async ({ page }) => {
+    await page.goto('/');
+  });
+
+  test('hamburger button is visible on mobile', async ({ page }) => {
+    await expect(
+      page.getByRole('button', { name: /open navigation menu/i }),
+    ).toBeVisible({ timeout: 10_000 });
+  });
+
+  test('desktop nav links are not visible on mobile', async ({ page }) => {
+    await expect(
+      page.getByRole('navigation', { name: 'Main navigation' }),
+    ).not.toBeVisible();
+  });
+
+  test('clicking hamburger opens the mobile nav drawer', async ({ page }) => {
+    await page.getByRole('button', { name: /open navigation menu/i }).click();
+    await expect(
+      page.getByRole('navigation', { name: 'Mobile navigation' }),
+    ).toBeVisible({ timeout: 5_000 });
+  });
+
+  test('mobile nav drawer contains Posts and Timeline links', async ({
+    page,
+  }) => {
+    await page.getByRole('button', { name: /open navigation menu/i }).click();
+    const mobileNav = page.getByRole('navigation', {
+      name: 'Mobile navigation',
+    });
+    await expect(mobileNav).toBeVisible({ timeout: 5_000 });
+    await expect(mobileNav.getByRole('link', { name: 'Posts' })).toBeVisible();
+    await expect(
+      mobileNav.getByRole('link', { name: 'Timeline' }),
+    ).toBeVisible();
+  });
+
+  test('clicking Timeline in mobile nav navigates to /timeline', async ({
+    page,
+  }) => {
+    await page.getByRole('button', { name: /open navigation menu/i }).click();
+    await page
+      .getByRole('navigation', { name: 'Mobile navigation' })
+      .getByRole('link', { name: 'Timeline' })
+      .click();
+    await expect(
+      page.getByRole('button', { name: 'Load 3 months at a time' }),
+    ).toBeVisible({ timeout: 10_000 });
+  });
+
+  test('pressing Escape closes the mobile nav drawer', async ({ page }) => {
+    await page.getByRole('button', { name: /open navigation menu/i }).click();
+    await expect(
+      page.getByRole('navigation', { name: 'Mobile navigation' }),
+    ).toBeVisible({ timeout: 5_000 });
+    await page.keyboard.press('Escape');
+    await expect(
+      page.getByRole('navigation', { name: 'Mobile navigation' }),
+    ).not.toBeVisible({ timeout: 3_000 });
+  });
+
+  test('clicking backdrop closes the mobile nav drawer', async ({ page }) => {
+    await page.getByRole('button', { name: /open navigation menu/i }).click();
+    await expect(
+      page.getByRole('navigation', { name: 'Mobile navigation' }),
+    ).toBeVisible({ timeout: 5_000 });
+    // Click the right side of the screen (backdrop area, outside the 85vw drawer)
+    await page.mouse.click(370, 400);
+    await expect(
+      page.getByRole('navigation', { name: 'Mobile navigation' }),
+    ).not.toBeVisible({ timeout: 3_000 });
+  });
+});
