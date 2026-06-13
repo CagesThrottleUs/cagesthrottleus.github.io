@@ -28,7 +28,6 @@ export const monthEntries: MonthEntry[] = Object.entries(modules)
       month,
       id: `${m[1]}-${m[2]}`,
       label: toLabel(year, month),
-      factory,
       Component: lazy(factory),
     };
   })

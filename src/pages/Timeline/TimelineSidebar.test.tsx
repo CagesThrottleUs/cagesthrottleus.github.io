@@ -18,7 +18,6 @@ function makeEntries(...ids: string[]): MonthEntry[] {
         month: 'long',
         year: 'numeric',
       }),
-      factory,
       Component: lazy(factory),
     };
   });

@@ -10,6 +10,5 @@ export interface MonthEntry {
   month: number;
   id: string;
   label: string;
-  factory: () => Promise<{ default: ComponentType }>;
   Component: LazyExoticComponent<ComponentType>;
 }
