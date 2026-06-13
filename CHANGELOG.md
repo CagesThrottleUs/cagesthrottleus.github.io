@@ -14,6 +14,10 @@
 - `CVEntry` bullet component with amber dash accent and dark frosted hover tooltip
 - Seed June 2026 entries; registry auto-discovers new months via `import.meta.glob`
 - Full unit, integration, and E2E test coverage for all timeline components
+- Move nav links (Posts/Timeline) from header centre to header right, grouped with the theme toggle
+- Move social links (GitHub, LinkedIn) from header to footer, between copyright and handle
+- Add hairline vertical divider in header between nav links and theme toggle
+- Scale footer social buttons down to size S to match footer's subdued detail text
 
 ## 1.0.1
 
