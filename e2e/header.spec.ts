@@ -69,7 +69,9 @@ test('Posts nav link visibility matches viewport width', async ({ page }) => {
     ).not.toBeVisible();
   } else {
     await expect(
-      page.getByRole('navigation', { name: 'Main navigation' }).getByRole('link', { name: 'Posts' }),
+      page
+        .getByRole('navigation', { name: 'Main navigation' })
+        .getByRole('link', { name: 'Posts' }),
     ).toBeVisible();
   }
 });

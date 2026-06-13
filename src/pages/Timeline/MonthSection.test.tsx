@@ -71,9 +71,7 @@ describe('MonthSection', () => {
           res({ default: () => null });
         };
       });
-    render(
-      <MonthSection entry={makeEntry({ Component: lazy(factory) })} />,
-    );
+    render(<MonthSection entry={makeEntry({ Component: lazy(factory) })} />);
     expect(
       screen.getByRole('progressbar', { name: 'Loading June 2026' }),
     ).toBeInTheDocument();

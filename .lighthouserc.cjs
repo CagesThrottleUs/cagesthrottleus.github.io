@@ -69,10 +69,10 @@ module.exports = {
         // ── PASS THRESHOLDS ──────────────────────────────────────────────────
         // All four measured categories must clear these floors.
         // Raise, never lower, without a structural reason.
-        'categories:performance':    ['error', { minScore: 0.9 }],
-        'categories:accessibility':  ['error', { minScore: 1.0 }],
+        'categories:performance': ['error', { minScore: 0.9 }],
+        'categories:accessibility': ['error', { minScore: 1.0 }],
         'categories:best-practices': ['error', { minScore: 0.9 }],
-        'categories:seo':            ['error', { minScore: 0.9 }],
+        'categories:seo': ['error', { minScore: 0.9 }],
 
         // ── EXPLICIT IGNORES ─────────────────────────────────────────────────
         // Every 'off' entry documents why the audit is structurally impossible
@@ -82,12 +82,12 @@ module.exports = {
         // There is no web app manifest, no service worker, and no requirement
         // for installability or offline support. All five PWA audits are
         // not applicable to this deployment target.
-        'categories:pwa':       'off',
+        'categories:pwa': 'off',
         'installable-manifest': 'off',
-        'service-worker':       'off',
-        'splash-screen':        'off',
-        'themed-browser-ui':    'off',
-        'maskable-icon':        'off',
+        'service-worker': 'off',
+        'splash-screen': 'off',
+        'themed-browser-ui': 'off',
+        'maskable-icon': 'off',
 
         // HTTP/2 — vite's built-in preview server uses HTTP/1.1 on localhost.
         // Production (GitHub Pages CDN) serves HTTP/2. This cannot be
