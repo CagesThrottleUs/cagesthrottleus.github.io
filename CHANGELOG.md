@@ -6,6 +6,9 @@
 - Drawer closes on backdrop click, Escape key, or nav link click; body scroll locked while open
 - Responsive side padding: `12.5vw` on desktop steps down to `6vw` on tablet and `16px` on mobile (was flat `12.5vw` at all widths)
 - Add Lighthouse reporting to the project
+- Drop unused `factory` field from timeline `MonthEntry` — entries now expose only the lazy `Component`; per-month dynamic loading is unchanged
+- Centralise the timeline section DOM contract (`data-month-*` attributes and anchor id) in one module so sidebar navigation cannot drift from the rendered markup
+- Guard post `id` against its directory name at registry load — a mismatched slug now fails loudly instead of shipping a dead "Post not found" link
 
 ## 1.1.0
 
