@@ -3,15 +3,14 @@ import { CVEntry } from '../../CVEntry';
 export default function June2026() {
   return (
     <>
-      <CVEntry tooltip="3-column editorial header, Geist Variable font, amber monogram accent">
-        Redesigned personal blog to Editorial Precision direction
+      <CVEntry tooltip="Personal commitment to avoid staying just a corporate drone">
+        Decided to invest seriously in self-improvement beyond day job
       </CVEntry>
-      <CVEntry tooltip="Lazy loading per month, IntersectionObserver sentinel, configurable batch size">
-        Implemented reverse-chronological engineering timeline page
+      <CVEntry tooltip="Research-paper style: every section answers a question; covers engineering of dynamic plugin systems at a deep level">
+        Writing engineering paper on dynamic plugin system architecture
       </CVEntry>
-      <CVEntry tooltip="light-dark() on page shell fixes OS dark-mode + site light-mode mismatch">
-        Fixed post content text visibility across theme combinations
-      </CVEntry>
+      <CVEntry>Reframing all learning as engineering problems to produce research work</CVEntry>
+      <CVEntry>Building products and solutions from research, especially targeting defense</CVEntry>
     </>
   );
 }
