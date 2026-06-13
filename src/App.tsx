@@ -16,7 +16,6 @@ declare module '@react-spectrum/s2' {
 
 const fullBodyHeight = style({
   minHeight: 'screen',
-  backgroundColor: 'gray-75',
   display: 'flex',
   flexDirection: 'column',
 });

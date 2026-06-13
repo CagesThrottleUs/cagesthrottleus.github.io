@@ -1,5 +1,25 @@
+@import '@fontsource-variable/geist';
+
 /* S2 uses CSS Cascade Layers — global resets outside @layer override S2 styles.
    Page background and color scheme are handled by @react-spectrum/s2/page.css (imported in App.tsx). */
+/* Timeline reading-progress animation — used by TimelineSidebar via animation-timeline: scroll(root) */
+@keyframes cv-read-progress {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
 body {
   margin: 0;
+  font-family:
+    'Geist Variable',
+    'Geist',
+    system-ui,
+    -apple-system,
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }

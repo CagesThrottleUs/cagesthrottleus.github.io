@@ -3,9 +3,26 @@ import { act, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import type React from 'react';
 import { MemoryRouter } from 'react-router';
-import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { mockMatchMedia } from './test/providers';
+
+vi.mock('./cv/index', async () => {
+  const { lazy } = await import('react');
+  const factory = () => Promise.resolve({ default: () => null });
+  return {
+    monthEntries: [
+      {
+        year: 2026,
+        month: 6,
+        id: '2026-06',
+        label: 'June 2026',
+        factory,
+        Component: lazy(factory),
+      },
+    ],
+  };
+});
 
 vi.mock('@react-spectrum/s2/CardView', () => ({
   Card: ({
@@ -94,7 +111,16 @@ describe('App integration', () => {
   beforeEach(() => {
     localStorage.clear();
     mockMatchMedia(false);
+    vi.stubGlobal(
+      'IntersectionObserver',
+      class {
+        observe = vi.fn();
+        disconnect = vi.fn();
+      },
+    );
   });
+
+  afterEach(() => vi.unstubAllGlobals());
 
   describe('layout on every route', () => {
     it('header and footer are visible on the home route', async () => {
@@ -105,6 +131,12 @@ describe('App integration', () => {
 
     it('header and footer are visible on a post route', async () => {
       await renderApp('/posts/2026-06-08-hello-world');
+      expect(screen.getByRole('banner')).toBeInTheDocument();
+      expect(screen.getByRole('contentinfo')).toBeInTheDocument();
+    });
+
+    it('header and footer are visible on the timeline route', async () => {
+      await renderApp('/timeline');
       expect(screen.getByRole('banner')).toBeInTheDocument();
       expect(screen.getByRole('contentinfo')).toBeInTheDocument();
     });
@@ -148,6 +180,54 @@ describe('App integration', () => {
     it('"Post not found" shown for an unknown slug', async () => {
       await renderApp('/posts/unknown-slug');
       expect(screen.getByText('Post not found')).toBeInTheDocument();
+    });
+  });
+
+  describe('nav links', () => {
+    it('Posts link is present on the home route', async () => {
+      await renderApp('/');
+      expect(screen.getByRole('link', { name: 'Posts' })).toBeInTheDocument();
+    });
+
+    it('Timeline link is present on the home route', async () => {
+      await renderApp('/');
+      expect(
+        screen.getByRole('link', { name: 'Timeline' }),
+      ).toBeInTheDocument();
+    });
+
+    it('Posts link href resolves to "/"', async () => {
+      await renderApp('/');
+      expect(screen.getByRole('link', { name: 'Posts' })).toHaveAttribute(
+        'href',
+        '/',
+      );
+    });
+
+    it('Timeline link href resolves to "/timeline"', async () => {
+      await renderApp('/');
+      expect(screen.getByRole('link', { name: 'Timeline' })).toHaveAttribute(
+        'href',
+        '/timeline',
+      );
+    });
+
+    it('nav links persist on a post route', async () => {
+      await renderApp('/posts/2026-06-08-hello-world');
+      expect(screen.getByRole('link', { name: 'Posts' })).toBeInTheDocument();
+      expect(
+        screen.getByRole('link', { name: 'Timeline' }),
+      ).toBeInTheDocument();
+    });
+  });
+
+  describe('timeline route', () => {
+    it('navigating to /timeline renders the timeline navigation', async () => {
+      await renderApp('/timeline');
+      // TimelinePage is lazy — findByRole waits for the import to resolve.
+      await expect(
+        screen.findByRole('navigation', { name: 'Timeline navigation' }),
+      ).resolves.toBeInTheDocument();
     });
   });
 });
