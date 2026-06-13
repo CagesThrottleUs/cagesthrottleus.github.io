@@ -90,7 +90,7 @@ export function MobileNav({ isOpen, onClose }: Readonly<Props>) {
       if (e.key === 'Escape') onClose();
     };
     document.addEventListener('keydown', handler);
-    return () => document.removeEventListener('keydown', handler);
+    return () => { document.removeEventListener('keydown', handler); };
   }, [isOpen, onClose]);
 
   useEffect(() => {
