@@ -29,10 +29,22 @@ const sentinelStyle = css(`
 `);
 
 const endNoteStyle = css(`
-  font-size: 13px;
-  color: light-dark(#78716c, #a8a29e);
-  padding: 32px 0;
-  text-align: center;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: light-dark(#a8a29e, #78716c);
+  padding: 48px 0 40px;
+
+  &::before,
+  &::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: light-dark(#e8e7e5, #282624);
+  }
 `);
 
 const emptyStyle = css(`

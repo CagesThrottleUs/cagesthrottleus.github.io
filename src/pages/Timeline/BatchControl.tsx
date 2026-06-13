@@ -12,17 +12,17 @@ const groupStyle = css(`
 const labelStyle = css(`
   font-size: 11px;
   font-weight: 500;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: light-dark(#78716c, #a8a29e);
-  margin-right: 8px;
+  color: light-dark(#a8a29e, #78716c);
+  margin-right: 6px;
   user-select: none;
 `);
 
 const btnStyle = css(`
-  width: 28px;
-  height: 24px;
-  border-radius: 4px;
+  width: 30px;
+  height: 26px;
+  border-radius: 5px;
   border: 1px solid light-dark(#e8e7e5, #282624);
   background: transparent;
   font-size: 12px;
@@ -30,11 +30,15 @@ const btnStyle = css(`
   font-family: inherit;
   cursor: pointer;
   color: light-dark(#78716c, #a8a29e);
-  transition: color 120ms ease, border-color 120ms ease, background-color 120ms ease;
+  transition: color 120ms ease, border-color 120ms ease, background-color 120ms ease, transform 120ms ease;
 
   &:hover {
     border-color: light-dark(#b45309, #d97706);
     color: light-dark(#b45309, #d97706);
+  }
+
+  &:active {
+    transform: scale(0.95);
   }
 `);
 
