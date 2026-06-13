@@ -5,11 +5,16 @@ const itemStyle = css(`
   position: relative;
   display: flex;
   gap: 10px;
-  padding: 5px 0;
+  padding: 6px 0;
   font-size: 14px;
-  line-height: 1.6;
+  line-height: 1.65;
   color: inherit;
   list-style: none;
+  transition: transform 160ms cubic-bezier(0.16, 1, 0.3, 1);
+
+  &:hover {
+    transform: translateX(4px);
+  }
 
   &:hover .cv-tooltip {
     opacity: 1;

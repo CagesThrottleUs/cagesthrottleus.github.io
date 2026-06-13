@@ -6,17 +6,20 @@ import type { MonthEntry } from '../../cv/types';
 import { monthSectionProps } from './monthSectionDom';
 
 const sectionStyle = css(`
-  padding: 32px 0 48px;
+  padding: 44px 0 64px;
   border-bottom: 1px solid light-dark(#e8e7e5, #282624);
   scroll-margin-top: 24px;
 `);
 
 const headingStyle = css(`
-  font-size: clamp(1.1rem, 2.5vw, 1.35rem);
+  font-size: clamp(1.4rem, 3vw, 1.85rem);
   font-weight: 700;
-  letter-spacing: -0.03em;
+  letter-spacing: -0.045em;
+  line-height: 1;
   color: inherit;
-  margin: 0 0 20px;
+  margin: 0 0 28px;
+  padding-left: 12px;
+  border-left: 2.5px solid light-dark(#b45309, #d97706);
 `);
 
 const listStyle = css(`
@@ -24,6 +27,11 @@ const listStyle = css(`
   padding: 0;
   display: flex;
   flex-direction: column;
+  will-change: opacity, transform;
+
+  @media (prefers-reduced-motion: no-preference) {
+    animation: cv-entries-in 0.45s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
 `);
 
 const loadingStyle = css(`
