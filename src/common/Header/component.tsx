@@ -5,7 +5,6 @@ import { css, style } from '@react-spectrum/s2/style' with { type: 'macro' };
 import { Link, NavLink } from 'react-router';
 
 import { useTheme } from '../../ThemeProvider/hooks';
-import { Socials } from './Socials';
 
 const headerStyle = style({
   display: 'flex',
@@ -138,17 +137,15 @@ export function Header() {
           <span className={siteNameStyle}>Cages&apos;</span>
         </Link>
 
-        <nav className={navStyle} aria-label="Main navigation">
-          <NavLink to="/" end className={navLinkBase}>
-            Posts
-          </NavLink>
-          <NavLink to="/timeline" className={navLinkBase}>
-            Timeline
-          </NavLink>
-        </nav>
-
         <div className={actionsStyle}>
-          <Socials />
+          <nav className={navStyle} aria-label="Main navigation">
+            <NavLink to="/" end className={navLinkBase}>
+              Posts
+            </NavLink>
+            <NavLink to="/timeline" className={navLinkBase}>
+              Timeline
+            </NavLink>
+          </nav>
           <Button
             variant="secondary"
             size="M"

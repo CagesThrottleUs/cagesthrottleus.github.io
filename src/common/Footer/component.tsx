@@ -1,6 +1,8 @@
 import { Divider } from '@react-spectrum/s2';
 import { style } from '@react-spectrum/s2/style' with { type: 'macro' };
 
+import { Socials } from '../Header/Socials';
+
 const rowStyle = style({
   display: 'flex',
   alignItems: 'center',
@@ -29,6 +31,7 @@ export function Footer() {
         <span className={textStyle}>
           &copy; {CURRENT_YEAR} Cages&apos;. All rights reserved.
         </span>
+        <Socials />
         <span className={textStyle}>cagesthrottleus</span>
       </div>
     </footer>
